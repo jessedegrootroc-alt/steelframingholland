@@ -1,0 +1,977 @@
+{
+ "sfh-hero": {
+  "bron": "/assets_bron/sfh/sfh-hero-still.jpg",
+  "rol": "hero",
+  "alt": "",
+  "herkomst": "eerste beeldje van assets/video/sfh-hero.mp4",
+  "bronmaat": "1280x720",
+  "noot": "Terugvalbeeld van de herofilm. Leeg alt: de film en dit beeeld zijn decoratief, de kop ernaast draagt de betekenis."
+ },
+ "sfh-projecten": {
+  "bron": "/assets_bron/sfh/sfh-projecten.jpg",
+  "rol": "hero",
+  "alt": "Wit, geleed gebouw met verspringende verdiepingen, opgetrokken met een staalframe",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/11/P3214854.jpg",
+  "bronmaat": "1600x879"
+ },
+ "sfh-engineering": {
+  "bron": "/assets_bron/sfh/sfh-engineering.jpg",
+  "rol": "hero",
+  "alt": "Detail van een gemonteerd staalframe, waarin de koudgevormde profielen en hun verbindingen te zien zijn",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/steelframing_slide3.jpg",
+  "bronmaat": "1900x873"
+ },
+ "sfh-pand": {
+  "bron": "/assets_bron/sfh/sfh-pand.jpg",
+  "rol": "hero",
+  "alt": "Het bedrijfspand van Steel Framing Holland aan Netwerk in Purmerend, met een bakstenen gevel en groene kozijnen",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2018/10/Pand-Netwerk.jpg",
+  "bronmaat": "4128x3096"
+ },
+ "sfh-woningbouw": {
+  "bron": "/assets_bron/sfh/sfh-woningbouw.jpg",
+  "rol": "hero",
+  "alt": "Vrijstaande villa van twee lagen met grote glasvlakken en een uitkragende bovenverdieping in een bosrijke omgeving",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2016/08/IMG_6657.jpg",
+  "bronmaat": "1632x1224"
+ },
+ "sfh-renovatie": {
+  "bron": "/assets_bron/sfh/sfh-renovatie.jpeg",
+  "rol": "hero",
+  "alt": "Galerijflat in Utrecht tijdens de renovatie, met nieuwe geveldelen langs de bestaande gevel",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/image00003.jpeg",
+  "bronmaat": "4032x3024"
+ },
+ "sfh-utiliteitsbouw": {
+  "bron": "/assets_bron/sfh/sfh-utiliteitsbouw.jpg",
+  "rol": "hero",
+  "alt": "Brandweerkazerne in Zwolle met een wit, geleed volume waarvan de verdiepingen ten opzichte van elkaar verspringen",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_1179.jpg",
+  "bronmaat": "2592x1936"
+ },
+ "sfh-staalframe": {
+  "bron": "/assets_bron/sfh/sfh-staalframe.jpg",
+  "rol": "hero",
+  "alt": "Staalframe van een gebouw in aanbouw, waarbij een kraan een dakligger op zijn plek brengt",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/P5054020.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-eps": {
+  "bron": "/assets_bron/sfh/sfh-eps.jpg",
+  "rol": "hero",
+  "alt": "Staalframe waarin witte EPS-wandelementen zijn geplaatst, met daarachter een bestaande woning",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2017/09/IMG_1063.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-wandsystemen": {
+  "bron": "/assets_bron/sfh/sfh-wandsystemen.jpg",
+  "rol": "hero",
+  "alt": "Afgewerkte gevel met een erker en houten bekleding, geplaatst als prefab element",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/09/2015-07-02-11.00.25.jpg",
+  "bronmaat": "3264x2448"
+ },
+ "sfh-over-ons": {
+  "bron": "/assets_bron/sfh/sfh-over-ons.jpg",
+  "rol": "hero",
+  "alt": "Drie monteurs zetten op de bouwplaats een wandframe van koudgevormde staalprofielen overeind",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/P5054001.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-werkwijze": {
+  "bron": "/assets_bron/sfh/sfh-werkwijze.jpg",
+  "rol": "hero",
+  "alt": "Team monteurs zet op locatie een staalframe met EPS-wanden in elkaar",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMGP6337.jpg",
+  "bronmaat": "3872x2592"
+ },
+ "sfh-partners": {
+  "bron": "/assets_bron/sfh/sfh-partners.jpg",
+  "rol": "hero",
+  "alt": "Gebouw met EPS-wanden en rondbogen boven de raamopeningen, kort voor de afwerking",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/DSC_0084.jpg",
+  "bronmaat": "1200x797"
+ },
+ "sfh-offerte": {
+  "bron": "/assets_bron/sfh/sfh-offerte.jpg",
+  "rol": "hero",
+  "alt": "Compleet staalframe van een woning met kapconstructie, opgebouwd op de bouwplaats",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_2093.jpg",
+  "bronmaat": "1200x800"
+ },
+ "sfh-project-villa-in-bergen": {
+  "bron": "/assets_bron/sfh/sfh-project-villa-in-bergen.jpg",
+  "rol": "hero",
+  "alt": "Vrijstaande villa in Bergen met een plat dak en doorlopende glasvlakken over de volle breedte",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2016/08/IMG_6655.jpg",
+  "bronmaat": "1632x1224"
+ },
+ "sfh-project-villa-in-bergen-02": {
+  "bron": "/assets_bron/sfh/sfh-project-villa-in-bergen-02.jpg",
+  "rol": "inhoud",
+  "alt": "Vrijstaande villa in Bergen met een plat dak en doorlopende glasvlakken over de volle breedte — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2016/08/IMG_6656.jpg",
+  "bronmaat": "1632x1224"
+ },
+ "sfh-project-villa-in-bergen-03": {
+  "bron": "/assets_bron/sfh/sfh-project-villa-in-bergen-03.jpg",
+  "rol": "inhoud",
+  "alt": "Vrijstaande villa in Bergen met een plat dak en doorlopende glasvlakken over de volle breedte — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2016/08/IMG_6658.jpg",
+  "bronmaat": "1632x1224"
+ },
+ "sfh-project-villa-in-bergen-04": {
+  "bron": "/assets_bron/sfh/sfh-project-villa-in-bergen-04.jpg",
+  "rol": "inhoud",
+  "alt": "Vrijstaande villa in Bergen met een plat dak en doorlopende glasvlakken over de volle breedte — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2016/08/IMG_6659.jpg",
+  "bronmaat": "1632x1224"
+ },
+ "sfh-project-brandweerkazerne-zwolle": {
+  "bron": "/assets_bron/sfh/sfh-project-brandweerkazerne-zwolle.jpg",
+  "rol": "hero",
+  "alt": "Brandweerkazerne Zwolle: wit gebouw met verspringende verdiepingen en een glazen plint",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_1133.jpg",
+  "bronmaat": "2592x1936"
+ },
+ "sfh-project-brandweerkazerne-zwolle-02": {
+  "bron": "/assets_bron/sfh/sfh-project-brandweerkazerne-zwolle-02.jpg",
+  "rol": "inhoud",
+  "alt": "Brandweerkazerne Zwolle — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/DJI_0069.jpg",
+  "bronmaat": "2000x1500"
+ },
+ "sfh-project-brandweerkazerne-zwolle-03": {
+  "bron": "/assets_bron/sfh/sfh-project-brandweerkazerne-zwolle-03.jpg",
+  "rol": "inhoud",
+  "alt": "Brandweerkazerne Zwolle — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/DJI_0072.jpg",
+  "bronmaat": "2000x1500"
+ },
+ "sfh-project-brandweerkazerne-zwolle-04": {
+  "bron": "/assets_bron/sfh/sfh-project-brandweerkazerne-zwolle-04.jpg",
+  "rol": "inhoud",
+  "alt": "Brandweerkazerne Zwolle — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/DSC_0269.jpg",
+  "bronmaat": "1024x680"
+ },
+ "sfh-project-drijvende-woningen-in-delft": {
+  "bron": "/assets_bron/sfh/sfh-project-drijvende-woningen-in-delft.jpg",
+  "rol": "hero",
+  "alt": "Drijvende woning in Delft met houten gevelbekleding en donkere luiken",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/01/foto-334.jpg",
+  "bronmaat": "1296x968"
+ },
+ "sfh-project-drijvende-woningen-in-delft-02": {
+  "bron": "/assets_bron/sfh/sfh-project-drijvende-woningen-in-delft-02.jpg",
+  "rol": "inhoud",
+  "alt": "Drijvende woning in Delft met houten gevelbekleding en donkere luiken — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/01/foto-2342.jpg",
+  "bronmaat": "1296x968"
+ },
+ "sfh-project-drijvende-woningen-in-delft-03": {
+  "bron": "/assets_bron/sfh/sfh-project-drijvende-woningen-in-delft-03.jpg",
+  "rol": "inhoud",
+  "alt": "Drijvende woning in Delft met houten gevelbekleding en donkere luiken — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/01/foto-3567.jpg",
+  "bronmaat": "1296x968"
+ },
+ "sfh-project-drijvende-woningen-in-delft-04": {
+  "bron": "/assets_bron/sfh/sfh-project-drijvende-woningen-in-delft-04.jpg",
+  "rol": "inhoud",
+  "alt": "Drijvende woning in Delft met houten gevelbekleding en donkere luiken — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/01/foto-434.jpg",
+  "bronmaat": "1296x968"
+ },
+ "sfh-project-vakantiehuis-bonaire-crown-west-2": {
+  "bron": "/assets_bron/sfh/sfh-project-vakantiehuis-bonaire-crown-west-2.jpg",
+  "rol": "hero",
+  "alt": "Vakantiewoning op Bonaire met een terras en zwembad, gezien vanaf het perceel",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/01/corzilius-21.jpg",
+  "bronmaat": "5464x3640"
+ },
+ "sfh-project-vakantiehuis-bonaire-crown-west-2-02": {
+  "bron": "/assets_bron/sfh/sfh-project-vakantiehuis-bonaire-crown-west-2-02.jpg",
+  "rol": "inhoud",
+  "alt": "Vakantiewoning op Bonaire met een terras en zwembad — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/01/corzilius-51.jpg",
+  "bronmaat": "6240x4160"
+ },
+ "sfh-project-vakantiehuis-bonaire-crown-west-2-03": {
+  "bron": "/assets_bron/sfh/sfh-project-vakantiehuis-bonaire-crown-west-2-03.jpg",
+  "rol": "inhoud",
+  "alt": "Vakantiewoning op Bonaire met een terras en zwembad — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/01/corzilius-61.jpg",
+  "bronmaat": "6240x4160"
+ },
+ "sfh-project-vakantiehuis-bonaire-crown-west-2-04": {
+  "bron": "/assets_bron/sfh/sfh-project-vakantiehuis-bonaire-crown-west-2-04.jpg",
+  "rol": "inhoud",
+  "alt": "Vakantiewoning op Bonaire met een terras en zwembad — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/01/corzilius-31.jpg",
+  "bronmaat": "5464x3640"
+ },
+ "sfh-project-woning-nes-aan-de-amstel": {
+  "bron": "/assets_bron/sfh/sfh-project-woning-nes-aan-de-amstel.jpg",
+  "rol": "hero",
+  "alt": "Woning in Nes aan de Amstel met een wit gepleisterde gevel en een donker mansardedak",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2016/08/IMG_6963.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-woning-nes-aan-de-amstel-02": {
+  "bron": "/assets_bron/sfh/sfh-project-woning-nes-aan-de-amstel-02.jpg",
+  "rol": "inhoud",
+  "alt": "Woning in Nes aan de Amstel met een wit gepleisterde gevel en een donker mansardedak — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2016/08/IMG_6467.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-woning-nes-aan-de-amstel-03": {
+  "bron": "/assets_bron/sfh/sfh-project-woning-nes-aan-de-amstel-03.jpg",
+  "rol": "inhoud",
+  "alt": "Woning in Nes aan de Amstel met een wit gepleisterde gevel en een donker mansardedak — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2016/08/IMG_6436.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-woning-nes-aan-de-amstel-04": {
+  "bron": "/assets_bron/sfh/sfh-project-woning-nes-aan-de-amstel-04.jpg",
+  "rol": "inhoud",
+  "alt": "Woning in Nes aan de Amstel met een wit gepleisterde gevel en een donker mansardedak — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2016/08/IMG_6403.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-utrecht-portiek-flats-renovatie": {
+  "bron": "/assets_bron/sfh/sfh-project-utrecht-portiek-flats-renovatie.jpeg",
+  "rol": "hero",
+  "alt": "Portiekflat in Utrecht tijdens de renovatie",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/image00002.jpeg",
+  "bronmaat": "4032x3024"
+ },
+ "sfh-project-utrecht-portiek-flats-renovatie-02": {
+  "bron": "/assets_bron/sfh/sfh-project-utrecht-portiek-flats-renovatie-02.jpg",
+  "rol": "inhoud",
+  "alt": "Portiekflat in Utrecht tijdens de renovatie — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/u5.jpg",
+  "bronmaat": "4032x3024"
+ },
+ "sfh-project-utrecht-portiek-flats-renovatie-03": {
+  "bron": "/assets_bron/sfh/sfh-project-utrecht-portiek-flats-renovatie-03.jpg",
+  "rol": "inhoud",
+  "alt": "Portiekflat in Utrecht tijdens de renovatie — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/u3.jpg",
+  "bronmaat": "4032x3024"
+ },
+ "sfh-project-kinderopvang": {
+  "bron": "/assets_bron/sfh/sfh-project-kinderopvang.jpg",
+  "rol": "hero",
+  "alt": "Staalframe van de kinderopvang in Almere op de bouwplaats, met monteurs aan het werk",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/P5054000.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-project-kinderopvang-02": {
+  "bron": "/assets_bron/sfh/sfh-project-kinderopvang-02.jpg",
+  "rol": "inhoud",
+  "alt": "Staalframe van de kinderopvang in Almere op de bouwplaats — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/P5054002.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-project-kinderopvang-03": {
+  "bron": "/assets_bron/sfh/sfh-project-kinderopvang-03.jpg",
+  "rol": "inhoud",
+  "alt": "Staalframe van de kinderopvang in Almere op de bouwplaats — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/P5054006.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-project-kinderopvang-04": {
+  "bron": "/assets_bron/sfh/sfh-project-kinderopvang-04.jpg",
+  "rol": "inhoud",
+  "alt": "Staalframe van de kinderopvang in Almere op de bouwplaats — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/P5054022.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-project-kantoor-en-werkruimte": {
+  "bron": "/assets_bron/sfh/sfh-project-kantoor-en-werkruimte.jpg",
+  "rol": "hero",
+  "alt": "Kantoor met werkruimte in Volendam, gezien vanuit de lucht",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/11/DJI_0077.jpg",
+  "bronmaat": "2000x1500"
+ },
+ "sfh-project-kantoor-en-werkruimte-02": {
+  "bron": "/assets_bron/sfh/sfh-project-kantoor-en-werkruimte-02.jpg",
+  "rol": "inhoud",
+  "alt": "Kantoor met werkruimte in Volendam — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/11/foto-2-4-1024x768.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-kantoor-en-werkruimte-03": {
+  "bron": "/assets_bron/sfh/sfh-project-kantoor-en-werkruimte-03.jpg",
+  "rol": "inhoud",
+  "alt": "Kantoor met werkruimte in Volendam — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/11/foto-3-4-1024x768.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-kantoor-en-werkruimte-04": {
+  "bron": "/assets_bron/sfh/sfh-project-kantoor-en-werkruimte-04.jpg",
+  "rol": "inhoud",
+  "alt": "Kantoor met werkruimte in Volendam — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/11/foto-4-2-1024x768.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-naarden-renovatie": {
+  "bron": "/assets_bron/sfh/sfh-project-naarden-renovatie.jpg",
+  "rol": "hero",
+  "alt": "Gerenoveerd appartementengebouw in Naarden met balkons en een lichte gevelbekleding",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/na1.jpg",
+  "bronmaat": "4032x3024"
+ },
+ "sfh-project-voortgang-villa-noordwijkerhout": {
+  "bron": "/assets_bron/sfh/sfh-project-voortgang-villa-noordwijkerhout.jpg",
+  "rol": "hero",
+  "alt": "Villa in aanbouw in Noordwijkerhout met ver uitkragende betonvloeren",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/n3.jpg",
+  "bronmaat": "2048x1536"
+ },
+ "sfh-project-voortgang-villa-noordwijkerhout-02": {
+  "bron": "/assets_bron/sfh/sfh-project-voortgang-villa-noordwijkerhout-02.jpg",
+  "rol": "inhoud",
+  "alt": "Villa in aanbouw in Noordwijkerhout met ver uitkragende betonvloeren — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/n4.jpg",
+  "bronmaat": "2048x1536"
+ },
+ "sfh-project-voortgang-villa-noordwijkerhout-03": {
+  "bron": "/assets_bron/sfh/sfh-project-voortgang-villa-noordwijkerhout-03.jpg",
+  "rol": "inhoud",
+  "alt": "Villa in aanbouw in Noordwijkerhout met ver uitkragende betonvloeren — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/n2.jpg",
+  "bronmaat": "2016x1512"
+ },
+ "sfh-project-voortgang-villa-noordwijkerhout-04": {
+  "bron": "/assets_bron/sfh/sfh-project-voortgang-villa-noordwijkerhout-04.jpg",
+  "rol": "inhoud",
+  "alt": "Villa in aanbouw in Noordwijkerhout met ver uitkragende betonvloeren — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/nw-1.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-woningen-lochem": {
+  "bron": "/assets_bron/sfh/sfh-project-woningen-lochem.jpg",
+  "rol": "hero",
+  "alt": "Staalframes van woningen in Lochem naast elkaar op de bouwplaats",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2017/09/IMG-20170912-WA0001.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-woningen-lochem-02": {
+  "bron": "/assets_bron/sfh/sfh-project-woningen-lochem-02.jpg",
+  "rol": "inhoud",
+  "alt": "Staalframes van woningen in Lochem naast elkaar op de bouwplaats — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2017/09/IMG-20170912-WA0003.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-woningen-lochem-03": {
+  "bron": "/assets_bron/sfh/sfh-project-woningen-lochem-03.jpg",
+  "rol": "inhoud",
+  "alt": "Staalframes van woningen in Lochem naast elkaar op de bouwplaats — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2017/09/IMG-20170912-WA0004.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-woningen-lochem-04": {
+  "bron": "/assets_bron/sfh/sfh-project-woningen-lochem-04.jpg",
+  "rol": "inhoud",
+  "alt": "Staalframes van woningen in Lochem naast elkaar op de bouwplaats — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2017/09/IMG-20170912-WA0006.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-veerhuis-building": {
+  "bron": "/assets_bron/sfh/sfh-project-veerhuis-building.jpg",
+  "rol": "hero",
+  "alt": "Woonhuis in Wervershoof met een lichte gevel en een topgevel met hoge ramen",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_1160.jpg",
+  "bronmaat": "1500x1000"
+ },
+ "sfh-project-veerhuis-building-02": {
+  "bron": "/assets_bron/sfh/sfh-project-veerhuis-building-02.jpg",
+  "rol": "inhoud",
+  "alt": "Woonhuis in Wervershoof met een lichte gevel en een topgevel met hoge ramen — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/DSC08052.jpg",
+  "bronmaat": "1200x803"
+ },
+ "sfh-project-veerhuis-building-03": {
+  "bron": "/assets_bron/sfh/sfh-project-veerhuis-building-03.jpg",
+  "rol": "inhoud",
+  "alt": "Woonhuis in Wervershoof met een lichte gevel en een topgevel met hoge ramen — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/DSC08053.jpg",
+  "bronmaat": "1200x803"
+ },
+ "sfh-project-veerhuis-building-04": {
+  "bron": "/assets_bron/sfh/sfh-project-veerhuis-building-04.jpg",
+  "rol": "inhoud",
+  "alt": "Woonhuis in Wervershoof met een lichte gevel en een topgevel met hoge ramen — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/DSC08063.jpg",
+  "bronmaat": "1200x803"
+ },
+ "sfh-project-natuurvillapark-waalerburght-texel": {
+  "bron": "/assets_bron/sfh/sfh-project-natuurvillapark-waalerburght-texel.jpg",
+  "rol": "hero",
+  "alt": "Villapark op Texel vanuit de lucht, met vrijstaande woningen rond een waterpartij",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/10/vdh-3.jpg",
+  "bronmaat": "1587x936"
+ },
+ "sfh-project-dirkshoeve-vakantiebungalows-fase-2": {
+  "bron": "/assets_bron/sfh/sfh-project-dirkshoeve-vakantiebungalows-fase-2.jpg",
+  "rol": "hero",
+  "alt": "Vakantiebungalow in Dirkshorn met een zadeldak en donkere gevelbekleding",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/01/drkh-2.6.jpg",
+  "bronmaat": "4032x3024"
+ },
+ "sfh-project-dirkshoeve-vakantiebungalows-fase-2-02": {
+  "bron": "/assets_bron/sfh/sfh-project-dirkshoeve-vakantiebungalows-fase-2-02.jpeg",
+  "rol": "inhoud",
+  "alt": "Vakantiebungalow in Dirkshorn met een zadeldak en donkere gevelbekleding — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/01/image00001.jpeg",
+  "bronmaat": "4032x3024"
+ },
+ "sfh-project-dirkshoeve-vakantiebungalows-fase-2-03": {
+  "bron": "/assets_bron/sfh/sfh-project-dirkshoeve-vakantiebungalows-fase-2-03.jpeg",
+  "rol": "inhoud",
+  "alt": "Vakantiebungalow in Dirkshorn met een zadeldak en donkere gevelbekleding — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/01/image00002.jpeg",
+  "bronmaat": "4032x3024"
+ },
+ "sfh-project-dirkshoeve-vakantiebungalows-fase-2-04": {
+  "bron": "/assets_bron/sfh/sfh-project-dirkshoeve-vakantiebungalows-fase-2-04.jpeg",
+  "rol": "inhoud",
+  "alt": "Vakantiebungalow in Dirkshorn met een zadeldak en donkere gevelbekleding — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/01/image00003.jpeg",
+  "bronmaat": "4032x3024"
+ },
+ "sfh-project-dirkshoeve-vakantiebungalows-fase-1": {
+  "bron": "/assets_bron/sfh/sfh-project-dirkshoeve-vakantiebungalows-fase-1.jpg",
+  "rol": "hero",
+  "alt": "Rij vakantiebungalows in Dirkshorn met donkere gevelbekleding langs een pad",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/d1.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-dirkshoeve-vakantiebungalows-fase-1-02": {
+  "bron": "/assets_bron/sfh/sfh-project-dirkshoeve-vakantiebungalows-fase-1-02.jpg",
+  "rol": "inhoud",
+  "alt": "Rij vakantiebungalows in Dirkshorn met donkere gevelbekleding langs een pad — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/d2.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-villa-te-zoetermeer": {
+  "bron": "/assets_bron/sfh/sfh-project-villa-te-zoetermeer.jpg",
+  "rol": "hero",
+  "alt": "Villa in Zoetermeer in aanbouw: staalframe met EPS-wandelementen",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2017/09/IMG_1148.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-villa-te-zoetermeer-02": {
+  "bron": "/assets_bron/sfh/sfh-project-villa-te-zoetermeer-02.jpg",
+  "rol": "inhoud",
+  "alt": "Villa in Zoetermeer in aanbouw — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2017/09/IMG_1130.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-villa-te-zoetermeer-03": {
+  "bron": "/assets_bron/sfh/sfh-project-villa-te-zoetermeer-03.jpg",
+  "rol": "inhoud",
+  "alt": "Villa in Zoetermeer in aanbouw — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2017/10/IMG-20171004-WA0003.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-villa-te-zoetermeer-04": {
+  "bron": "/assets_bron/sfh/sfh-project-villa-te-zoetermeer-04.jpg",
+  "rol": "inhoud",
+  "alt": "Villa in Zoetermeer in aanbouw — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2017/10/IMG-20171004-WA0004.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-villa-te-schagerbrug": {
+  "bron": "/assets_bron/sfh/sfh-project-villa-te-schagerbrug.jpg",
+  "rol": "hero",
+  "alt": "Villa in Schagerbrug in aanbouw, met een houten kapconstructie op het staalframe",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2017/09/2017-04-04-PHOTO-00000940.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-villa-te-schagerbrug-02": {
+  "bron": "/assets_bron/sfh/sfh-project-villa-te-schagerbrug-02.jpg",
+  "rol": "inhoud",
+  "alt": "Villa in Schagerbrug in aanbouw — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2017/09/2017-04-04-PHOTO-00000941.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-villa-te-schagerbrug-03": {
+  "bron": "/assets_bron/sfh/sfh-project-villa-te-schagerbrug-03.jpg",
+  "rol": "inhoud",
+  "alt": "Villa in Schagerbrug in aanbouw — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2017/09/IMG-20170912-WA0032.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-woonhuis": {
+  "bron": "/assets_bron/sfh/sfh-project-woonhuis.jpg",
+  "rol": "hero",
+  "alt": "Woonhuis in Voorthuizen in aanbouw: staalframe met EPS-wanden",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/20131002_163336.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-project-woonhuis-02": {
+  "bron": "/assets_bron/sfh/sfh-project-woonhuis-02.jpg",
+  "rol": "inhoud",
+  "alt": "Woonhuis in Voorthuizen in aanbouw — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/20131002_163356.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-project-woonhuis-03": {
+  "bron": "/assets_bron/sfh/sfh-project-woonhuis-03.jpg",
+  "rol": "inhoud",
+  "alt": "Woonhuis in Voorthuizen in aanbouw — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_0137.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-project-woonhuis-04": {
+  "bron": "/assets_bron/sfh/sfh-project-woonhuis-04.jpg",
+  "rol": "inhoud",
+  "alt": "Woonhuis in Voorthuizen in aanbouw — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_0180.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-project-woonhuis-uk": {
+  "bron": "/assets_bron/sfh/sfh-project-woonhuis-uk.jpg",
+  "rol": "hero",
+  "alt": "Staalframe van een woonhuis in het Verenigd Koninkrijk, met kapconstructie",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_2092.jpg",
+  "bronmaat": "1200x800"
+ },
+ "sfh-project-woonhuis-uk-02": {
+  "bron": "/assets_bron/sfh/sfh-project-woonhuis-uk-02.jpg",
+  "rol": "inhoud",
+  "alt": "Staalframe van een woonhuis in het Verenigd Koninkrijk — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_20971.jpg",
+  "bronmaat": "1200x800"
+ },
+ "sfh-project-woonhuis-uk-03": {
+  "bron": "/assets_bron/sfh/sfh-project-woonhuis-uk-03.jpg",
+  "rol": "inhoud",
+  "alt": "Staalframe van een woonhuis in het Verenigd Koninkrijk — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_2114.jpg",
+  "bronmaat": "1200x800"
+ },
+ "sfh-project-woonhuis-uk-04": {
+  "bron": "/assets_bron/sfh/sfh-project-woonhuis-uk-04.jpg",
+  "rol": "inhoud",
+  "alt": "Staalframe van een woonhuis in het Verenigd Koninkrijk — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_2117.jpg",
+  "bronmaat": "1200x798"
+ },
+ "sfh-project-hotel-de-grote-kerk-in-hoorn": {
+  "bron": "/assets_bron/sfh/sfh-project-hotel-de-grote-kerk-in-hoorn.jpg",
+  "rol": "hero",
+  "alt": "Interieur van de Grote Kerk in Hoorn, waarin een vrijstaande staalconstructie voor het hotel is opgebouwd",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/k1.jpg",
+  "bronmaat": "3024x4032"
+ },
+ "sfh-project-hotel-de-grote-kerk-in-hoorn-02": {
+  "bron": "/assets_bron/sfh/sfh-project-hotel-de-grote-kerk-in-hoorn-02.jpg",
+  "rol": "inhoud",
+  "alt": "Interieur van de Grote Kerk in Hoorn — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/k2.jpg",
+  "bronmaat": "3024x4032"
+ },
+ "sfh-project-hotel-de-grote-kerk-in-hoorn-03": {
+  "bron": "/assets_bron/sfh/sfh-project-hotel-de-grote-kerk-in-hoorn-03.jpg",
+  "rol": "inhoud",
+  "alt": "Interieur van de Grote Kerk in Hoorn — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/k4.jpg",
+  "bronmaat": "3024x4032"
+ },
+ "sfh-project-kantershof-optopper": {
+  "bron": "/assets_bron/sfh/sfh-project-kantershof-optopper.jpg",
+  "rol": "hero",
+  "alt": "Staalframe voor een extra verdieping, gemonteerd op het bestaande dak in Amsterdam",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/ka2.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-kantershof-optopper-02": {
+  "bron": "/assets_bron/sfh/sfh-project-kantershof-optopper-02.jpg",
+  "rol": "inhoud",
+  "alt": "Staalframe voor een extra verdieping — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/ka1.jpg",
+  "bronmaat": "1600x1200"
+ },
+ "sfh-project-kantershof-optopper-03": {
+  "bron": "/assets_bron/sfh/sfh-project-kantershof-optopper-03.jpg",
+  "rol": "inhoud",
+  "alt": "Staalframe voor een extra verdieping — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/ka3.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-kantershof-optopper-04": {
+  "bron": "/assets_bron/sfh/sfh-project-kantershof-optopper-04.jpg",
+  "rol": "inhoud",
+  "alt": "Staalframe voor een extra verdieping — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/ka4.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-thema-dreven-portiek-flats-utrecht": {
+  "bron": "/assets_bron/sfh/sfh-project-thema-dreven-portiek-flats-utrecht.jpg",
+  "rol": "hero",
+  "alt": "Vernieuwde entree en gevel van een portiekflat in Utrecht",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/04/thema-6.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-thema-dreven-portiek-flats-utrecht-02": {
+  "bron": "/assets_bron/sfh/sfh-project-thema-dreven-portiek-flats-utrecht-02.jpg",
+  "rol": "inhoud",
+  "alt": "Vernieuwde entree en gevel van een portiekflat in Utrecht — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/04/thema-1.jpg",
+  "bronmaat": "768x1024"
+ },
+ "sfh-project-thema-dreven-portiek-flats-utrecht-03": {
+  "bron": "/assets_bron/sfh/sfh-project-thema-dreven-portiek-flats-utrecht-03.jpg",
+  "rol": "inhoud",
+  "alt": "Vernieuwde entree en gevel van een portiekflat in Utrecht — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/04/thema-2.jpg",
+  "bronmaat": "768x1024"
+ },
+ "sfh-project-apparterra": {
+  "bron": "/assets_bron/sfh/sfh-project-apparterra.jpg",
+  "rol": "hero",
+  "alt": "Prefab gevelelement met raam hangt aan de kraan boven de bouwplaats in Heemskerk",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/09/20150702_110326.jpg",
+  "bronmaat": "3264x1836"
+ },
+ "sfh-project-apparterra-02": {
+  "bron": "/assets_bron/sfh/sfh-project-apparterra-02.jpg",
+  "rol": "inhoud",
+  "alt": "Prefab gevelelement met raam hangt aan de kraan boven de bouwplaats in Heemskerk — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/09/2015-07-02-11.00.17.jpg",
+  "bronmaat": "3264x2448"
+ },
+ "sfh-project-apparterra-03": {
+  "bron": "/assets_bron/sfh/sfh-project-apparterra-03.jpg",
+  "rol": "inhoud",
+  "alt": "Prefab gevelelement met raam hangt aan de kraan boven de bouwplaats in Heemskerk — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/09/2015-07-02-10.19.09.jpg",
+  "bronmaat": "3264x2448"
+ },
+ "sfh-project-apparterra-04": {
+  "bron": "/assets_bron/sfh/sfh-project-apparterra-04.jpg",
+  "rol": "inhoud",
+  "alt": "Prefab gevelelement met raam hangt aan de kraan boven de bouwplaats in Heemskerk — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/09/2015-07-02-10.16.47.jpg",
+  "bronmaat": "3264x2448"
+ },
+ "sfh-project-abc-cluster": {
+  "bron": "/assets_bron/sfh/sfh-project-abc-cluster.jpg",
+  "rol": "hero",
+  "alt": "Bovenvolume met steenstripgevel, geplaatst op de bestaande constructie in Amersfoort",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/09/a248aae23c8a2ee8f7050d7ec60bed9a.jpg",
+  "bronmaat": "1280x720"
+ },
+ "sfh-project-abc-cluster-02": {
+  "bron": "/assets_bron/sfh/sfh-project-abc-cluster-02.jpg",
+  "rol": "inhoud",
+  "alt": "Bovenvolume met steenstripgevel — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/09/ac5e83b35684aa41d4191c86b18835e6.jpg",
+  "bronmaat": "1280x720"
+ },
+ "sfh-project-abc-cluster-03": {
+  "bron": "/assets_bron/sfh/sfh-project-abc-cluster-03.jpg",
+  "rol": "inhoud",
+  "alt": "Bovenvolume met steenstripgevel — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/09/11071630b1d4ab2a3db39995f947c3ee.jpg",
+  "bronmaat": "1280x720"
+ },
+ "sfh-project-gevel-renovatie": {
+  "bron": "/assets_bron/sfh/sfh-project-gevel-renovatie.jpg",
+  "rol": "hero",
+  "alt": "Gerenoveerde gevel in Amsterdam met een licht gepleisterde afwerking",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/03/foto-61.jpg",
+  "bronmaat": "640x478"
+ },
+ "sfh-project-gevel-renovatie-02": {
+  "bron": "/assets_bron/sfh/sfh-project-gevel-renovatie-02.jpg",
+  "rol": "inhoud",
+  "alt": "Gerenoveerde gevel in Amsterdam met een licht gepleisterde afwerking — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/03/foto-5.jpg",
+  "bronmaat": "640x478"
+ },
+ "sfh-project-gevel-renovatie-03": {
+  "bron": "/assets_bron/sfh/sfh-project-gevel-renovatie-03.jpg",
+  "rol": "inhoud",
+  "alt": "Gerenoveerde gevel in Amsterdam met een licht gepleisterde afwerking — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2015/03/foto-4.jpg",
+  "bronmaat": "640x478"
+ },
+ "sfh-project-aanbouw-schuur-texel": {
+  "bron": "/assets_bron/sfh/sfh-project-aanbouw-schuur-texel.jpg",
+  "rol": "hero",
+  "alt": "Nieuwe vloerplaat voor de aanbouw bij een schuur op Texel",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/10/st1.jpg",
+  "bronmaat": "1024x497"
+ },
+ "sfh-project-aanbouw-schuur-texel-02": {
+  "bron": "/assets_bron/sfh/sfh-project-aanbouw-schuur-texel-02.jpg",
+  "rol": "inhoud",
+  "alt": "Nieuwe vloerplaat voor de aanbouw bij een schuur op Texel — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/10/st2.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-aanbouw-schuur-texel-03": {
+  "bron": "/assets_bron/sfh/sfh-project-aanbouw-schuur-texel-03.jpg",
+  "rol": "inhoud",
+  "alt": "Nieuwe vloerplaat voor de aanbouw bij een schuur op Texel — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/10/st3.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-aanbouw-schuur-texel-04": {
+  "bron": "/assets_bron/sfh/sfh-project-aanbouw-schuur-texel-04.jpg",
+  "rol": "inhoud",
+  "alt": "Nieuwe vloerplaat voor de aanbouw bij een schuur op Texel — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/10/st4.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-vakantiehuisjes-panoven": {
+  "bron": "/assets_bron/sfh/sfh-project-vakantiehuisjes-panoven.jpg",
+  "rol": "hero",
+  "alt": "Vakantiehuisje in Zevenaar met EPS-wanden en rondbogen boven de raamopeningen",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/DSC_0077.jpg",
+  "bronmaat": "1200x797"
+ },
+ "sfh-project-vakantiehuisjes-panoven-02": {
+  "bron": "/assets_bron/sfh/sfh-project-vakantiehuisjes-panoven-02.jpg",
+  "rol": "inhoud",
+  "alt": "Vakantiehuisje in Zevenaar met EPS-wanden en rondbogen boven de raamopeningen — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/DSC_0080.jpg",
+  "bronmaat": "1200x797"
+ },
+ "sfh-project-vakantiehuisjes-panoven-03": {
+  "bron": "/assets_bron/sfh/sfh-project-vakantiehuisjes-panoven-03.jpg",
+  "rol": "inhoud",
+  "alt": "Vakantiehuisje in Zevenaar met EPS-wanden en rondbogen boven de raamopeningen — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/DSC_0082.jpg",
+  "bronmaat": "1200x797"
+ },
+ "sfh-project-vakantiehuisjes-panoven-04": {
+  "bron": "/assets_bron/sfh/sfh-project-vakantiehuisjes-panoven-04.jpg",
+  "rol": "inhoud",
+  "alt": "Vakantiehuisje in Zevenaar met EPS-wanden en rondbogen boven de raamopeningen — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/DSC_0083.jpg",
+  "bronmaat": "1200x797"
+ },
+ "sfh-project-voortgang-ibiza-woonhuis": {
+  "bron": "/assets_bron/sfh/sfh-project-voortgang-ibiza-woonhuis.jpg",
+  "rol": "hero",
+  "alt": "Woonhuis in aanbouw op Ibiza, met staalframe en EPS-wanden op een hellend terrein",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/i1.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-voortgang-ibiza-woonhuis-02": {
+  "bron": "/assets_bron/sfh/sfh-project-voortgang-ibiza-woonhuis-02.jpg",
+  "rol": "inhoud",
+  "alt": "Woonhuis in aanbouw op Ibiza — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/i2.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-voortgang-ibiza-woonhuis-03": {
+  "bron": "/assets_bron/sfh/sfh-project-voortgang-ibiza-woonhuis-03.jpg",
+  "rol": "inhoud",
+  "alt": "Woonhuis in aanbouw op Ibiza — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/i3.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-voortgang-ibiza-woonhuis-04": {
+  "bron": "/assets_bron/sfh/sfh-project-voortgang-ibiza-woonhuis-04.jpg",
+  "rol": "inhoud",
+  "alt": "Woonhuis in aanbouw op Ibiza — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/i4.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-voortgang-woning-azoren-pico": {
+  "bron": "/assets_bron/sfh/sfh-project-voortgang-woning-azoren-pico.jpg",
+  "rol": "hero",
+  "alt": "Woning in aanbouw op Pico, Azoren, met staalframe en EPS-wandelementen",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/07/p7.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-voortgang-woning-azoren-pico-02": {
+  "bron": "/assets_bron/sfh/sfh-project-voortgang-woning-azoren-pico-02.jpg",
+  "rol": "inhoud",
+  "alt": "Woning in aanbouw op Pico — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/07/p8.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-voortgang-woning-azoren-pico-03": {
+  "bron": "/assets_bron/sfh/sfh-project-voortgang-woning-azoren-pico-03.jpg",
+  "rol": "inhoud",
+  "alt": "Woning in aanbouw op Pico — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/07/p9.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-voortgang-woning-azoren-pico-04": {
+  "bron": "/assets_bron/sfh/sfh-project-voortgang-woning-azoren-pico-04.jpg",
+  "rol": "inhoud",
+  "alt": "Woning in aanbouw op Pico — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2023/07/p10.jpg",
+  "bronmaat": "1024x768"
+ },
+ "sfh-project-houses-in-bonaire": {
+  "bron": "/assets_bron/sfh/sfh-project-houses-in-bonaire.jpg",
+  "rol": "hero",
+  "alt": "Rij gelijkvormige woningen van één laag op Bonaire, met een licht hellend dak",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_9537_edited-2.jpg",
+  "bronmaat": "1024x558"
+ },
+ "sfh-project-houses-in-bonaire-02": {
+  "bron": "/assets_bron/sfh/sfh-project-houses-in-bonaire-02.jpg",
+  "rol": "inhoud",
+  "alt": "Rij gelijkvormige woningen van één laag op Bonaire — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_1165_edited-1.jpg",
+  "bronmaat": "1024x682"
+ },
+ "sfh-project-houses-in-bonaire-03": {
+  "bron": "/assets_bron/sfh/sfh-project-houses-in-bonaire-03.jpg",
+  "rol": "inhoud",
+  "alt": "Rij gelijkvormige woningen van één laag op Bonaire — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_1158_edited-1.jpg",
+  "bronmaat": "1024x682"
+ },
+ "sfh-project-houses-in-bonaire-04": {
+  "bron": "/assets_bron/sfh/sfh-project-houses-in-bonaire-04.jpg",
+  "rol": "inhoud",
+  "alt": "Rij gelijkvormige woningen van één laag op Bonaire — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_9540_edited-1.jpg",
+  "bronmaat": "1024x682"
+ },
+ "sfh-project-bonaire-off-grid-woning": {
+  "bron": "/assets_bron/sfh/sfh-project-bonaire-off-grid-woning.jpg",
+  "rol": "hero",
+  "alt": "Off-grid woning op Bonaire: één laag met een plat dak, op een onbebouwde kavel",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/301583139_5305284259524594_4577471520318665033_n.jpg",
+  "bronmaat": "960x720"
+ },
+ "sfh-project-bonaire-off-grid-woning-02": {
+  "bron": "/assets_bron/sfh/sfh-project-bonaire-off-grid-woning-02.jpg",
+  "rol": "inhoud",
+  "alt": "Off-grid woning op Bonaire — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/305924815_5346234458762907_2400952349248486189_n.jpg",
+  "bronmaat": "960x720"
+ },
+ "sfh-project-bonaire-off-grid-woning-03": {
+  "bron": "/assets_bron/sfh/sfh-project-bonaire-off-grid-woning-03.jpg",
+  "rol": "inhoud",
+  "alt": "Off-grid woning op Bonaire — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2022/09/305937165_5346241535428866_150222632781617190_n.jpg",
+  "bronmaat": "960x540"
+ },
+ "sfh-project-steel-framing-holland-irak": {
+  "bron": "/assets_bron/sfh/sfh-project-steel-framing-holland-irak.jpg",
+  "rol": "hero",
+  "alt": "Monteurs zetten in Irak een staalframe met EPS-wanden in elkaar",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMGP6342.jpg",
+  "bronmaat": "3872x2592"
+ },
+ "sfh-project-steel-framing-holland-irak-02": {
+  "bron": "/assets_bron/sfh/sfh-project-steel-framing-holland-irak-02.jpg",
+  "rol": "inhoud",
+  "alt": "Monteurs zetten in Irak een staalframe met EPS-wanden in elkaar — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMGP6453.jpg",
+  "bronmaat": "3872x2592"
+ },
+ "sfh-project-steel-framing-holland-irak-03": {
+  "bron": "/assets_bron/sfh/sfh-project-steel-framing-holland-irak-03.jpg",
+  "rol": "inhoud",
+  "alt": "Monteurs zetten in Irak een staalframe met EPS-wanden in elkaar — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMGP6334.jpg",
+  "bronmaat": "3872x2592"
+ },
+ "sfh-project-steel-framing-holland-irak-04": {
+  "bron": "/assets_bron/sfh/sfh-project-steel-framing-holland-irak-04.jpg",
+  "rol": "inhoud",
+  "alt": "Monteurs zetten in Irak een staalframe met EPS-wanden in elkaar — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMGP6451.jpg",
+  "bronmaat": "3872x2592"
+ },
+ "sfh-project-school-in-haiti": {
+  "bron": "/assets_bron/sfh/sfh-project-school-in-haiti.jpg",
+  "rol": "hero",
+  "alt": "Langgerekt schoolgebouw van één laag in Haïti, met een doorgaand dakvlak op een staalframe",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/foto.jpg",
+  "bronmaat": "1280x960"
+ },
+ "sfh-project-school-in-haiti-02": {
+  "bron": "/assets_bron/sfh/sfh-project-school-in-haiti-02.jpg",
+  "rol": "inhoud",
+  "alt": "Langgerekt schoolgebouw van één laag in Haïti — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/Nieuwe-afbeelding.jpg",
+  "bronmaat": "1280x960"
+ },
+ "sfh-project-school-in-haiti-03": {
+  "bron": "/assets_bron/sfh/sfh-project-school-in-haiti-03.jpg",
+  "rol": "inhoud",
+  "alt": "Langgerekt schoolgebouw van één laag in Haïti — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/2012-02-16-17-32-39.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-project-school-in-haiti-04": {
+  "bron": "/assets_bron/sfh/sfh-project-school-in-haiti-04.jpg",
+  "rol": "inhoud",
+  "alt": "Langgerekt schoolgebouw van één laag in Haïti — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/foto11.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-project-verblijf-voor-ziekenhuispersoneel": {
+  "bron": "/assets_bron/sfh/sfh-project-verblijf-voor-ziekenhuispersoneel.jpg",
+  "rol": "hero",
+  "alt": "Verblijf voor ziekenhuispersoneel in Haïti: staalframe op een betonnen onderbouw",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/DSC_0279.jpg",
+  "bronmaat": "1200x797"
+ },
+ "sfh-project-verblijf-voor-ziekenhuispersoneel-02": {
+  "bron": "/assets_bron/sfh/sfh-project-verblijf-voor-ziekenhuispersoneel-02.jpg",
+  "rol": "inhoud",
+  "alt": "Verblijf voor ziekenhuispersoneel in Haïti — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_0033.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-project-verblijf-voor-ziekenhuispersoneel-03": {
+  "bron": "/assets_bron/sfh/sfh-project-verblijf-voor-ziekenhuispersoneel-03.jpg",
+  "rol": "inhoud",
+  "alt": "Verblijf voor ziekenhuispersoneel in Haïti — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_0038.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-project-verblijf-voor-ziekenhuispersoneel-04": {
+  "bron": "/assets_bron/sfh/sfh-project-verblijf-voor-ziekenhuispersoneel-04.jpg",
+  "rol": "inhoud",
+  "alt": "Verblijf voor ziekenhuispersoneel in Haïti — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/IMG_0043.jpg",
+  "bronmaat": "1200x900"
+ },
+ "sfh-project-cite-soleil": {
+  "bron": "/assets_bron/sfh/sfh-project-cite-soleil.jpg",
+  "rol": "hero",
+  "alt": "Gebouw van één laag met een overdekte veranda in Cité Soleil, Haïti",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/haiti087.jpg",
+  "bronmaat": "640x480"
+ },
+ "sfh-project-cite-soleil-02": {
+  "bron": "/assets_bron/sfh/sfh-project-cite-soleil-02.jpg",
+  "rol": "inhoud",
+  "alt": "Gebouw van één laag met een overdekte veranda in Cité Soleil — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/haiti109.jpg",
+  "bronmaat": "640x480"
+ },
+ "sfh-project-cite-soleil-03": {
+  "bron": "/assets_bron/sfh/sfh-project-cite-soleil-03.jpg",
+  "rol": "inhoud",
+  "alt": "Gebouw van één laag met een overdekte veranda in Cité Soleil — bouwfase",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/haitipjmay1.jpg",
+  "bronmaat": "505x335"
+ },
+ "sfh-werkfoto": {
+  "bron": "/assets_bron/sfh/sfh-hero.jpg",
+  "rol": "hero",
+  "alt": "Twee monteurs op een steiger brengen beplating aan op een staalframe",
+  "herkomst": "https://www.steelframingholland.nl/wp-content/uploads/2014/12/steelframing_slide1.jpg",
+  "bronmaat": "1900x873",
+  "noot": "Niet meer op een pagina in gebruik: de herofoto is vervangen door het eerste beeldje van de film. Dit beeld is de bron van assets/social/sfh-deelafbeelding.png en blijft daarvoor staan."
+ }
+}

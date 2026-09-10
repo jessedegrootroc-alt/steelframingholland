@@ -1,0 +1,25 @@
+/* ============================================================================
+   service.css: gedeeld door veilig-gedrag, ehs-rie en safety-checks
+   De drie pagina's hebben hetzelfde sectieskelet (zie SECTIONS.md); alleen de
+   inhoud verschilt. Wat hier staat geldt dus voor alle drie.
+   ========================================================================== */
+
+/* De fotohero met witte tekst eroverheen stond hier. De dienstpagina's dragen
+   sinds 2 september 2026 dezelfde gesplitste hero als contact en over-ons
+   (.paginahero in styleguide.css): kop op grijs links, foto rechts. De regels
+   voor .service-hero staan nog wel in cases.css en cursus.css, want de case- en
+   cursuspagina's gebruiken die hero nog. */
+
+.hero--actions { margin-top: var(--space-700); display: flex; flex-wrap: wrap; gap: var(--space-300); }
+
+/* ---- 06 Projecten -------------------------------------------------------
+   Dezelfde caserijen als op de homepage: tekst links, beeld rechts, onder
+   991px het beeld erboven (§6.9). */
+.projectkaart__klant {
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+  margin: 0;
+}
+
+/* De trap en de voordeel-panelen staan in styleguide.css: ze worden ook
+   gebruikt op pagina's die deze stylesheet niet laden. */

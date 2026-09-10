@@ -1,0 +1,155 @@
+/* ============================================================================
+   index.css: alleen wat op de homepage staat
+   Het systeem zelf staat in styleguide.css.
+   ========================================================================== */
+
+/* ---- Hero (§6.7) --------------------------------------------------------
+   Beeld over de volle breedte met de inhoud linksonder, zoals in de gids.
+   Onderop een foto, daarover een film die pas in beeld komt als hij speelt. De
+   foto is het eerste beeldje van die film, dus de wissel is geen sprong. */
+.hero--beeld { position: absolute; inset: 0; overflow: hidden; }
+.hero--beeld img,
+.hero--video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* De film staat op nul en vervaagt erin zodra hij loopt. Weigert de browser het
+   automatisch afspelen, dan blijft dit op nul staan en zie je de foto; dat is
+   het eerste beeldje van dezelfde film, dus je mist niets. */
+.hero--video { opacity: 0; transition: opacity var(--duration-image) var(--ease-standard); }
+.hero--video.is-zichtbaar { opacity: 1; }
+
+/* Geen kleur meer over de film: de groene gradient is eruit, de film houdt zijn
+   eigen kleuren. Wat blijft is een donkere aanloop naar onderen. Dat is geen
+   filter maar het temmen van het beeld waar de tekst staat, en zonder is het
+   onbruikbaar: er zit een fel verlichte loods in de film en op die beeldjes
+   staat de kop op 1,00:1. Wit op wit, de kop is dan letterlijk weg.
+
+   Gemeten over 30 beeldjes verdeeld over de hele film, op de lichtste vijf
+   procent van elk tekstvak: kop 4,37:1, introtekst 5,83:1, knoppen 7,32:1,
+   tegen een eis van 3:1 en 4,5:1. 30% is de lichtste stand waarop dat lukt.
+
+   Wil je ook deze laag weg, dan is het één regel; zie CONTENT-TODO.md voor wat
+   dat kost. */
+.hero--sluier {
+  position: absolute; inset: 0;
+  /* Eén vlakke laag van 25%, en dat is met opzet zo licht.
+
+     Hier stond een gradient van drie stops: 68% boven, 36% in het midden, 70%
+     onder. Die was donker genoeg voor elke film, maar hij drukte de film ook
+     plat: boven in de hero zag je door 68% zwart bijna niets meer van het
+     beeld, en dat is precies waar deze film zijn mooiste momenten heeft.
+
+     Op verzoek terug naar 25%. Dat kon alleen door de film zelf verder terug te
+     brengen in helderheid, want met de film zoals hij was zakten de navigatie
+     en het label naar 4,29 en 4,13:1 tegen een eis van 4,5. De film staat nu op
+     `colorlevels omax=0.52` in plaats van 0.58; zie assets/video/HERKOMST.md.
+
+     Die ruil is de goede kant op. Een sluier haalt contrast wég uit het beeld:
+     alles gaat naar zwart toe en de lucht gaat banden vertonen. Een gradatie
+     houdt het contrast binnen het beeld intact en maakt het alleen donkerder.
+     Netto is de achtergrond achter de kop nu zelfs iets lichter dan met de oude
+     sluier (luminantie 0,165 tegen 0,147), terwijl de film boven in de hero
+     ruim twee keer zo goed zichtbaar is.
+
+     Gemeten over dertig beeldjes, op het 98e percentiel per tekstvlak, op
+     1440x900 en op 375x812:
+       navigatie (14px, eis 4,5)  5,3:1
+       label     (11px, eis 4,5)  5,1:1
+       titel     (72px, eis 3,0)  5,2:1
+       intro     (16px, eis 4,5)  5,9:1
+       knop      (11px, eis 4,5)  5,7:1
+
+     Zelf nameten na een wijziging hier of aan de film:
+
+       python3 _generator/meet_hero_contrast.py
+
+     Dat script leest deze stops uit dit bestand, dus het kan niet meer op
+     andere waarden meten dan er staan. Dat is één keer misgegaan. */
+  background: linear-gradient(rgba(0, 0, 0, .25) 0%,
+                              rgba(0, 0, 0, .25) 100%);
+}
+/* De hero vult het scherm. min-height en niet height, zodat hij meegroeit als de
+   tekst niet past; op een kleine telefoon in liggende stand is 100vh nog geen
+   400px en dan moet de inhoud eruit kunnen lopen in plaats van afgesneden te
+   worden.
+
+   svh en niet vh: op een telefoon rekent vh met de balken van de browser
+   weggeklapt, en dan steekt de hero er bij het openen onderuit. De vh-regel
+   staat er als terugval voor browsers die svh niet kennen. */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  background-color: var(--color-groen);
+  display: flex;
+}
+
+.hero--container {
+  position: relative; width: 100%; max-width: var(--container-max); margin-inline: auto;
+  display: flex; align-items: flex-end;
+  padding: 160px var(--inset-x) var(--space-650);
+}
+@media (max-width: 576px) { .hero--container { padding: 120px var(--inset-x) var(--space-650); } }
+
+.hero--content { width: 100%; max-width: 900px; }
+.hero--title { margin: var(--space-500) 0; color: var(--color-white); font-size: clamp(24px, 6vw, 72px); }
+@media (max-width: 576px) { .hero--title { font-size: 36px; } }
+.hero--intro { color: var(--color-white); max-width: var(--content-max-half); }
+.hero--intro p + p { margin-top: 1.6em; }
+.hero--actions { margin-top: var(--space-700); display: flex; flex-wrap: wrap; gap: var(--space-300); }
+
+/* ---- De hero op een laag venster ----------------------------------------
+   De twee knoppen zijn de reden dat deze sectie er staat, dus die moeten in
+   beeld staan zonder scrollen. Dat was niet zo: gemeten vielen ze 125 px onder
+   de vouw op 1440x640, 222 px op een iPhone SE en 314 px op een liggende
+   telefoon. De hero is `min-height: 100svh`, maar hij groeit door zodra de
+   inhoud niet past, en dan schuiven de knoppen eruit.
+
+   De inleiding is daarom ingekort van 58 naar 22 woorden (zie inhoud_copy.py),
+   en hieronder gaat op een laag venster de lucht eraf. De bovenruimte van
+   160 px is er om de vaste balk vrij te houden; die is 116 px op desktop,
+   109 px op een liggende telefoon en 77 px onder 576 px breed. Wat daarboven
+   zit is lucht, en die gaat als eerste weg.
+
+   De kop krijgt ook een grens in vh: bij min(6vw, ...) is 6vw op een breed maar
+   laag venster nog steeds 86 px, en dan vult de kop alleen al de halve hoogte.
+   Boven 800 px hoog verandert er niets, want daar haalt de vh-grens de 72 px
+   uit de clamp niet. */
+@media (max-height: 800px) {
+  .hero--container { padding-top: 132px; padding-bottom: var(--space-500); }
+  .hero--title { margin: var(--space-400) 0; font-size: clamp(24px, min(6vw, 9vh), 72px); }
+  .hero--actions { margin-top: var(--space-500); }
+}
+@media (max-height: 520px) {
+  .hero--container { padding-top: 120px; padding-bottom: var(--space-400); }
+  .hero--title { margin: var(--space-300) 0; font-size: clamp(22px, min(5.5vw, 8.5vh), 72px); }
+  .hero--intro { font-size: 0.9375rem; }
+  .hero--actions { margin-top: var(--space-400); }
+}
+/* Onder 576 px breed staat de balk op 77 px, dus daar kan de bovenruimte
+   verder omlaag dan de 120 px hierboven. */
+@media (max-width: 576px) and (max-height: 800px) {
+  .hero--container { padding-top: 100px; }
+}
+
+/* ---- USP's --------------------------------------------------------------- */
+.usp__getal { font-family: var(--font-light); font-weight: var(--weight-light);
+              font-size: clamp(3rem, 2rem + 4vw, 5rem); line-height: 1; margin: 0; }
+.usp__label { font-family: var(--font-medium); font-weight: var(--weight-medium);
+              font-size: 0.6875rem; letter-spacing: var(--tracking-label);
+              text-transform: uppercase; margin: 0; }
+
+/* ---- Projecten ---------------------------------------------------------- */
+.projectkaart__klant {
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+  margin: 0;
+}
+
+
+/* ---- 03 Tekst met uitlopend beeld --------------------------------------
+   De opzet uit §6.10: tekstkolom links, beeld rechts dat op desktop voorbij
+   de rand loopt. Onder 991px komt het beeld gewoon onder de tekst.
+   De kop hier is een h2 in plaats van de h3 uit de gids, want dit is de
+   eerste sectiekop van de pagina na de h1 in de hero. */
+.content-text-side-visual { background-color: var(--color-white); }
+/* De rest van dit component staat in styleguide.css; de cursuspagina's
+   gebruiken het ook. */

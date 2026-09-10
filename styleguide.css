@@ -1,0 +1,2459 @@
+/* ============================================================================
+   styleguide.css: het systeem uit STYLEGUIDE.md
+   ----------------------------------------------------------------------------
+   MADEGRO. Overgenomen uit de referentie-implementatie (Webjoy) met één
+   verschil: de lettertypen staan hier lokaal in assets/fonts/ in plaats van op
+   de Google Fonts CDN, zoals de projectbrief vraagt.
+   ----------------------------------------------------------------------------
+   Dit bestand bevat alleen wat op elke pagina geldt: de tokens (§2), de
+   body-defaults (§2.2), typografie (§3), de layout-utilities (§4.4) en de
+   componenten die op meerdere pagina's terugkomen (§6).
+
+   Alles wat maar bij één pagina hoort staat in index.css, kwalificatie.css of
+   tekstpagina.css.
+
+   Regel 6 van de gids: gebruik de custom properties, geen losse hex- of
+   px-waarden. Regel 5: geen waarden buiten de schaal.
+   ========================================================================== */
+
+/* ---- Inter Tight, lokaal gehost (brief §7) ----
+   Variabel gewicht 300–600 in één bestand per subset. latin-ext staat erbij
+   voor de accenten die in Nederlandse namen en leenwoorden voorkomen. */
+/* Er stond hier ook een @font-face voor de latin-ext subset, 90 kB. Geen enkel
+   teken op de site valt in dat bereik: het hoogste codepoint in alle twintig
+   pagina's is de euro (U+20AC) en die zit in latin. Door de unicode-range haalde
+   de browser hem al niet op, maar nu kan het ook niet meer per ongeluk.
+
+   Komt er ooit een naam met een teken erbuiten in de content, denk aan een
+   Poolse of Tsjechische opdrachtgever, dan valt dat teken terug op het
+   systeemlettertype. Het bestand staat nog in assets/fonts; deze regel terug
+   plakken is dan genoeg:
+
+     @font-face { font-family:'Inter Tight'; font-style:normal;
+       font-weight:300 600; font-display:swap;
+       src:url('assets/fonts/inter-tight-latin-ext.woff2') format('woff2');
+       unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+         U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+         U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+         U+A720-A7FF; }
+*/
+/* De merkfonts uit brand-style.md: Assistant voor de koppen, Karla
+   voor de lopende tekst. Beide staan lokaal in assets/fonts/, net als het
+   lettertype dat hier eerder stond: geen Google Fonts-CDN, dus geen verzoek van
+   de bezoeker naar een derde partij. Het zijn variabele snedes, dus één bestand
+   dekt het hele gewichtsbereik dat de merklaag vraagt (400-800 en 400-700).
+
+   De bronsite declareert deze twee families wel, maar laadt ze nergens; daar
+   valt alles terug op de systeem-sans. Hier worden ze dus voor het eerst echt
+   gebruikt. */
+@font-face {
+  font-family: 'Assistant';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('assets/fonts/assistant-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Karla';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('assets/fonts/karla-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Twee fallback-families met de metriek van de merkfonts.
+   ------------------------------------------------------------------
+   Met font-display: swap tekent de browser de tekst eerst in de
+   systeemletter en daarna opnieuw in Assistant of Karla. Die tweede tekening
+   heeft een andere regelbreedte en -hoogte, en Chrome ziet dat als een nieuw
+   grootste tekstblok: de Largest Contentful Paint werd daardoor niet op de
+   eerste tekening geregistreerd maar op de tweede. Gemeten scheelde dat 0,5
+   seconde LCP en drie punten in Lighthouse.
+
+   Deze twee families zijn dezelfde systeemletter, maar op maat gezet zodat een
+   regel exact even breed en even hoog wordt als in het merkfont. De wissel is
+   dan alleen een vormverschil en geen herschikking, dus de LCP blijft op de
+   eerste tekening staan en er komt geen layout shift bij.
+
+   De getallen komen uit de fontbestanden zelf, met fontTools gemeten over een
+   proefreeks van 72 tekens (letters, cijfers en interpunctie in Nederlandse
+   frequentie):
+
+                 gem. breedte   ascent   descent
+     Assistant       0,4574     1,0210    0,2870
+     Karla           0,5179     0,9170    0,2520
+     Arial           0,5411     0,9053    0,2119
+
+   size-adjust is de verhouding van de gemiddelde breedtes; de ascent- en
+   descent-overrides zijn die van het merkfont gedeeld door diezelfde
+   verhouding, want size-adjust schaalt de em mee.
+
+   Wordt een van de twee fonts ooit vervangen, dan moeten deze getallen opnieuw
+   berekend worden, anders komt de layout shift terug. */
+@font-face {
+  font-family: 'Assistant terugval';
+  src: local('Arial');
+  size-adjust: 84.53%;
+  ascent-override: 120.78%;
+  descent-override: 33.95%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Karla terugval';
+  src: local('Arial');
+  size-adjust: 95.71%;
+  ascent-override: 95.81%;
+  descent-override: 26.33%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* ---------- Merklaag: de acht tokens uit brand-style.md ----------
+     Dit is de enige plek waar een merkkleur een waarde krijgt. Alles daaronder
+     verwijst hiernaar; er staat geen tweede kleurensysteem naast. De namen zijn
+     die uit de style guide, zodat een kleur wijzigen één regel is.
+
+     De verhouding 60/30/10: wit is de basis (--color-background), indigo is de
+     merklaag op grote vlakken (--color-primary) en marineblauw is het accent
+     voor knoppen, links en labels (--color-accent). */
+  --color-primary:           #0D2646;  /* SFH Navy, uit het logo: merkvlakken (30%) */
+  --color-secondary:         #BCDA83;  /* SFH Lichtgroen, uit het logo: tekst en details OP donkere merkvlakken (9,8:1 op navy) */
+  --color-accent:            #1B7A48;  /* SFH Groen verdiept: CTA, links, labels (10%). Het logogroen #30B36D haalt op wit maar 2,7:1; deze stap haalt 5,35:1 en dus AA. */
+  --color-background:        #FFFFFF;  /* de dominante basis (60%) */
+  --color-background-subtle: #F5F5F5;  /* rustige afwijkende achtergrond */
+  --color-text:              #383838;  /* koppen en lopende tekst */
+  --color-text-muted:        #636363;  /* ondersteunende tekst, captions, meta */
+  --color-border-soft:       #E6E6E6;  /* kleur van bestaande randen en scheidingen */
+
+  /* Bedieningstrappen. Geen nieuwe merkkleuren, maar donkerder stappen van
+     primary en accent met dezelfde tint en verzadiging. Ze zijn er omdat de
+     template zijn eigen hover- en pressed-gedrag houdt en daar een waarde voor
+     nodig heeft; welke beweging een vlak maakt, blijft dus van de template. */
+  --color-primary-deep:      #0A1E36;  /* haarlijnen, kleine labels, pressed */
+  --color-primary-deepest:   #081729;  /* donkerste vlak en de sluier over foto's */
+  --color-accent-strong:     #14603A;  /* accent een stap donkerder: hover en pressed (7,6:1) */
+
+  /* ---------- Merkkleuren (§2) ----------
+     De namen hieronder komen uit de oorspronkelijke template en worden in de
+     componenten gebruikt. Ze zijn niet vervangen maar omgehangen naar de
+     merklaag: zo blijft elke component werken en verandert alleen de kleur.
+     'geel' is nu het marineblauwe accent en 'groen' de indigo merkkleur; de
+     namen zijn historisch, de waarden komen uit brand-style.md. */
+  --color-geel:              var(--color-accent);
+  --color-geel-hover:        var(--color-accent-strong);
+  /* De navy uit het Steel Framing Holland-logo: het merendeel van de logopixels is exact #0D2646.
+     De drie tonen hebben dezelfde tint en verzadiging en verschillen alleen in
+     helderheid, net zoals de groene ramp die hier eerder stond. */
+  --color-groen:              var(--color-primary);       /* merkvlakken */
+  --color-groen-diep:         var(--color-primary-deep);  /* haarlijnen en kleine labels */
+  --color-ink:               #030104;
+  --color-black:             #000000;
+  --color-white:             #ffffff;
+  --color-grey:              var(--color-background-subtle);
+  --color-grey-placeholder:  #EFEFEF;
+  --color-grey-diep:         #E0E0E0;  /* vulling van de grijze icoonknop: even grote stap als voorheen */
+  --color-groen-diepst:      var(--color-primary-deepest);  /* sluier over foto, donkerste vlak */
+  --color-focus:             var(--color-groen-diepst);
+
+  /* Bediening. Een groen vlak wordt bij aanwijzen een stap donkerder en bij
+     indrukken nog een stap; dat zijn dezelfde twee tonen als hierboven. Ze
+     staan hier apart zodat in een regel te lezen is waarom de kleur er staat,
+     en zodat je de bediening later kunt losmaken van de haarlijnen zonder
+     overal te hoeven zoeken.
+
+     Een vlak dat al op de donkerste toon staat (de knop naar een case) kan niet
+     donkerder en gaat de ramp juist op; dat staat bij .button--secundair. */
+  --color-groen-hover:       var(--color-groen-diep);
+  --color-groen-pressed:     var(--color-groen-diepst);
+
+  /* ---------- Semantisch ---------- */
+  --color-surface:         var(--color-white);
+  --color-surface-alt:     var(--color-grey);
+  --color-surface-inverse: var(--color-primary);
+  /* Koppen en lopende tekst staan beide op #383838 uit de merklaag: 11,73:1 op
+     wit en 10,76:1 op het subtiele grijs. De bronsite zette koppen op #383838
+     en lopende tekst op #636363; die tweede is hier --color-text-muted en doet
+     het ondersteunende werk (captions, meta, bijschriften). */
+  --color-text-primary:    var(--color-text);
+  --color-text-inverse:    var(--color-white);
+  /* Het accent is nu donker in plaats van geel, dus de tekst erop is wit.
+     Stond hier zwart, want op geel las dat goed. */
+  --color-text-on-accent:  var(--color-white);
+  --color-heading:         var(--color-text);
+  --color-accent-hover:    var(--color-accent-strong);
+  /* De haarlijn blijft een gekleurde lijn, zoals de template hem bedoelde,
+     maar nu in de merkkleur. De neutrale scheiding gebruikt de zachte
+     randkleur uit de merklaag. */
+  --color-border-hairline: var(--color-primary-deep);
+  --color-divider:         var(--color-border-soft);
+
+  /* ---------- Overlays en verlopen ---------- */
+  --overlay-card-backdrop: rgba(13, 38, 70, 0.35);    /* navy #0D2646 */
+  --overlay-panel:         rgba(0, 0, 0, 0.40);
+  --overlay-slide-in:      rgba(0, 0, 0, 0.75);
+  --overlay-modal:         rgba(0, 0, 0, 0.80);
+  --gradient-black-fade:   linear-gradient(0deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0) 100%);
+  --gradient-groen-fade:   linear-gradient(0deg, rgba(8,23,41,0.60) 0%, rgba(8,23,41,0) 100%);
+  --gradient-nav-card:     linear-gradient(180deg, #081729 0%, #0D2646 14.21%, rgba(0,0,0,0) 62.32%),
+                           linear-gradient(0deg, rgba(0,0,0,0.5), rgba(0,0,0,0.5));
+
+  /* ---------- Dekking ---------- */
+  --opacity-muted-link: 0.65;
+  --opacity-hidden:     0;
+  --opacity-scrim:      0.75;
+
+  /* ---------- Radius: vrijwel overal nul (DR-1) ---------- */
+  --radius-none:  0;
+  --radius-pill:  100px;
+  --radius-modal: 8px;
+  --radius-chip:  12px;
+
+  /* ---------- Schaduw: alleen zwevende lagen (DR-2) ---------- */
+  --shadow-popup:  0 8px 80px rgba(0, 0, 0, 0.15);
+  --shadow-modal:  0 0 30px rgba(0, 0, 0, 0.60);
+  --shadow-button: 0 2px 6px rgba(0, 0, 0, 0.30);
+  --shadow-none:   none;
+
+  /* ---------- Spatiëring ---------- */
+  --space-0:    0px;
+  --space-100:  4px;
+  --space-200:  8px;
+  --space-300:  12px;
+  --space-400:  16px;
+  --space-500:  24px;
+  --space-600:  32px;
+  --space-650:  40px;
+  --space-700:  48px;
+  --space-800:  64px;
+  --space-900:  72px;
+  --space-1000: 96px;
+  --space-1100: 128px;
+  --space-1200: 256px;
+
+  --space-section-y:           96px;
+  --space-section-y-mobile:    32px;
+  --space-section-y-mobile-lg: 64px;
+  --space-section-x:           48px;
+  --space-section-x-mobile:    16px;
+  /* De zijinzet van de pagina: 48px op desktop, 16px daaronder. De componenten
+     uit de gids schakelden elk op een ander breekpunt, waardoor er op een tablet
+     16, 32, 40 en 48px naast elkaar stonden. Eén variabele, één schakelpunt, en
+     dat punt ligt op 991px omdat de caserijen (§6.9) en de kaartlichamen (§6.8)
+     daar ook omgaan. */
+  --inset-x:                   48px;
+  /* Hoogte van de vaste balk. Nodig waar iets eronderdoor loopt en niet
+     afgesneden mag worden; gemeten, want de balk krijgt zijn hoogte van zijn
+     inhoud: 45px hamburger of 52px menu-item plus de padding eromheen. */
+  --balk-hoogte:             116px;
+
+  --space-panel:               48px;
+  --space-panel-md:            32px;
+  --space-panel-sm:            24px;
+  --space-stack:               48px;
+  --space-stack-tight:         32px;
+  --space-gutter:              24px;
+
+  /* ---------- Container ---------- */
+  --container-max:        1800px;
+  --content-max-quarter:  437px;
+  --content-max-half:     664px;
+  --content-max-box:      480px;
+  --content-max-hero:     640px;
+  --content-max-carousel: 460px;
+
+  /* ---------- Beweging ---------- */
+  --ease-standard:   cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-emphasized: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-clip:       cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  --ease-image:      cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-legacy:     ease;
+  --ease-rotate:     ease-in-out;
+
+  --duration-instant: 150ms;
+  --duration-fast:    200ms;
+  --duration-quick:   250ms;
+  --duration-base:    300ms;
+  --duration-medium:  350ms;
+  --duration-slow:    400ms;
+  --duration-legacy:  500ms;
+  --duration-image:   600ms;
+  --duration-clip:    650ms;
+  --duration-panel:   750ms;
+
+  --stagger-menu-item: 60ms;
+
+  /* ---------- Lagen ---------- */
+  --z-behind:          -1;
+  --z-base:             0;
+  --z-content:          1;
+  --z-main:             2;
+  --z-nav-inner:       20;
+  --z-nav-branding:   200;
+  --z-mobile-header: 1000;
+  --z-header-dropdown: 998;
+  --z-header:          999;
+  --z-hero-modal:     9999;
+  --z-panel-overlay: 10000;
+  --z-panel:         10001;
+
+  /* ---------- Typografie (§3.1) ----------
+     Twee families uit brand-style.md, met de fallback stacks uit die gids:
+     Assistant voor koppen, Karla voor lopende tekst. Beide lokaal geladen.
+
+     LET OP, dit vervangt DR-6. De template zette koppen bewust op gewicht 300;
+     dat was de typografische handtekening van een eerder merk. Deze site zet koppen
+     op 700 en de grote paginakop op 800, en font weights vallen onder de
+     merklaag. Er is dus geen 300 meer: de variabele snedes beginnen bij 400 en
+     de lichte koppen zijn vervangen door zware.
+
+     De maten zijn niet aangeraakt. Alle font-size-waarden en de responsive
+     schaal hieronder zijn die van de template gebleven. */
+  --font-sans:     "Karla", "Karla terugval", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-heading:  "Assistant", "Assistant terugval", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body:     var(--font-sans);
+  /* De vier oude aliassen wijzen nu naar de juiste familie: alles wat 'light'
+     of 'regular' was is lopende tekst (Karla), de koppen halen hun familie uit
+     --font-heading. */
+  --font-light:    var(--font-sans);
+  --font-regular:  var(--font-sans);
+  --font-medium:   var(--font-sans);
+  --font-semibold: var(--font-sans);
+  /* Vier gewichten, niet meer: 400 en 600 op Karla, 700 en 800 op Assistant.
+     --weight-light stond op 300 en is nu 400; die naam wordt nog door
+     componenten gebruikt, de waarde komt uit de merklaag. */
+  --weight-light:    400;
+  --weight-regular:  400;
+  --weight-medium:   600;
+  --weight-semibold: 600;
+  --weight-heading:  700;
+  --weight-display:  800;
+
+  /* Vaste maat voor uppercase labels (DR-7). */
+  --tracking-label: 2.2px;
+
+  color-scheme: light;
+}
+
+/* Zelfde token, kleinere balk. Twee losse media-regels en niet in :root, want
+   custom properties in :root kunnen niet per media-query in hetzelfde blok. */
+@media (max-width: 1199px) { :root { --balk-hoogte: 109px; } }
+@media (max-width: 768px)  { :root { --balk-hoogte: 77px; } }
+
+/* ============================================================================
+   Body-defaults (§2.2)
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: var(--weight-light);
+  line-height: 1.5;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+main { position: relative; z-index: var(--z-main); }
+
+img, picture { display: block; max-width: 100%; }
+/* Elke foto zit sinds de AVIF-bronnen in een <picture>. Dat element staat
+   tussen het vak en de <img>, en een <img> met height: 100% rekent tegen zijn
+   ouder: de picture, niet het vak. Zonder deze regel is die ouder zo hoog als
+   de foto zelf en vult de foto het vak niet meer; in de cursushero bleef zo de
+   onderste helft kaal groen. Met height: 100% geeft de picture de hoogte van
+   het vak door. Waar het vak geen vaste hoogte heeft rekent 100% uit op auto en
+   verandert er niets. */
+picture { height: 100%; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: var(--weight-heading);
+  line-height: 1.1;
+  color: var(--color-heading);
+}
+h1, h2, h3, h4 { text-wrap: balance; }
+
+button, input, select, textarea, label { font: inherit; line-height: 1.1; }
+
+ol[role="list"], ul[role="list"] { list-style: none; margin: 0; padding: 0; }
+
+a:not([class]) { color: currentColor; text-decoration-skip-ink: auto; }
+
+:target { scroll-margin-block: 5ex; }
+
+/* Geen border-radius, nergens, behalve waar een component het expliciet zet. */
+img, figure, section, article, aside { border-radius: var(--radius-none); }
+
+/* ============================================================================
+   Typografie (§3.2 – §3.5)
+   ========================================================================== */
+
+/* De lopende tekst in de lichte snede stond op 16px met 135% interlinie. Dat
+   leest krap, zeker omdat 300 dunner oogt dan een normale 400. Naar 18px met
+   iets meer lucht. Alle tekst in de normale snede zet zijn eigen maat, dus die
+   blijft op 16px staan en de verhouding tussen de twee blijft kloppen. */
+p {
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-size: 1.125rem;
+  line-height: 1.45;
+  margin: 0 0 1.5rem;
+}
+p:last-child { margin-bottom: 0; }
+
+li { font-family: var(--font-body); font-weight: var(--weight-regular); font-size: 1.125rem; line-height: 1.45; }
+
+/* Alleen familie en gewicht komen uit de merklaag; de maten zijn die van de
+   template. --font-size--xxl is de Display-trap uit brand-style.md en staat
+   daarom op 800, de overige koppen op 700. */
+.font-size--xxl { font-size: 5rem;     line-height: 1.15; font-family: var(--font-heading); font-weight: var(--weight-display); }
+.font-size--xl  { font-size: 3.5rem;   line-height: 1.1; font-family: var(--font-heading); font-weight: var(--weight-heading); margin-bottom: var(--space-700); }
+.font-size--lg  { font-size: 2rem;     line-height: 1.1; font-family: var(--font-heading); font-weight: var(--weight-heading); }
+.font-size--md  { font-size: 1.5rem;   line-height: 1.2; font-family: var(--font-heading); font-weight: var(--weight-heading); }
+.font-size--sm  { font-size: 0.875rem; line-height: 1.35; font-family: var(--font-body); font-weight: var(--weight-regular); }
+.font-size--xs  { font-size: 0.6875rem; line-height: 1.1; font-weight: var(--weight-medium);
+                  letter-spacing: var(--tracking-label); text-transform: uppercase; }
+
+@media (max-width: 576px) {
+  .font-size--xxl { font-size: 2.5rem; }
+  .font-size--xl  { font-size: 2rem; margin-bottom: var(--space-600); }
+}
+
+/* Eyebrow / bovenkopje */
+.subtitle {
+  display: block;
+  font-family: var(--font-medium);
+  font-weight: var(--weight-medium);
+  font-size: 0.7rem;
+  line-height: 1.1;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+/* De merkkleur op de grote koppen. Met de indigo uit brand-style.md is de
+   afweging die hier voor het groen stond niet meer nodig: #0D2646 haalt 15,19:1
+   op wit en 9,04:1 op het subtiele grijs, dus ruim boven de 4,5:1 die ook voor
+   kleine tekst geldt. */
+.section-heading,
+.cases-grid__heading,
+.font-size--xl,
+.cta-blocks-advanced__title,
+.usp__getal,
+.streamer--employee-name { color: var(--color-groen); }
+
+/* Fluïde kopmaten (§3.3) */
+.hero--title     { font-size: clamp(24px, 8vw, 80px); }
+.section-heading { font-size: clamp(2rem, 1.25rem + 3vw, 3.5rem);
+                   hyphens: auto; overflow-wrap: anywhere; }
+.card-title--lg  { font-size: clamp(1.5rem, 1.25rem + 1.5vw, 2.5rem); }
+.card-title--md  { font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem); }
+
+/* Een span in een kop is een markeer-chip (§3.4) */
+h1 > span.highlight, h2 > span.highlight, h3 > span.highlight {
+  padding: 0 1rem 0.25rem;
+  border-radius: var(--radius-chip);
+  background-color: var(--color-geel);
+  color: var(--color-text-on-accent);
+}
+
+/* Lopende tekst in kaarten en artikelen is zwaarder en ruimer (§3.5) */
+.card-body, .rte-body { font-family: var(--font-regular); font-weight: var(--weight-regular); font-size: 1rem; line-height: 1.5; }
+.article-body         { font-family: var(--font-regular); font-weight: var(--weight-regular); font-size: 1rem; line-height: 1.6; }
+.article-body p       { margin: 0; }
+.article-body p + p   { margin-top: 1.6em; }
+
+.text-inverse, .text-inverse :is(h1,h2,h3,h4,h5,h6,p,li) { color: var(--color-white); }
+
+/* ============================================================================
+   Layout (§4.4)
+   ========================================================================== */
+
+.container { width: 100%; max-width: var(--container-max); margin-inline: auto; }
+
+/* row-gap telt alleen tussen regels die afbreken. Zolang de kolommen naast
+   elkaar staan verandert er dus niets; zodra ze onder elkaar vallen komt er de
+   stapelafstand uit §4.5 tussen. Zonder dit plakt een kop op mobiel tegen de
+   inhoud die erbij hoort. */
+.row { display: flex; flex-wrap: wrap; row-gap: var(--space-stack);
+       margin-inline: calc(var(--space-gutter) * -0.5); }
+.row > * { flex-shrink: 0; width: 100%; max-width: 100%; padding-inline: calc(var(--space-gutter) * 0.5); }
+/* g-0 betekent: de panelen moeten elkaar raken, ook gestapeld. */
+.row.g-0, .row.gx-0 { margin-inline: 0; row-gap: 0; }
+.row.g-0 > *, .row.gx-0 > * { padding-inline: 0; }
+
+.col-12 { width: 100%; }
+@media (min-width: 768px) {
+  .col-md-4 { width: 33.3333%; } .col-md-6 { width: 50%; }
+  .col-md-8 { width: 66.6667%; } .col-md-10 { width: 83.3333%; }
+  .text-md-end { text-align: right; }
+}
+@media (min-width: 992px) {
+  .col-lg-2 { width: 16.6667%; } .col-lg-3 { width: 25%; }
+  .col-lg-4 { width: 33.3333%; } .col-lg-6 { width: 50%; }
+  .col-lg-8 { width: 66.6667%; } .col-lg-9 { width: 75%; }
+}
+@media (min-width: 1400px) {
+  .col-xxl-4 { width: 33.3333%; } .col-xxl-8 { width: 66.6667%; } .col-xxl-9 { width: 75%; }
+}
+
+/* Een geel gemarkeerd gat in de content: hier hoort een echt gegeven te staan
+   dat we nog niet hebben. Bewust opvallend, zodat het niet per ongeluk live gaat. */
+.invulveld {
+  background: var(--color-geel); padding: 0 .25em;
+  font-family: var(--font-medium); font-weight: var(--weight-medium); color: var(--color-text-on-accent);
+}
+
+/* Een kolom die zijn inhoud over de volle hoogte laat lopen; nodig als er een
+   kaart in staat die net zo hoog moet worden als de kaart ernaast. */
+.kolom--vullend { display: flex; }
+
+.gap-sm { gap: var(--space-200); }
+.gap-md { gap: var(--space-400); }
+.gap-lg { gap: var(--space-500); }
+.gap-xl { gap: var(--space-600); }
+
+/* Sectieritme: marges bestaan niet, alleen padding (§4.6) */
+.pt--small { padding-top: 32px; }  .pb--small { padding-bottom: 32px; }
+.pt--medium { padding-top: 64px; } .pb--medium { padding-bottom: 64px; }
+.pt--large { padding-top: 128px; } .pb--large { padding-bottom: 128px; }
+.pt--none { padding-top: 0; }      .pb--none { padding-bottom: 0; }
+@media (max-width: 991px) {
+  .pt--small { padding-top: 24px; } .pb--small { padding-bottom: 24px; }
+  .pt--large { padding-top: 56px; } .pb--large { padding-bottom: 56px; }
+}
+@media (max-width: 768px) {
+  .pt--small { padding-top: 20px; } .pb--small { padding-bottom: 20px; }
+}
+
+/* Het standaard binnenwerk van een band: 96px verticaal, 48px horizontaal.
+
+   De zijinzet zit binnen de .container, niet erbuiten. Dat is hoe §4.1 het
+   bedoelt (de container heeft zelf geen padding, de inzet komt uit de wikkel
+   erbinnen) en het is ook hoe de kaarten, caserijen en panelen het doen. Zet je
+   de padding op de sectie, dan lopen de twee patronen uiteen zodra het scherm
+   breder is dan 1800 + 2 x 48px. */
+.band { padding: var(--space-section-y) var(--inset-x); }
+section.band { padding-inline: 0; }
+section.band > .container { padding-inline: var(--inset-x); }
+.band--supporting { padding: var(--space-800) var(--inset-x); }
+section.band--supporting { padding-inline: 0; }
+@media (max-width: 991px) {
+  :root { --inset-x: var(--space-section-x-mobile); }
+}
+
+@media (max-width: 576px) {
+  .band { padding: var(--space-section-y-mobile) var(--inset-x); }
+  .band--supporting { padding: var(--space-700) var(--inset-x); }
+}
+
+/* ---- Ritme tussen banden (§4.6) ----------------------------------------
+   Twee banden achter elkaar zetten allebei hun volle 96px neer; samen wordt dat
+   bijna 200px en dat leest als een gat. De gids lost dat op door bij één van de
+   twee de padding dicht te zetten. Hier halveren we de bovenkant van elke band
+   die op een andere band volgt: het ritme komt van de onderkant van de vorige
+   band, en de nieuwe band houdt genoeg binnenruimte om niet tegen zijn eigen
+   kleurrand te plakken. */
+main > section + section.band,
+main > section + section > .container > .band,
+main > section + section > .container > .content-block--container,
+main > section + section > .container > .cases-grid__header,
+main > section + section > .container > .content-text-side-cta--container {
+  padding-top: var(--space-700);
+}
+/* En hetzelfde aan de onderkant, zodat elke overgang tussen twee banden op
+   dezelfde 48 + 48 = 96px uitkomt. De eerste en de laatste band van de pagina
+   houden hun volle 96px, want daar zit geen buurband tegenaan. */
+main > section:has(+ section).band,
+main > section:has(+ section) > .container > .band,
+main > section:has(+ section) > .container > .content-block--container,
+main > section:has(+ section) > .container > .cases-grid__header,
+main > section:has(+ section) > .container > .content-text-side-cta--container {
+  padding-bottom: var(--space-700);
+}
+
+@media (max-width: 576px) {
+  main > section + section.band,
+  main > section + section > .container > .band,
+  main > section + section > .container > .content-block--container,
+  main > section + section > .container > .cases-grid__header,
+  main > section + section > .container > .content-text-side-cta--container {
+    padding-top: var(--space-section-y-mobile);
+  }
+  main > section:has(+ section).band,
+  main > section:has(+ section) > .container > .band,
+  main > section:has(+ section) > .container > .content-block--container,
+  main > section:has(+ section) > .container > .cases-grid__header,
+  main > section:has(+ section) > .container > .content-text-side-cta--container {
+    padding-bottom: var(--space-section-y-mobile);
+  }
+}
+
+.background--white { background-color: var(--color-white); }
+.background--grey  { background-color: var(--color-grey); }
+.background--groen  { background-color: var(--color-groen); color: var(--color-white); }
+.background--groen :is(h1,h2,h3,h4,h5,h6,p,li,a:not(.button)) { color: var(--color-white); }
+.background--geel  { background-color: var(--color-geel); color: var(--color-text-on-accent); }
+.background--geel :is(h1,h2,h3,h4,h5,h6,p,li,a:not(.button)) { color: var(--color-text-on-accent); }
+
+/* Een foto op zijn eigen verhouding, over de breedte van de inhoud. Anders dan
+   .case-bleed in cases.css wordt hier niet gesneden: op een groepsfoto valt dan
+   niemand af. */
+.beeldband { margin: var(--space-700) 0 0; }
+
+/* Beeld over de volle breedte, gesneden op een vaste hoogte. Voor een foto
+   waar het om de sfeer gaat en niet om wat er precies in de hoeken staat;
+   .beeldband hierboven is de variant die niets afsnijdt. Stond in cases.css,
+   maar wordt ook gebruikt op index.html en contact.html. */
+/* Beeld over de volle breedte. Staat buiten .container, dus het loopt door de
+   zijinzet heen. De hoogte is begrensd omdat het opvulbeeld maar 1024px breed
+   is; een hogere band zou dat te ver oprekken. */
+.case-bleed { margin: 0; }
+.case-bleed img {
+  display: block; width: 100%;
+  height: clamp(220px, 34vw, 460px);
+  object-fit: cover; object-position: center 45%;
+}
+
+.beeldband img { width: 100%; height: auto; }
+
+.ratio-1x1  { aspect-ratio: 1/1;  display: flex; align-items: center; justify-content: center; width: 100%; }
+.ratio-16x9 { aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; width: 100%; }
+.image--cover img { width: 100%; height: 100%; object-fit: cover; }
+.cubic-ease { transition: all var(--duration-legacy) var(--ease-legacy); }
+
+.content-fit--quarter { max-width: var(--content-max-quarter); }
+.content-fit--half    { max-width: var(--content-max-half); }
+.content-fit--box     { max-width: var(--content-max-box); }
+
+/* ============================================================================
+   Knoppen (§6.6)
+   ========================================================================== */
+
+.button {
+  display: inline-block;
+  position: relative;
+  width: auto;
+  padding: var(--space-300) var(--space-400);
+  border: none;
+  border-radius: var(--radius-none);
+  text-decoration: none;
+  cursor: pointer;
+  font-family: var(--font-medium);
+  font-weight: var(--weight-medium);
+  font-size: 0.6875rem;
+  line-height: 1.5rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  transition: all var(--duration-legacy) var(--ease-legacy);
+}
+/* De primaire knop staat in de merkkleur en niet in het navy accent. Het accent
+   blijft wel het accent voor links en kleine vlakken; alleen de knopvulling is
+   paars. Wit haalt op de indigo 10,01:1 en het vlak zelf haalt datzelfde tegen
+   wit en 9,18:1 tegen het subtiele grijs, dus ruim boven de eis. */
+.button--primary   { background-color: var(--color-primary);  color: var(--color-text-on-accent); }
+.button--secondary { background-color: var(--color-white); color: var(--color-black); }
+.button--groen      { background-color: var(--color-groen);  color: var(--color-white); }
+/* De tweede keus, in diepgroen. Diensten en cursussen zijn waar iemand voor
+   komt en houden het geel; de cases zijn onderbouwing daarbij en trekken
+   daarom niet dezelfde aandacht. */
+.button--secundair  { background-color: var(--color-groen-diepst); color: var(--color-white); }
+.button:hover      { background-color: var(--color-geel-hover); color: var(--color-text-on-accent); }
+/* Na de regel hierboven, niet ervoor: die heeft dezelfde specificiteit en
+   zou de knop bij hover terug naar het navy zetten. */
+.button--primary:hover  { background-color: var(--color-primary-deep); color: var(--color-text-on-accent); }
+.button--primary:active { background-color: var(--color-primary-deepest); color: var(--color-text-on-accent); }
+/* Een groen vlak wordt donkerder in plaats van van kleur te wisselen. */
+.button--groen:hover  { background-color: var(--color-groen-hover); color: var(--color-white); }
+.button--groen:active { background-color: var(--color-groen-pressed); color: var(--color-white); }
+/* Blijft bij hover in het groen: naar geel springen zou hem alsnog als
+   primaire actie laten lezen. Deze knop staat al op de donkerste toon en kan
+   dus niet donkerder; hij gaat de ramp op en zakt bij indrukken terug. */
+.button--secundair:hover  { background-color: var(--color-groen); color: var(--color-white); }
+.button--secundair:active { background-color: var(--color-groen-diep); color: var(--color-white); }
+.button:has(.button--icon) { padding-left: 0; }
+
+/* Knoppen op een donker merkvlak: CTA en uitklapkaart (§6.6.3)
+   -----------------------------------------------------------
+   De twee vullingen hierboven gaan uit van een lichte ondergrond. Het navy van
+   de primaire knop haalt op wit 12,30:1 en springt er dus uit, maar op het
+   merkpatroon van het CTA-vlak zakt datzelfde navy naar 2,05:1: de knop
+   verdween daar in de band, terwijl de witte tweede keus er juist uitsprong.
+   De hiërarchie stond omgekeerd.
+
+   In dit vlak wisselen de twee daarom van rol. Beide blijven massieve vlakken,
+   want dat is de knoptaal van dit template; het onderscheid zit in de toon,
+   niet in een rand of een omlijning.
+
+     primair    wit          vorm 6,00:1 tot 11,32:1   tekst navy 12,30:1
+     secundair  SFH Lichtgroen  vorm 4,10:1 tot 7,72:1   tekst navy  8,39:1
+
+   Gemeten op de lichtste pixel van het patroon, dus op de ongunstigste plek.
+   Neutraal grijs (#F5F5F5) was hier de eerste gedachte, maar dat haalt naast
+   wit maar 1,09:1: de twee knoppen zouden dan als één vulling lezen. De mist
+   zit met 1,47:1 plus een koele tint wél zichtbaar onder het wit.
+
+   Hover volgt de logica van .button--secundair hierboven: een knop die al op de
+   uiterste toon staat kan niet verder die kant op en gaat de ramp terug op. Wit
+   kan niet lichter en zakt naar mist; mist gaat omhoog naar wit.
+
+   Dezelfde regel geldt voor de kaart in het uitklapmenu: daar ligt een sluier
+   over een bouwtekening en haalde de navy knop 1,24:1. Die kaart viel buiten
+   alle eerdere metingen omdat het paneel dicht is zolang je het menu niet
+   opent, en verborgen elementen worden overgeslagen.
+
+   LET OP, dit geldt bewust niet in de hero. Daar staat de gewone primaire knop
+   over de film. Gemeten over twaalf frames, op de lichtste pixel onder de
+   knoppenstrook, met de sluier op 67% op die hoogte:
+
+     navy  #0D2646 (nu)   1,04:1
+     groen #1B7A48 (accent) 1,47:1
+     licht #BCDA83        9,76:1
+     wit   #FFFFFF        8,01:1
+
+   Beide massieve merkkleuren blijven daar dus onder de 3:1 voor een
+   UI-element. Dat is op verzoek zo gelaten: de hero houdt zijn eigen knoppen.
+   Wil je het daar ook omdraaien, dan is het deze selector plus `.hero` ervoor;
+   dan haalt de knop 8,01:1. */
+.cta-slot__hoofd .button--primary,
+.uitklap__kaart .button--primary {
+  background-color: var(--color-white); color: var(--color-accent);
+}
+.cta-slot__hoofd .button--primary:hover,
+.uitklap__kaart .button--primary:hover {
+  background-color: var(--color-secondary); color: var(--color-accent);
+}
+.cta-slot__hoofd .button--secondary,
+.uitklap__kaart .button--secondary {
+  background-color: var(--color-secondary); color: var(--color-accent);
+}
+.cta-slot__hoofd .button--secondary:hover,
+.uitklap__kaart .button--secondary:hover {
+  background-color: var(--color-white); color: var(--color-accent);
+}
+/* De focusring is standaard indigo en valt op een indigo vlak weg (1,3:1).
+   WCAG 2.2 vraagt 3:1 voor de focusindicator; wit haalt hier 6:1 of meer. */
+.hero a:focus-visible, .hero button:focus-visible,
+.cta-slot__hoofd a:focus-visible, .cta-slot__hoofd button:focus-visible,
+.uitklap__kaart a:focus-visible, .uitklap__kaart button:focus-visible,
+.background--groen a:focus-visible, .background--groen button:focus-visible,
+.service-hero a:focus-visible, .service-hero button:focus-visible {
+  outline: 2px solid var(--color-white); outline-offset: 2px;
+}
+.button--link {
+  padding: 0;
+  background: none;
+  font-size: 0.9rem;
+  font-family: var(--font-semibold);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+.button--link:hover { background: none; }
+
+.button__inner { display: flex; align-items: center; gap: var(--space-200); }
+
+/* Dezelfde pijlwissel als de ronde icoonknop (§6.6.2), maar dan in de grote
+   CTA-knop. INFERRED: de gids geeft die knop alleen een kleurwissel; de pijl
+   erbij maakt de twee knopsoorten één familie. De pijl loopt mee met de
+   tekstkleur, zodat hij ook klopt zodra een groene knop op hover geel wordt.
+   .button__spoor knipt de uitlopende pijl af, precies zoals overflow:hidden
+   dat bij de ronde knop doet. */
+.button__inhoud {
+  display: inline-flex; align-items: center; gap: var(--space-200);
+}
+/* Dezelfde pijlwissel als de ronde icoonknop (§6.6.2), maar dan in de grote
+   CTA-knop. INFERRED: de gids geeft die knop alleen een kleurwissel; de pijl
+   erbij maakt de twee knopsoorten één familie. De pijl loopt mee met de
+   tekstkleur, zodat hij ook klopt zodra een groene knop op hover geel wordt.
+   .button__spoor knipt de uitlopende pijl af, precies zoals overflow:hidden
+   dat bij de ronde knop doet. */
+.button__spoor {
+  position: relative; flex-shrink: 0;
+  display: block; overflow: hidden;
+  width: 14px; height: 14px;
+}
+.button__spoor .arrow--animation { width: 14px; height: 14px; fill: currentColor; }
+.button__spoor .arrow--animation.is-2 { top: 0; left: 0; }
+.button:hover .button__spoor .arrow--animation.is-1,
+.button:focus-visible .button__spoor .arrow--animation.is-1 { opacity: 0; transform: translate3d(165%, 0, 0); }
+.button:hover .button__spoor .arrow--animation.is-2,
+.button:focus-visible .button__spoor .arrow--animation.is-2 { opacity: 1; transform: translateZ(0); }
+
+@media (max-width: 768px) {
+  .button__mobile-width > * { width: 100%; text-align: center; }
+}
+
+/* Ronde icoonknop: de handtekening-interactie (§6.6.2) */
+.button--icon {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  width: 48px; height: 48px;
+  padding: 0; border: none;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.button--icon .button--circle {
+  position: absolute; inset: -1px;
+  clip-path: inset(8px 8px 8px calc(100% - 50px) round 100px);
+  transition: clip-path var(--duration-clip) var(--ease-clip),
+              transform  var(--duration-clip) var(--ease-clip);
+}
+.button--icon .circle-container {
+  position: absolute; right: 0; width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.button--icon:hover .button--circle,
+.hover--icon:hover .button--circle { clip-path: inset(0 round 4.25rem); }
+
+.arrow--animation { display: block; transition: opacity var(--duration-clip) var(--ease-clip),
+                                                transform var(--duration-clip) var(--ease-clip); }
+.arrow--animation.is-1 { opacity: 1; transform: translateZ(0); }
+.arrow--animation.is-2 { position: absolute; opacity: 0; transform: translate3d(-165%, 0, 0); }
+.button--icon:hover .arrow--animation.is-1,
+.hover--icon:hover  .arrow--animation.is-1 { opacity: 0; transform: translate3d(165%, 0, 0); }
+.button--icon:hover .arrow--animation.is-2,
+.hover--icon:hover  .arrow--animation.is-2 { opacity: 1; transform: translateZ(0); }
+
+/* De gids beschrijft twee lagen, de knop en de .button--circle die opengeklapt
+   wordt, maar geeft de circle geen eigen kleur, waardoor er in rust niets te
+   zien zou zijn. INFERRED: de knop is het grijze grondvlak, de circle is de
+   accentvulling die opengroeit tot de hele cirkel.
+
+   De pijl is wit, in rust en bij hover. Dat is geen keuze maar een noodzaak:
+   de rustklem hieronder is `inset(8px 8px 8px calc(100% - 50px))`, en bij een
+   knop van 48 of 54px komt die linkerinset op 0 tot 6px uit. De accentvulling
+   ligt dus ook in rust al onder de pijl, niet als pilletje rechts ernaast.
+
+   Op het gele accent van de oude huisstijl kon de pijl daarom donker blijven.
+   Op het marineblauwe accent haalde die combinatie 1,05:1: de pijl stond er
+   wel, maar was niet te zien. Wit haalt op het accent 12,30:1. */
+.button--icon { background-color: var(--color-grey); }
+.button--icon .button--circle { background-color: var(--color-geel); }
+.button--icon :is(svg, i) { fill: var(--color-white); color: var(--color-white); }
+
+.button--icon.button--groen-vlak { background-color: var(--color-groen); }
+.button--icon.button--groen-vlak :is(svg, i) { fill: var(--color-white); color: var(--color-white); }
+.button--icon.button--groen-vlak .button--circle { background-color: var(--color-geel); }
+.button--icon.button--groen-vlak:hover :is(svg, i),
+.hover--icon:hover .button--icon.button--groen-vlak :is(svg, i) { fill: var(--color-text-on-accent); color: var(--color-text-on-accent); }
+/* Dezelfde tweede keus voor de ronde knop: de vulling wordt diepgroen en de
+   pijl wit, in plaats van geel met een groene pijl. */
+.button--icon.button--secundair .button--circle { background-color: var(--color-groen-diepst); }
+.button--icon.button--secundair:active .button--circle,
+.hover--icon:active .button--icon.button--secundair .button--circle { background-color: var(--color-groen-diep); }
+.button--icon.button--secundair :is(svg, i) { fill: var(--color-white); color: var(--color-white); }
+
+/* Derde keus: helemaal grijs. Voor knoppen die geen actie zijn maar bediening,
+   zoals de pijlen onder de citaten. Daar bladert iemand mee, hij gaat er niet
+   mee naar een volgende stap. Geel trok die pijlen naar het niveau van een
+   hoofdknop. De vulling is een stap donkerder dan de knop zelf, anders is er
+   niets te zien als de cirkel opengaat. */
+.button--icon.button--grijs { background-color: var(--color-grey); }
+.button--icon.button--grijs .button--circle { background-color: var(--color-grey-diep); }
+.button--icon.button--grijs :is(svg, i) { fill: var(--color-text-primary); color: var(--color-text-primary); }
+.button--icon.button--grijs:hover :is(svg, i),
+.hover--icon:hover .button--icon.button--grijs :is(svg, i) { fill: var(--color-text-primary); color: var(--color-text-primary); }
+
+.button--icon.button--white-fill { background-color: var(--color-white); }
+
+.button--icon--54 { width: 54px; height: 54px; }
+.button--icon--56 { width: 56px; height: 56px; }
+.button--icon--80 { width: 80px; height: 80px; }
+.button--icon--80 svg { width: 1.5rem; height: 1.5rem; }
+
+/* ============================================================================
+   Kaartenpaar (§6.8)
+   ========================================================================== */
+
+.cta-blocks-advanced__card {
+  display: flex; flex-direction: column; width: 100%; height: 100%;
+  overflow: hidden; color: inherit; text-decoration: none;
+}
+.cta-blocks-advanced__banner {
+  position: relative; margin: 0; width: 100%; height: 192px;
+  overflow: hidden; background: var(--color-groen); flex-shrink: 0;
+}
+.cta-blocks-advanced__banner img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform var(--duration-image) var(--ease-image);
+}
+.cta-blocks-advanced__card--linked:hover .cta-blocks-advanced__banner img { transform: scale(1.05); }
+.cta-blocks-advanced__backdrop {
+  position: absolute; inset: 0; background: var(--overlay-card-backdrop); pointer-events: none;
+}
+.cta-blocks-advanced__body {
+  flex: 1 1 auto; display: flex; flex-direction: column;
+  gap: var(--space-600); padding: var(--space-panel) var(--inset-x);
+}
+.cta-blocks-advanced__body--bg-grey  { background-color: var(--color-grey); }
+.cta-blocks-advanced__body--bg-white { background-color: var(--color-white); }
+.cta-blocks-advanced__body--bg-geel  { background-color: var(--color-geel); color: var(--color-text-on-accent); }
+.cta-blocks-advanced__body--bg-geel :is(h1,h2,h3,h4,h5,h6,p,li) { color: var(--color-text-on-accent); }
+.cta-blocks-advanced__body--bg-groen  { background-color: var(--color-groen); }
+.cta-blocks-advanced__body--bg-groen :is(h1,h2,h3,h4,h5,h6,p,li) { color: var(--color-white); }
+.cta-blocks-advanced__wrapper {
+  flex: 1 1 auto; display: grid; grid-template-columns: 5fr 1fr;
+  gap: var(--space-500); width: 100%;
+}
+/* Een grid-item krimpt niet onder zijn min-content: één lang woord in de
+   tekstkolom (Funderingsherstel, Stabiliteitsportalen) duwt de 5fr-kolom dan
+   breder dan de kaart. min-width: 0 laat de kolom wél krimpen en verandert
+   niets voor inhoud die al paste. Dezelfde ingreep staat op .paginahero__beeld
+   en .streamer .title. */
+.cta-blocks-advanced__wrapper > * { min-width: 0; }
+.cta-blocks-advanced__icon-button { justify-self: end; align-self: end; }
+.cta-blocks-advanced__title { font-size: clamp(1.5rem, 1.25rem + 1.5vw, 2.5rem); line-height: 1.1; }
+.cta-blocks-advanced__content { font-family: var(--font-regular); font-weight: var(--weight-regular);
+                                font-size: 1rem; line-height: 1.5; color: var(--color-ink); }
+.cta-blocks-advanced__content p { margin: 0; font: inherit; }
+.cta-blocks-advanced__content p + p { margin-top: 1em; }
+.cta-blocks-advanced__card--linked:focus-visible { outline: 2px solid var(--color-groen); outline-offset: 2px; }
+
+/* Horizontale variant: beeld en tekst naast elkaar */
+.cta-blocks-advanced__card--horizontal { flex-direction: row-reverse; }
+.cta-blocks-advanced__card--horizontal .cta-blocks-advanced__banner,
+.cta-blocks-advanced__card--horizontal .cta-blocks-advanced__body { flex: 1 1 50%; height: auto; }
+.cta-blocks-advanced__card--horizontal .cta-blocks-advanced__body {
+  /* Links de pagina-inzet, zodat de tekst op dezelfde lijn staat als elke
+     andere sectie. Rechts ruimer, want de kolom is smal en de regel mag daar
+     eerder afbreken. Hier stond eerder 121px, een los getal uit de referentie
+     dat bij geen enkele stap uit de schaal hoorde. */
+  padding: var(--space-800) var(--space-1000) var(--space-800) var(--inset-x);
+  gap: var(--space-800); justify-content: center;
+}
+@media (max-width: 1199px) {
+  .cta-blocks-advanced__card--horizontal .cta-blocks-advanced__body { padding-right: var(--space-800); }
+}
+@media (max-width: 991px) {
+  .cta-blocks-advanced__body { padding: var(--space-panel-md) var(--inset-x); gap: var(--space-500); }
+  .cta-blocks-advanced__wrapper { grid-template-columns: 1fr; gap: var(--space-500); }
+  .cta-blocks-advanced__card--horizontal { flex-direction: column-reverse; }
+  .cta-blocks-advanced__card--horizontal .cta-blocks-advanced__banner { height: 192px; flex: 0 0 auto; }
+  .cta-blocks-advanced__card--horizontal .cta-blocks-advanced__body { padding: var(--space-panel) var(--inset-x); gap: var(--space-600); }
+}
+@media (max-width: 576px) {
+  .cta-blocks-advanced__banner { height: 160px; }
+  .cta-blocks-advanced__body { padding: var(--space-panel-sm) var(--inset-x); }
+}
+
+/* In een rij van drie is de vaste bannerhoogte te laag: de kaart is dan 480px
+   breed en het beeld wordt een streep. Met een verhouding schaalt het mee.
+   16:10 komt uit de referentie, waar het beeld 637 bij 390 staat.
+
+   Deze twee regels staan bewust helemaal onderaan het onderdeel. Ze hebben
+   dezelfde soortelijkheid als .cta-blocks-advanced__banner, en die krijgt in de
+   media-queries hierboven twee keer een vaste hoogte; stonden ze eerder, dan
+   won die vaste hoogte onder 576px alsnog en werd het beeld op een telefoon
+   160px hoog naast een cursuskaart van 234.
+
+   De afbeelding staat absoluut, want een percentagehoogte tegen een hoogte die
+   uit aspect-ratio komt is niet in elke browser even betrouwbaar. */
+.cta-blocks-advanced__banner--verhouding { height: auto; aspect-ratio: 16 / 10; }
+.cta-blocks-advanced__banner--verhouding img { position: absolute; inset: 0; }
+
+/* ============================================================================
+   Caserijen (§6.9)
+   ========================================================================== */
+
+.cases-grid__header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-600); padding: var(--space-section-y) var(--inset-x);
+}
+@media (max-width: 991px) { .cases-grid__header { padding: var(--space-800) var(--inset-x); } }
+.cases-grid__heading { font-size: clamp(2rem, 1.25rem + 3vw, 3.5rem); line-height: 1.1; }
+.cases-grid__list { display: flex; flex-direction: column; }
+.cases-grid__row {
+  display: flex; align-items: stretch; text-decoration: none; color: inherit;
+  transition: background-color var(--duration-base) var(--ease-image);
+}
+.cases-grid__row--grey  { background-color: var(--color-grey); }
+.cases-grid__row--white { background-color: var(--color-white); }
+.cases-grid__body { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column;
+                    padding: var(--space-panel) var(--inset-x); }
+.cases-grid__body > * + * { margin-top: var(--space-600); }
+.cases-grid__body > .cases-grid__meta + .cases-grid__title { margin-top: var(--space-400); }
+.cases-grid__meta { display: flex; gap: var(--space-400); flex-wrap: wrap; }
+.cases-grid__meta-item {
+  font-family: var(--font-medium); font-weight: var(--weight-medium); font-size: 12px;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--color-text-primary);
+}
+.cases-grid__title {
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem); line-height: 1.1;
+}
+.cases-grid__wrapper { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-700); }
+.cases-grid__text {
+  max-width: var(--content-max-half);
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: 1rem; line-height: 1.5; color: var(--color-text-primary); margin: 0;
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
+  overflow: hidden; text-overflow: ellipsis; min-height: 6em;
+}
+.cases-grid__image { flex: 1 1 0; margin: 0; min-width: 0; min-height: 320px; overflow: hidden; position: relative; }
+.cases-grid__image img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform var(--duration-image) var(--ease-image);
+}
+.cases-grid__row.hover--icon:hover .cases-grid__image img { transform: scale(1.05); }
+.cases-grid__row:focus-visible { outline: 2px solid var(--color-groen); outline-offset: -2px; }
+@media (max-width: 991px) {
+  .cases-grid__row { flex-direction: column-reverse; }
+  .cases-grid__body { padding: var(--space-panel-md) var(--inset-x); }
+  .cases-grid__body > * + * { margin-top: var(--space-500); }
+  .cases-grid__image { flex: 0 0 auto; width: 100%; height: auto; min-height: 0; aspect-ratio: 16/9; }
+}
+@media (max-width: 767px) { .cases-grid__wrapper { gap: var(--space-500); } }
+
+/* ============================================================================
+   Tekst met uitlopend beeld (§6.10)
+   ========================================================================== */
+
+.content-text-side-visual { position: relative; overflow: clip; }
+.content-text-side-visual article { position: relative; z-index: var(--z-content); padding: var(--space-panel); min-height: 0; }
+.content-text-side-visual--stack { display: flex; flex-direction: column; gap: var(--space-700); align-items: flex-start; }
+.content-text-side-visual--article h3 { font-size: 2rem; line-height: 1.4; }
+.content-text-side-visual--body { font-family: var(--font-regular); font-weight: var(--weight-regular);
+                                  font-size: 1rem; line-height: 1.6; color: var(--color-text-primary); margin: 0; }
+.content-text-side-visual--body p { margin: 0; font: inherit; }
+.content-text-side-visual--body p + p { margin-top: 1.6em; }
+.content-text-side-visual--visual { position: absolute; top: 0; right: 0; width: 60%; z-index: var(--z-base); }
+.content-text-side-visual--visual.content-fit--half { width: 48%; }
+@media (min-width: 992px) {
+  .content-text-side-visual--visual.added-distance {
+    width: max(940px, calc(60% + 10vw)); right: -10vw; left: auto; max-width: none;
+  }
+  .content-text-side-visual--visual.added-distance.content-fit--half { width: max(780px, calc(48% + 10vw)); }
+}
+@media (max-width: 991px) {
+  .content-text-side-visual--visual,
+  .content-text-side-visual--visual.added-distance { position: relative; right: 0; width: 100%; }
+  .content-text-side-visual article { padding: var(--space-panel) var(--inset-x); }
+}
+.content-text-side-visual--article h2 {
+  font-size: clamp(2rem, 1.25rem + 2vw, 3rem);
+  line-height: 1.1;
+}
+.content-text-side-visual--visual img { width: 100%; height: auto; }
+
+/* .row.gx-0 zet padding-inline op nul en wint van de padding die §6.10 aan het
+   artikel geeft; daarom hier een regel die specifiek genoeg is. */
+.content-text-side-visual .row > article { padding: var(--space-panel) var(--inset-x); }
+@media (max-width: 991px) {
+  .content-text-side-visual .row > article { padding: var(--space-panel) var(--inset-x); }
+}
+@media (max-width: 576px) {
+  .content-text-side-visual .row > article { padding: var(--space-panel-md) var(--inset-x); }
+}
+/* De gids laat het beeld vanaf 992px uitlopen, maar dan wil het 940px breed
+   zijn. Tussen 992 en 1199px blijft er te weinig over voor de tekst en loopt
+   die onder het beeld door; daar zet het beeld zich dus onder de tekst. */
+@media (max-width: 1199px) {
+  .content-text-side-visual--visual,
+  .content-text-side-visual--visual.added-distance,
+  .content-text-side-visual--visual.content-fit--half {
+    position: relative; right: 0; width: 100%; max-width: none;
+  }
+}
+@media (max-width: 1199px) {
+  .content-text-side-visual--visual { padding: 0 var(--inset-x) var(--space-800); }
+}
+@media (max-width: 576px) { .content-text-side-visual article { padding: var(--space-panel-md) var(--inset-x); } }
+
+/* ============================================================================
+   Statement-band (§6.11)
+   ========================================================================== */
+
+.content-text-side-cta--container { background-color: var(--color-white); padding: var(--space-800) var(--inset-x); }
+.content-text-side-cta--container.background--grey { background-color: var(--color-grey); }
+@media (max-width: 576px) { .content-text-side-cta--container { padding: var(--space-700) var(--inset-x); } }
+.content-text-side-cta--body { font-size: 2.25rem; margin: 0; }
+.content-text-side-cta--body p { font-size: 2.25rem; line-height: 1.3; margin-bottom: var(--space-700); }
+.content-text-side-cta--body p:last-child { margin-bottom: 0; }
+
+/* De kolom met de knop naast het statement. Stond eerst in cursus.css; de
+   dienstpagina's gebruiken dit blok nu ook en laden dat bestand niet, dus de
+   knop stond daar bovenin de kolom in plaats van op de onderregel.
+
+   De rij eromheen staat op gx-0, want de tekst moet op de paginainzet beginnen
+   en niet op de inzet plus een goot. Daardoor raakten de twee kolommen elkaar:
+   de knop begon precies waar de tekst ophield, zonder een pixel ertussen. De
+   ruimte zit daarom op deze kolom zelf: ernaast een inspringing, eronder een
+   marge. */
+.statement__actie { margin-top: var(--space-700); }
+@media (min-width: 992px) {
+  .statement__actie { margin-top: 0; display: flex; align-items: flex-end; }
+  /* De rij staat in de kiezer omdat `.row.gx-0 > *` de padding op nul zet, en
+     dat zijn twee klassen. Met alleen .statement__actie verliest deze regel. */
+  .row.gx-0 > .statement__actie { padding-left: var(--space-800); }
+}
+@media (max-width: 576px) {
+  .content-text-side-cta--body, .content-text-side-cta--body p { font-size: 1.5rem; }
+  .content-text-side-cta--body p { margin-bottom: var(--space-700); }
+}
+
+/* ============================================================================
+   Sectiekop met actie (§6.12)
+   ========================================================================== */
+
+.content-block--container { padding: var(--space-section-y) var(--inset-x); }
+@media (max-width: 576px) { .content-block--container { padding: var(--space-section-y-mobile) var(--inset-x); } }
+.content-block--container.background--groen { color: var(--color-white); }
+.content-block--content strong { font-size: 2rem; line-height: 140%; font-weight: var(--weight-regular); }
+
+/* ============================================================================
+   Logoband en slot-CTA
+   ========================================================================== */
+
+/* De reeks staat twee keer in het spoor; de animatie schuift precies de helft
+   op, dus op het moment dat hij herstart staat er hetzelfde beeld. Daarom -50%
+   en niet -100%. Het spoor is width:max-content zodat de logo's hun eigen
+   breedte houden. */
+.logo-slider { background-color: var(--color-white); padding: var(--space-700) 0; }
+.logo-slider__venster { overflow: hidden; }
+.logo-slider__spoor {
+  display: flex; width: max-content;
+  animation: logo-slider-x 45s linear infinite;
+}
+@keyframes logo-slider-x {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+/* Stilzetten zolang de bezoeker er met de muis op staat, zodat een logo te
+   lezen valt. */
+.logo-slider:hover .logo-slider__spoor,
+.logo-slider:focus-within .logo-slider__spoor { animation-play-state: paused; }
+
+.logo-slider__set {
+  display: flex; align-items: center;
+  margin: 0; padding: 0; list-style: none;
+}
+/* Op hoogte uitlijnen met een breedtebegrenzing erbij: het zijn woordmerken van
+   heel verschillende verhouding. De brede (Huhtamaki, Ballast Nedam, Alstom)
+   lopen tegen de max-width aan en worden daardoor iets lager; de compacte
+   (Stork, TES, Electrabel) houden de volle hoogte. Zo krijgen ze optisch
+   ongeveer gelijk gewicht in plaats van gelijke hoogte. */
+.logo-slider__logo { flex-shrink: 0; padding: 0 var(--space-700); }
+/* Terugval voor de logoband: een woordmerk in tekst, met dezelfde hoogte en
+   hetzelfde ritme als een logo, zodat de band niet verspringt. Deze site
+   gebruikt hem niet (er zijn zes echte partnerlogo's); hij staat er voor het
+   geval een partner geen bruikbaar logo levert. */
+.logo-slider__woord {
+  display: flex; align-items: center; height: 40px;
+  font-family: var(--font-heading); font-weight: var(--weight-heading);
+  font-size: 1.125rem; letter-spacing: 0.01em;
+  color: var(--color-primary); white-space: nowrap;
+}
+@media (max-width: 767px) {
+  .logo-slider__woord { height: 32px; font-size: 1rem; }
+}
+.logo-slider__logo img {
+  display: block; width: auto; height: 40px; max-width: 190px;
+  object-fit: contain;
+}
+@media (max-width: 767px) {
+  .logo-slider { padding: var(--space-600) 0; }
+  .logo-slider__logo { padding: 0 var(--space-500); }
+  .logo-slider__logo img { height: 32px; max-width: 150px; }
+}
+
+/* De slot-CTA: één groen vlak over de volle breedte met de kop, de tekst en de
+   knop gecentreerd. Verwijst naar contact.html; het formulier en de gegevens
+   van Martin staan daar. Er stond hier eerder een contactkaart naast; die is
+   eruit gehaald omdat dezelfde gegevens een klik verderop staan.
+
+   Geen ruimte onder het slotblok: het groene vlak sluit direct aan op de voet. */
+.cta-slot { background-color: var(--color-white); }
+/* Het merkpatroon op volle sterkte, zonder waas ertussen. Het zit in de
+   achtergrond en niet in een <img>: het is versiering en heeft geen
+   alternatieve tekst nodig.
+
+   Contrast van witte tekst op dit patroon, gemeten op de bitmap zelf
+   (cta-patroon-1440/2880.webp, elke tweede pixel):
+
+     donkerste pixel   11,32:1
+     mediaan            8,57:1
+     95e percentiel     6,84:1
+     lichtste pixel     6,00:1   <- de ongunstigste plek van het hele vlak
+
+   Wit haalt dus overal minstens 6:1, ruim boven de 4,5:1 voor normale tekst en
+   de 3:1 voor de kop. Een waas is niet nodig en zit er daarom niet.
+
+   Dit gold niet voor het vorige patroon, dat lichte gele stralen had; daar zakte
+   het label naar 1,76:1. Vervang je de bitmap opnieuw, meet dan opnieuw: de
+   ondergrens is een lichtste pixel die met wit nog 4,5:1 haalt, dat is
+   ongeveer #7A7A7A. Haalt een nieuw patroon dat niet, leg er dan een waas in
+   de merkkleur over tot het wel klopt:
+
+     background-image:
+       linear-gradient(rgba(13, 38, 70, .40), rgba(13, 38, 70, .40)),
+       url("assets/patronen/cta-patroon-2880.webp"); */
+.cta-slot__hoofd {
+  background-color: var(--color-groen-diepst);
+  /* image-set laat de browser kiezen: op een telefoon is 2880px zinloos breed.
+     De url() eronder is de terugval voor browsers zonder image-set. */
+  background-image: url("assets/patronen/cta-patroon-1440.webp");
+  background-image: image-set(url("assets/patronen/cta-patroon-1440.webp") 1x,
+                              url("assets/patronen/cta-patroon-2880.webp") 2x);
+  background-size: cover;
+  background-position: center;
+  padding: var(--space-1000) var(--inset-x);
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+}
+.cta-slot__label { color: var(--color-white); }
+.cta-slot__kop {
+  margin: var(--space-500) 0 0; max-width: 20ch;
+  font-size: clamp(1.75rem, 1.25rem + 2vw, 3rem); line-height: 1.1;
+  color: var(--color-white);
+}
+.cta-slot__tekst {
+  margin: var(--space-500) 0 0; max-width: 46ch;
+  color: var(--color-white);
+}
+/* De twee knoppen stonden hier als inline-block naast elkaar, zonder eigen
+   ruimte ertussen: naast elkaar hielden ze alleen het witruimte-teken uit de
+   HTML over, en zodra ze afbraken raakten ze elkaar helemaal. Zelfde oplossing
+   als bij .hero--actions: een flexrij die mag afbreken, met een gap. Hij staat
+   gecentreerd, want dat doet het hele blok. */
+.cta-slot__actie {
+  margin-top: var(--space-700);
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: var(--space-300);
+}
+@media (max-width: 767px) {
+  .cta-slot__hoofd { padding: var(--space-800) var(--inset-x); }
+}
+
+/* ============================================================================
+   Marquee (§6.14)
+   ========================================================================== */
+
+.marquee-streamer--container { background-color: var(--color-white); overflow: hidden; }
+.marquee-streamer .wrapper {
+  position: relative; display: flex; align-items: center;
+  width: max-content; overflow: hidden;
+  animation: marquee-x 40s linear infinite;
+}
+@keyframes marquee-x {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.marquee-streamer--box {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  height: 100%; margin: 0; padding: 0; flex-shrink: 0; overflow: hidden;
+}
+.marquee-streamer--box .box--inner { padding: 50px 0; width: 100%; height: 100%; }
+.marquee-streamer--box.type--images .box--inner { padding: 0; }
+.marquee-streamer--box.box--image { width: 400px; overflow: hidden; }
+.marquee-streamer--box.box--image.type--logos { width: 180px; height: 180px; margin: 0 1.5rem; }
+.marquee-streamer--box.box--image.type--logos .box--inner { padding: 0; display: flex; }
+.marquee-streamer--box.box--image img { width: 100%; height: 100%; object-fit: cover; }
+.marquee-streamer--box .box--logos { display: flex; }
+.marquee-streamer--box .box--logos img { margin: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
+
+/* ============================================================================
+   Streamer (§6.15)
+   ========================================================================== */
+
+.streamer { position: relative; overflow: hidden; }
+.streamer--inner { position: relative; z-index: var(--z-base); padding: var(--space-section-y) var(--inset-x); color: var(--color-white); }
+@media (max-width: 576px) { .streamer--inner { padding: var(--space-800) var(--inset-x); } }
+.streamer .background-image { position: absolute; inset: 0; z-index: var(--z-behind); margin: 0; width: 100%; height: 100%; }
+.streamer .background-image img { width: 100%; height: 100%; object-fit: cover; }
+.streamer .title { color: var(--color-white); max-width: 100%; min-width: 0;
+                   text-wrap: balance; hyphens: auto; overflow-wrap: anywhere; }
+.call-to-action-streamer--header { margin-bottom: 80px; }
+
+/* Medewerker-variant: portret vult de band, infopaneel ernaast */
+.streamer--employee-row { display: flex; align-items: stretch; }
+.streamer--employee-portrait { flex: 0 0 40%; overflow: hidden; margin: 0; }
+.streamer--employee-portrait img { width: 100%; height: 100%; object-fit: cover; }
+.streamer--employee-panel { flex: 1 1 0; display: flex; flex-direction: column;
+                            justify-content: center; gap: var(--space-500); }
+@media (max-width: 991px) {
+  .streamer--employee-row { flex-direction: column-reverse; }
+  .streamer--employee-portrait { flex: 0 0 auto; width: 100%; aspect-ratio: 16/9; }
+}
+.streamer--employee .streamer--employee-panel { padding: var(--space-600) var(--inset-x); }
+.streamer--employee-name { font-size: 2rem; line-height: 1.1; }
+@media (max-width: 991px) {
+  .streamer--employee .streamer--employee-panel { padding: var(--space-panel-sm) var(--inset-x); }
+  .streamer--employee-name { font-size: 1.5rem; }
+}
+@media (max-width: 576px) {
+  .streamer--employee .streamer--employee-panel { padding: var(--space-400) var(--inset-x); }
+  .streamer--employee-name { font-size: 1.25rem; }
+}
+
+/* Bij een staand portret werkt de 16/9-band op mobiel niet: die snijdt door het
+   gezicht. Vandaar 4/3.
+
+   Horizontaal blijft het beeldpunt in het midden; Martin zit midden in beeld. In
+   de liggende band eronder wordt er verticaal bijgesneden, en dan valt hij te
+   laag uit: het beeldpunt staat daarom op 65%, wat de onderkant van de foto
+   toont en hem dus hoger in het kader zet. */
+.streamer--employee--portret .streamer--employee-portrait img { object-position: center 65%; }
+@media (max-width: 991px) {
+  .streamer--employee--portret .streamer--employee-portrait { aspect-ratio: 4/3; }
+}
+
+/* ============================================================================
+   Kerncijfers (§6.19)
+   ----------------------------------------------------------------------------
+   Een rij van vier label-plus-getal. Op de casepagina's dragen ze het resultaat
+   van een traject, op de cursuspagina's de duur, de doorlooptijd, de groep en
+   de prijs. Twee per rij, vier vanaf 992px.
+   ========================================================================== */
+.kerncijfers { display: flex; flex-wrap: wrap; }
+.kerncijfers > * { width: 50%; }
+@media (min-width: 992px)  { .kerncijfers > * { width: 25%; } }
+@media (max-width: 575px)  { .kerncijfer { padding-right: var(--space-300); } }
+
+.kerncijfer { display: flex; flex-direction: column; gap: var(--space-200);
+              padding: var(--space-500) var(--space-500) var(--space-500) 0; }
+.kerncijfer__label {
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+}
+.kerncijfer__getal {
+  margin: 0; font-family: var(--font-light); font-weight: var(--weight-light);
+  font-size: clamp(2.5rem, 2rem + 2vw, 4rem); line-height: 1; color: var(--color-groen);
+}
+.kerncijfer__eenheid { font-size: 1rem; margin-left: var(--space-200);
+                       font-family: var(--font-medium); font-weight: var(--weight-medium); }
+.kerncijfer__eenheid:empty { display: none; }
+
+/* --------------------------------------------------------------------------
+   Detailpagina: het ritme uit de referentie. Alles op wit, secties gestapeld
+   in plaats van in twee kolommen, en beeld dat over de volle breedte loopt om
+   de tekstblokken uit elkaar te houden. De schaalsprong doet het werk: een
+   grote kop boven een smalle kolom kleine tekst.
+   -------------------------------------------------------------------------- */
+
+
+/* ============================================================================
+   Paginahero (§6.17)
+   ----------------------------------------------------------------------------
+   Twee helften over de volle breedte: links een grijs vlak met de h1 onderin,
+   rechts een foto. De vaste header ligt er met zijn eigen grijze balk overheen;
+   links loopt dat grijs naadloos door, rechts begint de foto onder de balk.
+
+   Gebruikt door contact.html en over-ons.html.
+   ========================================================================== */
+.paginahero { display: flex; flex-wrap: wrap; background-color: var(--color-grey); }
+
+.paginahero__kop {
+  flex: 1 1 50%; min-width: 0;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: clamp(320px, 30vw, 480px);
+  padding: 160px var(--inset-x) var(--space-800);
+}
+/* De dienstpagina's staan naast de cursuspagina's in het menu en worden ook zo
+   bekeken, dus hun kop hoort even hoog te zijn. De cursuskop is contentgestuurd
+   en zakt vanaf 1440px in op 641px; dat is het getal dat hier staat.
+
+   Onder de 1440 loopt de cursuskop juist op (714px op 992, 729px op 1200), want
+   daar breekt zijn introtekst over meer regels. Dat is niet met een vaste maat
+   te volgen: die reeks gaat eerst omhoog en dan omlaag, dus geen enkele clamp
+   komt erdoorheen. Hier staat daarom de waarde van het brede plateau.
+
+   Onder 768px geldt hij niet. Daar stapelt de hero en zou 640px neerkomen op een
+   grijs blok met alleen een titel erin, ruim een scherm hoog. */
+@media (min-width: 768px) {
+  .paginahero--hoog .paginahero__kop { min-height: 640px; }
+  /* Kop 40, foto 60. Het fotovak is met de hoogte van 640px bijna vierkant en
+     de dienstfoto's zijn liggend; op 50/50 viel ruim veertig procent van de
+     breedte af. Op 60 procent is dat nog een kwart, en de kop heeft aan veertig
+     procent genoeg: een label en een titel van twee woorden. Alleen voor de
+     dienstpagina's (--hoog); de patroonhero's blijven 50/50, want dat patroon
+     is voor een vak van die verhouding getekend. */
+  .paginahero--hoog .paginahero__kop   { flex: 1 1 40%; }
+  .paginahero--hoog .paginahero__beeld { flex: 1 1 60%; }
+}
+
+/* De maat is niet aangeraakt, het afbreken wel. De vaktermen op deze site zijn
+   lange Nederlandse samenstellingen: "Utiliteitsbouw" en "Staalframebouw" passen
+   op 80px niet in een kolom van 624px. Met lang="nl" op de pagina breekt de
+   browser op de juiste plek; overflow-wrap is het vangnet. Dezelfde
+   combinatie staat al op .streamer .title en op .panel-row--4 .panel__title. */
+.paginahero__titel {
+  margin: var(--space-400) 0 0;
+  font-size: clamp(2.75rem, 1.75rem + 4vw, 5rem); line-height: 1;
+  color: var(--color-heading);
+  hyphens: auto; overflow-wrap: anywhere;
+}
+
+.paginahero__beeld { flex: 1 1 50%; min-width: 0; position: relative; }
+.paginahero__beeld img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover; object-position: center 40%;
+}
+
+/* Met het merkpatroon in plaats van een foto. Het patroon is getekend voor dit
+   vak, dus er hoeft niets bijgesneden te worden: op breed scherm past de
+   liggende versie er vrijwel precies in, op een telefoon de vierkante.
+   object-position blijft daarom op het midden staan en niet op de 40% die een
+   foto hier krijgt, want dat zou de stralen half wegsnijden. */
+.paginahero--patroon .paginahero__beeld img { object-position: center; }
+/* Liggende foto in een vak dat op een bureaublad bijna vierkant is: de
+   zijkanten vallen af. Standaard blijft het midden over; met deze modifier de
+   linkerkant, voor foto's waar het onderwerp links staat. Alleen naast de kop:
+   onder 768px is de band breed en laag en snijdt hij juist boven en onder. */
+@media (min-width: 768px) {
+  .paginahero--beeld-links .paginahero__beeld img { object-position: left 40%; }
+}
+/* De balk staat vast over de bovenkant van de pagina heen, en dus over de
+   bovenkant van het patroon. Bij een foto valt dat niet op, bij een patroon met
+   een getekende compositie wel: op 900px lag een derde eronder. De hero wordt
+   daarom een balkhoogte hoger, zodat er onder de balk net zoveel patroon staat
+   als bedoeld. De kop lijnt onderaan uit, dus die zakt mee naar beneden. */
+/* Alleen waar de twee helften naast elkaar staan. Onder 768px staat het patroon
+   erboven in plaats van ernaast en heeft de kop geen minimumhoogte; deze regel
+   zou daar anders een leeg grijs vlak van 400px maken. */
+@media (min-width: 768px) {
+  .paginahero--patroon .paginahero__kop {
+    min-height: calc(clamp(320px, 30vw, 480px) + var(--balk-hoogte));
+  }
+}
+
+@media (max-width: 767px) {
+  .paginahero { flex-direction: column; }
+  /* De foto hoort bovenaan, maar de h1 blijft vooraan in de leesvolgorde.
+     In een kolom is flex-basis de hoogte, dus die moet hier vast staan: een
+     percentage rekent tegen een onbepaalde hoogte en wordt dan nul. */
+  .paginahero__beeld { order: -1; flex: 0 0 220px; }
+  /* De balk ligt vast over de bovenkant van de pagina en dus over de bovenkant
+     van de foto. Bij 220px bleef daar op een telefoon 143px van over, met het
+     onderwerp half onder de balk. Nu 240px foto plus de balkhoogte erbij, zodat
+     er onder de balk werkelijk 240px foto te zien is. */
+  .paginahero--hoog .paginahero__beeld { flex: 0 0 calc(240px + var(--balk-hoogte)); }
+  /* De band is 7:3, de verhouding uit de referentie, plus de hoogte van de
+     balk die eroverheen ligt. Onder de balk staat daarmee precies 7:3 aan
+     patroon; zonder die optelling was op een telefoon de helft van de band
+     onzichtbaar.
+
+     Het moet een verhoudingsvak met padding zijn en geen aspect-ratio: in een
+     kolom is flex-basis de hoogte, en een vak waarvan de inhoud absoluut staat
+     brengt zelf geen hoogte in. Vandaar height:0 met padding, de oude truc die
+     hier nog steeds de enige is die werkt.
+
+     De bron is het vierkante bestand en niet een uitsnede op 7:3: het vak is
+     door de balkhoogte hoger dan 7:3, en dan heeft cover verticaal wat over
+     nodig. */
+  .paginahero--patroon .paginahero__beeld {
+    flex: 0 0 auto; height: 0;
+    padding-top: calc(300% / 7);
+    padding-bottom: var(--balk-hoogte);
+  }
+  .paginahero--patroon .paginahero__beeld img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  }
+  .paginahero__kop {
+    flex: 0 0 auto; min-height: 0;
+    padding: var(--space-700) var(--inset-x) var(--space-800);
+  }
+}
+
+/* ============================================================================
+   Vlakkenrij (§6.18)
+   ----------------------------------------------------------------------------
+   Vier gekleurde vlakken over de volle breedte met de tekst onderin. Op de
+   contactpagina dragen ze de contactgegevens, op over-ons de waarden.
+
+   De rij zit bewust buiten .container: de vlakken lopen tot de schermrand. De
+   tekst houdt wel de pagina-inzet aan, zodat hij op een lijn staat met de kop
+   erboven.
+   ========================================================================== */
+.vlakkenrij {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  margin: 0; padding: 0; list-style: none;
+}
+.vlak {
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 280px;
+  padding: var(--space-800) var(--space-600) var(--space-700);
+}
+.vlak__kop {
+  margin: 0 0 var(--space-300);
+  font-size: 1.5rem; line-height: 1.2;
+  color: var(--color-heading);
+}
+.vlak__tekst {
+  margin: 0;
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: 1rem; line-height: 1.5;
+}
+.vlak__tekst a { color: inherit; text-decoration: underline; }
+.vlak__tekst a:hover { color: var(--color-focus); }
+
+.vlak--geel  { background-color: var(--color-geel); }
+.vlak--geel .vlak__kop,
+.vlak--geel .vlak__tekst { color: var(--color-text-on-accent); }
+.vlak--grijs { background-color: var(--color-grey); }
+.vlak--wit   { background-color: var(--color-white); }
+/* De merkkleur uit het logo, niet de donkerste toon: dit is een gekleurd vlak
+   in een rij naast het accent, grijs en wit, en dan hoort er de merkkleur te
+   staan. Wit haalt op de navy #0D2646 15,19:1, dus zowel de kop als de tekst
+   van 16px zit ruim boven de eis. */
+.vlak--groen { background-color: var(--color-groen); }
+.vlak--groen .vlak__kop,
+.vlak--groen .vlak__tekst { color: var(--color-white); }
+/* Op een indigo vlak kan een link niet naar het marineblauwe accent gaan: die
+   twee liggen te dicht bij elkaar (1,23:1). Hij gaat naar de mist-tint, die op
+   indigo 6,83:1 haalt. */
+.vlak--groen .vlak__tekst a:hover { color: var(--color-secondary); }
+
+.vlak:first-child { padding-left: var(--inset-x); }
+.vlak:last-child  { padding-right: var(--inset-x); }
+
+@media (max-width: 991px) {
+  .vlakkenrij { grid-template-columns: repeat(2, 1fr); }
+  .vlak { min-height: 220px; }
+  .vlak:nth-child(odd)  { padding-left: var(--inset-x); }
+  .vlak:nth-child(even) { padding-right: var(--inset-x); }
+}
+@media (max-width: 575px) {
+  .vlakkenrij { grid-template-columns: 1fr; }
+  .vlak { min-height: 0; padding: var(--space-700) var(--inset-x) var(--space-600); }
+}
+
+/* De band waar zo'n rij in zit: kop met de pagina-inzet, vlakken tot de rand,
+   en geen witruimte eronder omdat ze op de voet of het volgende vlak aansluiten. */
+.vlakkenband { background-color: var(--color-white); }
+.vlakkenband__kop { padding: 0 var(--inset-x) var(--space-800); }
+
+/* ============================================================================
+   Quotes (§6.20)
+   ----------------------------------------------------------------------------
+   Eén citaat per keer, groot uitgelicht: beeld links, tekst rechts, met een
+   streepje boven de naam. Onder 768px komt het beeld boven de tekst.
+
+   Er stonden hier eerder drie kleine kaarten naast elkaar. Eén citaat groot
+   leest beter dan drie kleine, maar het legt ook meer gewicht op wat er staat;
+   zie CONTENT-TODO.md, deze citaten zijn nog verzonnen.
+   ========================================================================== */
+/* Krapper dan de standaard sectiemaat: dit is één citaat met een foto, geen
+   blok met veel inhoud, en op 96px boven en onder viel het uit elkaar. */
+.quotes { background-color: var(--color-white); padding: var(--space-700) 0; }
+.quotes__kop { padding: 0 var(--inset-x) var(--space-600); }
+.quotes__kop .subtitle { margin-bottom: var(--space-400); display: block; }
+
+.quotes__venster { padding: 0 var(--inset-x); }
+/* Zonder JavaScript staan de citaten onder elkaar; dan hoort er ruimte tussen.
+   Allebei de kanten moeten zichtbaar zijn: met alleen `.quote + .quote` kreeg
+   het tweede en derde citaat die marge ook als de slider draait, want het
+   citaat ervoor staat er dan nog wel maar op display:none. Je zag dus 64px
+   extra witruimte verschijnen zodra je doorklikte. */
+.quote:not([hidden]) + .quote:not([hidden]) { margin-top: var(--space-800); }
+.quote {
+  margin: 0;
+  display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: var(--space-700); align-items: stretch;
+}
+.quote[hidden] { display: none; }
+
+/* Draait de slider, dan liggen alle citaten op elkaar in &eacute;&eacute;n rastervak. De rij
+   is daardoor altijd zo hoog als het langste citaat, en de pijlen eronder
+   blijven staan waar ze staan; zonder dit sprong de nav 73px op en neer omdat
+   het ene citaat drie regels is en het andere vier.
+
+   De verborgen citaten blijven dus staan, maar op visibility:hidden. Dat haalt
+   ze uit de tabvolgorde en uit wat een schermlezer voorleest, precies als
+   display:none, maar ze tellen wel mee voor de hoogte. site.js zet de klasse;
+   zonder JavaScript staan de citaten gewoon onder elkaar. */
+.quotes__venster--slider { display: grid; }
+.quotes__venster--slider .quote { grid-area: 1 / 1; margin-top: 0; }
+
+/* Het wisselen gaat met een overvloeiing in plaats van in &eacute;&eacute;n beeldje. Het oude
+   citaat gaat er in 150ms uit en het nieuwe komt daarna in 200ms binnen, en dus
+   niet allebei tegelijk half doorzichtig: twee foto's over elkaar heen geeft
+   een dubbele belichting. Zo is het een korte, schone wissel van 350ms.
+
+   visibility springt pas aan het eind om, anders zou het uitgaande citaat er
+   meteen af zijn en zag je de overvloeiing niet. Wie beweging heeft uitgezet
+   merkt er niets van: de regel bovenaan zet elke overgang op 0,01ms. */
+.quotes__venster--slider .quote {
+  opacity: 1;
+  transition: opacity 200ms var(--ease-standard) 150ms, visibility 0s;
+}
+.quotes__venster--slider .quote[hidden] {
+  display: grid; visibility: hidden; opacity: 0;
+  transition: opacity 150ms var(--ease-standard), visibility 0s linear 150ms;
+}
+/* Het beeld is een rechthoek die net zo hoog is als het citaat ernaast, in
+   plaats van een uitsnede op een vaste verhouding met wit eronder. De hoogte
+   komt dus uit de tekst en niet uit een getal hier: de onderkant van de foto
+   ligt altijd gelijk met de onderkant van het citaat. Draait de slider, dan is
+   de rij zo hoog als het langste citaat, dus houdt de foto ook bij het wisselen
+   dezelfde maat.
+
+   De afbeelding staat absoluut, zodat ze zelf geen hoogte meer inbrengt --
+   anders zou de rij zo hoog worden als de foto en zou height:100% terugvallen
+   op haar eigen hoogte. Dezelfde constructie staat op de dienstkaarten. De
+   min-height is de bodem voor het geval een citaat maar twee regels is. */
+.quote__beeld { position: relative; margin: 0; min-height: 220px; }
+.quote__beeld img {
+  position: absolute; inset: 0;
+  display: block; width: 100%; height: 100%; object-fit: cover;
+}
+.quote__body { display: flex; flex-direction: column; align-items: flex-start; }
+.quote__tekst {
+  margin: 0;
+  font-family: var(--font-light); font-weight: var(--weight-light);
+  font-size: clamp(1.375rem, 1rem + 1.4vw, 2.25rem); line-height: 1.25;
+  color: var(--color-heading);
+}
+.quote__tekst p { margin: 0; font: inherit; }
+/* Het streepje uit de referentie: kort, boven de naam. */
+.quote__streep {
+  width: 88px; height: 0; margin: var(--space-600) 0 var(--space-400);
+  border: 0; border-top: 1px solid var(--color-groen);
+}
+.quote__naam {
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: 1rem; line-height: 1.5; color: var(--color-text-primary);
+}
+/* Het logo van de opdrachtgever, onder de naam. Op hoogte uitgelijnd met een
+   breedtebegrenzing erbij, net als in de logoband: de dertien logo's lopen van
+   160 tot 478px breed en zonder begrenzing krijgt een lang woordmerk het
+   dubbele gewicht van een compact merk. */
+.quote__logo { margin: var(--space-500) 0 0; }
+.quote__logo img { display: block; height: 32px; width: auto; max-width: 170px;
+                   object-fit: contain; object-position: left center; }
+/* Het voorlopige woordmerk is getekend op 80px hoog met lucht eronder; op de
+   32px van een echt logo blijven de letters daardoor klein. Vandaar iets meer
+   hoogte, tot er echte logo's zijn. */
+.quote__logo--plaatshouder img { height: 40px; max-width: 200px; }
+@media (max-width: 767px) {
+  .quote__logo { margin-top: var(--space-500); }
+  .quote__logo img { height: 28px; max-width: 150px; }
+  .quote__logo--plaatshouder img { height: 34px; max-width: 175px; }
+}
+
+.quotes__nav {
+  display: flex; align-items: center; gap: var(--space-400);
+  padding: var(--space-600) var(--inset-x) 0;
+}
+.quotes__pijl { cursor: pointer; background: none; border: 0; padding: 0; }
+/* De vorige-pijl is dezelfde ronde knop, een halve slag gedraaid. Dat kan omdat
+   er geen tekst in zit: de knop is een cirkel met een pijl. De pijlwissel bij
+   hover schuift daardoor mee naar links, wat voor 'vorige' juist klopt. */
+.quotes__pijl[data-quote="vorige"] .button--icon { transform: rotate(180deg); }
+/* Het balkje dat aangeeft hoe lang een citaat blijft staan. Het spoor is
+   subtiel; de gevulde helft draagt de betekenis en haalt op wit en op het spoor
+   ruim 3:1. Het is versiering naast de teller, die hetzelfde in tekst zegt
+   ("2 / 3"), dus er gaat geen informatie verloren als iemand het niet ziet.
+
+   De animatie loopt niet uit de stylesheet maar wordt per citaat door site.js
+   opnieuw gezet, want hij moet bij elke wissel van voren af aan beginnen. */
+.quotes__voortgang {
+  flex: 0 0 72px; height: 3px;
+  background-color: var(--color-border-soft); overflow: hidden;
+}
+.quotes__voortgang span {
+  display: block; width: 100%; height: 100%;
+  background-color: var(--color-primary);
+  transform: scaleX(0); transform-origin: left center;
+}
+@keyframes quote-voortgang {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@media (max-width: 767px) { .quotes__voortgang { flex-basis: 56px; } }
+
+.quotes__teller {
+  margin: 0;
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 767px) {
+  /* Onder elkaar staat het beeld niet meer naast tekst waar het zich naar kan
+     richten, dus krijgt het hier weer een eigen verhouding. De align-items moet
+     dan terug naar start: bij stretch krijgt het vak een vaste hoogte van de rij
+     en rekent aspect-ratio de breedte daaruit terug, en dan loopt de foto het
+     scherm uit. */
+  .quote { grid-template-columns: 1fr; gap: var(--space-600); align-items: start; }
+  .quote__beeld { min-height: 0; aspect-ratio: 16 / 10; }
+  .quote__streep { margin: var(--space-500) 0 var(--space-400); }
+  .quotes__nav { padding-top: var(--space-500); }
+}
+
+/* ============================================================================
+   Footer (§6.16)
+   ========================================================================== */
+
+.footer { width: 100%; }
+.footer--gap { row-gap: var(--space-700); }
+.footer--widgets { padding: var(--space-800) var(--inset-x); background-color: var(--color-grey); }
+@media (max-width: 576px) {
+  .footer--widgets { padding: var(--space-section-y-mobile) var(--inset-x); }
+  .footer .widget { margin-bottom: var(--space-700); }
+}
+/* De kolomkoppen van de voet stonden op h4 en volgden op de h2 van het
+   slotblok. Dat is een sprong van twee niveaus, en dat is de enige fout die
+   Lighthouse op toegankelijkheid gaf (72 van de 73 pagina's).
+
+   Ze staan nu op h2. Niet h3: deze koppen zijn geen onderdeel van het
+   slotblok erboven maar eigen groepen binnen de voet-landmark, dus een niveau
+   dieper zou de verkeerde structuur suggereren. De klasse doet de opmaak, zodat
+   het niveau los staat van hoe het eruitziet. */
+.footer__kop {
+  font-size: 0.9rem; text-transform: uppercase; letter-spacing: var(--tracking-label);
+  margin-bottom: var(--space-600); font-family: var(--font-medium); font-weight: var(--weight-medium);
+}
+.footer ul { list-style: none; margin: 0; padding: 0; }
+.footer ul li { margin-bottom: var(--space-300); }
+.footer ul li a { color: var(--color-text-primary); font-size: 0.875rem; }
+.footer a { text-decoration: none; font-family: var(--font-regular); font-weight: var(--weight-regular); text-transform: uppercase; }
+.footer a:hover { color: var(--color-focus); }
+.footer p { color: var(--color-text-primary); }
+.footer--line { width: 100%; height: 1px; background-color: var(--color-grey); }
+.footer--copyright { padding: var(--space-panel); background-color: var(--color-white); }
+@media (max-width: 576px) { .footer--copyright { padding: var(--space-section-y-mobile) var(--inset-x); } }
+.footer--copyright :is(span, a) {
+  margin: 0 1rem; color: var(--color-text-primary);
+  text-transform: none; font-family: var(--font-light); font-weight: var(--weight-light);
+}
+
+/* ============================================================================
+   Accordeon (§6.19)
+   ========================================================================== */
+
+.accordion__item { display: flex; flex-direction: column; padding: var(--space-300) 0; }
+.accordion__header {
+  display: flex; gap: 2rem; align-items: center; cursor: pointer;
+  width: 100%; padding: 0; border: none; background: none; text-align: left;
+  transition: all var(--duration-base) var(--ease-rotate);
+}
+.accordion__number { font-size: 1.25rem; font-family: var(--font-light); font-weight: var(--weight-light); color: var(--color-text-primary); }
+.accordion__title { flex: 1; font-family: var(--font-regular); font-weight: var(--weight-regular);
+                    font-size: clamp(1.25rem, 1rem + 1.5vw, 3rem); line-height: 1.1; color: var(--color-text-primary); }
+.accordion__suffix {
+  position: relative; width: 40px; height: 40px; flex-shrink: 0;
+  border-radius: var(--radius-pill); background-color: var(--color-grey);
+  transition: background-color var(--duration-base) var(--ease-rotate);
+}
+.accordion__header:hover .accordion__suffix,
+.accordion__item.open .accordion__suffix { background-color: var(--color-geel); }
+/* Het plusje staat in rust op grijs en daarna op het accent: op donker accent
+   wordt het wit. */
+.accordion__header:hover .accordion__icon::before,
+.accordion__header:hover .accordion__icon::after,
+.accordion__item.open .accordion__icon::before,
+.accordion__item.open .accordion__icon::after { background-color: var(--color-text-on-accent); }
+.accordion__icon { position: absolute; inset: 12px; width: 16px; height: 16px; }
+.accordion__icon::before, .accordion__icon::after {
+  content: ""; position: absolute; top: 50%; left: 0; width: 16px; height: 2px;
+  margin-top: -1px; background-color: var(--color-groen);
+  transition: transform var(--duration-quick) ease-out;
+}
+.accordion__icon::after { transform: rotate(90deg); }
+.accordion__item.open .accordion__icon::after { transform: rotate(180deg); }
+.accordion__details { height: 0; overflow: hidden; transition: height var(--duration-base) var(--ease-standard); }
+.accordion__details-inner { padding: var(--space-500) 0 var(--space-200) 0; max-width: var(--content-max-half); }
+@media (max-width: 768px) {
+  .accordion__suffix { width: 32px; height: 32px; }
+  .accordion__icon { inset: 10px; width: 12px; height: 12px; }
+  .accordion__icon::before, .accordion__icon::after { width: 12px; }
+}
+
+/* ============================================================================
+   Formuliervelden (§6.20, afgeleid)
+   ========================================================================== */
+
+.field {
+  width: 100%; height: 52px; padding: var(--space-300) var(--space-400);
+  border: none; border-radius: var(--radius-none);
+  background: var(--color-white); color: var(--color-text-primary);
+  font-family: var(--font-regular); font-weight: var(--weight-regular); font-size: 1rem;
+}
+.field::placeholder { color: var(--color-text-primary); opacity: 0.5; }
+.field:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.field__label {
+  display: block; margin-bottom: var(--space-200);
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+}
+textarea.field { height: auto; min-height: 10em; line-height: 1.5; }
+
+/* ============================================================================
+   Focus (§11.7)
+   ========================================================================== */
+
+.header a:focus-visible, .header button:focus-visible,
+.mobile-panel a:focus-visible, .mobile-panel button:focus-visible,
+#hamburger:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible, .field:focus-visible {
+  outline: 2px solid var(--color-groen); outline-offset: 2px;
+}
+
+/* ============================================================================
+   Beperkte beweging (§9.4)
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee-streamer .wrapper { animation: none; }
+  .logo-slider__spoor { animation: none; }
+}
+
+/* ============================================================================
+   Header (§6.1 tot §6.2): vast, over de inhoud heen
+   ========================================================================== */
+
+.header {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: var(--z-header);
+  box-sizing: border-box;
+  transition: background-color var(--duration-base) var(--ease-standard),
+              transform var(--duration-base) var(--ease-emphasized);
+}
+.header--container {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-650);
+  max-width: var(--container-max); margin-inline: auto;
+  padding: var(--space-600) var(--inset-x);
+}
+@media (max-width: 768px) { .header--container { padding: var(--space-400); } }
+
+/* De twee logovarianten liggen op elkaar in één rastervak, zodat er niets
+   verspringt als de header van kleur wisselt; welke je ziet, regelt de opacity
+   verderop bij .header--light. */
+.header--logo { display: grid; align-items: center; justify-items: start;
+                margin-right: var(--space-650); }
+/* De gids gaat uit van een beeldmerk van 57x24; het logo hier is een woordmerk.
+   INFERRED: de hoogtes uit §6.1 blijven staan, met een breedtebegrenzing erbij,
+   anders zou het woordmerk op mobiel de halve balk vullen. */
+/* Het echte logo is 5,68:1 en draagt de ondertitel "Kwaliteit | Arbo | Milieu"
+   in de onderste helft. Op 32px hoog is die regel 6px en dus onleesbaar; op 40px
+   is het 8px. Vandaar 40px in plaats van de 32 die hier eerder stond, en een
+   max-width die bij die verhouding past.
+   TODO-CONTENT: een compacte variant zonder ondertitel is wat een balk eigenlijk
+   nodig heeft. Zie CONTENT-TODO.md. */
+.header--logo img { grid-area: 1 / 1;
+                    height: 40px; max-height: 40px; width: auto; max-width: 227px;
+                    transition: opacity var(--duration-base) var(--ease-standard); }
+@media (max-width: 768px) { .header--logo img { height: 34px; max-height: 34px; max-width: 193px; } }
+.header--logo-wit { opacity: 0; }
+
+.header--tagline {
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: 0.675rem; line-height: 1.1; letter-spacing: var(--tracking-label);
+  text-transform: uppercase; color: var(--color-groen-diep);
+}
+@media (max-width: 1199px) { .header--tagline { display: none; } }
+
+/* Boven de groene hero staat de header op wit; daarna schakelt hij om. */
+/* Op een donkere achtergrond wisselt het logo naar de witte variant die Martin
+   heeft aangeleverd. Een filter over het gekleurde logo kan hier niet: de
+   letters MADEGRO zijn uitgespaard, dus brightness(0) invert(1) laat een
+   massief wit blok over. Vandaar twee bestanden in plaats van één. */
+.header--light .header--logo-kleur { opacity: 0; }
+.header--light .header--logo-wit { opacity: 1; }
+.header--light .header--tagline { color: var(--color-white); }
+.header--light .submenu--link { background-color: transparent; color: var(--color-white); }
+.header--light .submenu--link:not(.highlight):hover { background-color: var(--color-white); color: var(--color-text-primary); }
+.header--light .hamburger { background-color: transparent; color: var(--color-white); }
+.header--light .hamburger:hover { background-color: var(--color-geel); color: var(--color-text-on-accent); }
+
+.header--scrolled { background-color: var(--color-grey); }
+.header--scrolled .hamburger { background-color: var(--color-white); }
+.header--scrolled .hamburger:hover { background-color: var(--color-geel); color: var(--color-text-on-accent); }
+.header--scroll-hidden { transform: translateY(-100%); }
+
+/* Navigatie ≥1200px: één doorlopende witte balk, geen tussenruimte */
+.submenu { display: flex; align-items: center; }
+@media (max-width: 1199px) { .submenu { display: none; } }
+.submenu--link {
+  display: flex; align-items: center; gap: var(--space-200);
+  height: 52px; padding: var(--space-300) var(--space-400);
+  /* Geen kapitalen in de balk: de menu-items zijn woorden om te lezen, geen
+     labels. Zonder kapitalen is 11px te klein, vandaar 14px, en de extra
+     letterafstand kan eraf: die is er voor kapitalen. Het mobiele paneel
+     schreef de items al zo. */
+  font-family: var(--font-semibold); font-weight: var(--weight-semibold);
+  font-size: 0.875rem; line-height: 1.1;
+  letter-spacing: 0; white-space: nowrap;
+  color: var(--color-text-primary); background-color: var(--color-white);
+  border: none; border-radius: var(--radius-none); cursor: pointer; text-decoration: none;
+  transition: all var(--duration-legacy) var(--ease-legacy);
+}
+.submenu--link:not(.highlight):hover { background-color: var(--color-groen); color: var(--color-white); }
+/* Dezelfde vulling als de primaire knop: dit is de CTA in de balk, en twee
+   CTA's naast elkaar in twee verschillende kleuren leest als een fout. Hover
+   gaat een stap donkerder; naar --color-groen springen kan niet meer, want dat
+   is nu de rustkleur zelf. */
+.submenu--link.highlight { background-color: var(--color-primary); color: var(--color-text-on-accent); }
+.submenu--link.highlight:hover { background-color: var(--color-primary-deep); color: var(--color-white); }
+
+/* ---- Uitklapmenu --------------------------------------------------------
+   Een menu-item met sublinks opent een vlak over de volle breedte onder de
+   balk: links de sublinks met hun ondertitel, rechts een kaart met een foto en
+   een knop. De balk is position:fixed en dus het ankerpunt.
+
+   Onder 1200px is de balk zelf al weg en neemt het mobiele paneel het over. */
+/* Hier stond `font: inherit` om de knop de letter van de pagina te geven. Dat
+   deed het omgekeerde: die snelkoppeling erft van .submenu, dus van de nav, en
+   zette daarmee ook de maat, snede en kapitalen van .submenu--link terug. Daardoor
+   stonden Diensten en Cursussen groter en lichter dan Cases en Over ons.
+   .submenu--link zet die eigenschappen zelf al, en een regel van de auteur wint
+   van wat de browser aan een <button> geeft. Er hoeft hier dus niets te staan. */
+.submenu--chevron { fill: currentColor; flex-shrink: 0;
+                    transition: transform var(--duration-base) var(--ease-standard); }
+.submenu--trigger[aria-expanded="true"] .submenu--chevron { transform: rotate(180deg); }
+/* Het open vlak wint van de actieve staat, ook op een lichte header: anders
+   ziet de knop waar het vlak onder hangt eruit alsof hij dicht is. */
+.submenu--trigger[aria-expanded="true"],
+.header--light .submenu--trigger[aria-expanded="true"],
+.submenu--link.is-actief.submenu--trigger[aria-expanded="true"] {
+  background-color: var(--color-groen); color: var(--color-white);
+}
+
+.uitklap {
+  position: absolute; top: 100%; left: 0; width: 100%;
+  z-index: var(--z-header-dropdown);
+  background-color: var(--color-white);
+  visibility: hidden; opacity: 0; transform: translateY(-8px); pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-standard),
+              transform var(--duration-base) var(--ease-standard),
+              visibility var(--duration-base) var(--ease-standard);
+}
+.uitklap.is-open { visibility: visible; opacity: 1; transform: none; pointer-events: auto; }
+@media (max-width: 1199px) { .uitklap { display: none; } }
+
+/* Het paneel hangt onder een header van 116px en had geen hoogtebegrenzing.
+   Met zeven werkzaamheden mét een regel uitleg is de lijst 724px hoog; samen
+   met de header vraagt dat 840px. Op een venster van 768px hoog (een laptop van
+   1366x768) liep de onderste rij daarmee 72px buiten beeld, zonder dat je erbij
+   kon: het paneel scrolde niet mee.
+
+   Het paneel wordt daarom afgetopt op wat er onder de header past en de lijst
+   schuift zelf. De kaart ernaast blijft staan, want die is één beeld en heeft
+   niets te scrollen. De 116px is hier een vaste waarde en geen variabele: de
+   uitklap bestaat alleen vanaf 1200px breed, en daar is de header altijd 116px
+   hoog, ook in de gescrolde staat. */
+.uitklap__inner {
+  display: flex; max-width: var(--container-max); margin-inline: auto;
+  max-height: calc(100vh - 116px);
+  max-height: calc(100dvh - 116px);
+}
+.uitklap__kolom {
+  flex: 1 1 60%; min-width: 0; padding: var(--space-800) var(--inset-x);
+  overflow-y: auto; overscroll-behavior: contain;
+}
+.uitklap__lijst {
+  list-style: none; margin: var(--space-600) 0 0; padding: 0;
+  display: flex; flex-direction: column;
+}
+.uitklap__link {
+  display: flex; flex-direction: column; gap: var(--space-100);
+  padding: var(--space-400) var(--space-400) var(--space-400) 0;
+  text-decoration: none; color: var(--color-text-primary);
+  transition: color var(--duration-instant) linear;
+}
+.uitklap__naam {
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: 1.375rem; line-height: 1.2; color: var(--color-heading);
+}
+.uitklap__uitleg {
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: 0.9375rem; line-height: 1.4; color: var(--color-text-primary);
+}
+.uitklap__link:hover .uitklap__naam { color: var(--color-groen); }
+.uitklap__link:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+.uitklap__kaart {
+  flex: 1 1 40%; min-width: 0; position: relative; overflow: hidden;
+  display: flex; align-items: flex-end;
+  background-color: var(--color-groen-diepst);
+}
+.uitklap__kaart img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* Twee lagen: de gradient in de merkkleur met daaronder een donkere laag voor
+   de leesbaarheid. De tekst staat op 43% van de kaart, net als in de fotohero's,
+   dus dezelfde waarden werken.
+
+   Deze rgba-waarde is twee kleurwissels achtergebleven. Hij stond op petrol
+   `rgba(1, 126, 132)`, werd bij de wissel naar indigo alleen in het commentaar
+   bijgewerkt, en bleef bij de wissel naar deze navy op die indigo
+   `rgba(70, 56, 120)` staan. In het menu was dat te zien als een paarse zweem
+   over de foto naast de sublinks.
+
+   Waarom het twee keer is gemist: de controle in eindcontrole.py zocht op de
+   hexvorm `#463878` en op één rgba-schrijfwijze met spaties. Deze stond er
+   zonder spaties in de tokenregel en met spaties hier. Die controle kijkt nu
+   naar de rgb-getallen zelf, ongeacht schrijfwijze.
+
+   Hermeten met de navy laag, op het 98e percentiel van elk tekstvak, over de
+   vier foto's die in het menu staan (slechtste van de vier):
+
+     kop   (24px) nodig 3     gemeten  8,40:1  (op sfh-staalframe)
+     body  (15px) nodig 4,5   gemeten 10,44:1  (op sfh-woningbouw)
+
+   De knop erin is een wit vlak met groene tekst, 5,35:1, en staat dus los van
+   deze sluier.
+
+   Navy is donkerder dan de indigo die er stond, dus het contrast kon alleen
+   beter worden. Met alleen deze gradient zou de kop op 2,1:1 staan; de donkere
+   laag eronder blijft dus nodig. */
+.uitklap__sluier {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(rgba(13, 38, 70, .20) 0%, rgba(13, 38, 70, .80) 100%),
+    linear-gradient(rgba(0, 0, 0, .50) 0%, rgba(0, 0, 0, .75) 100%);
+}
+.uitklap__kaart-tekst {
+  position: relative; z-index: var(--z-content);
+  padding: var(--space-700); display: flex; flex-direction: column; gap: var(--space-400);
+  align-items: flex-start;
+}
+.uitklap__kaart-kop {
+  margin: 0; font-size: 1.5rem; line-height: 1.2; color: var(--color-white);
+}
+.uitklap__kaart-body {
+  margin: 0; max-width: 34ch;
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: 0.9375rem; line-height: 1.5; color: var(--color-white);
+}
+
+/* Mobiele balk (<1200px) */
+.hamburger {
+  display: none; align-items: center; gap: var(--space-200);
+  height: 45px; padding: var(--space-200) var(--space-300);
+  border: none; cursor: pointer;
+  background-color: var(--color-grey); color: var(--color-groen-diep);
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: 0.6875rem; line-height: 1.1; letter-spacing: var(--tracking-label);
+  text-decoration: none; white-space: nowrap;
+  transition: background-color var(--duration-instant) linear,
+              color var(--duration-instant) linear;
+}
+@media (max-width: 1199px) { .hamburger { display: flex; } }
+.hamburger:hover { background-color: var(--color-geel); color: var(--color-text-on-accent); }
+
+/* ============================================================================
+   Mobiel schuifpaneel (§6.5)
+   ========================================================================== */
+
+.mobile-panel {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: 50vw; max-width: 100vw; z-index: var(--z-panel);
+  background-color: var(--color-white);
+  display: flex; flex-direction: column;
+  transform: translateX(100%); visibility: hidden;
+  overflow-y: auto; overflow-x: hidden; overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  transition: transform var(--duration-slow) var(--ease-standard),
+              visibility var(--duration-slow) var(--ease-standard);
+}
+@media (max-width: 768px), (orientation: portrait) { .mobile-panel { width: 100vw; } }
+.mobile-panel.is-open { transform: translateX(0); visibility: visible; }
+
+.mobile-panel--overlay {
+  position: fixed; inset: 0; z-index: var(--z-panel-overlay);
+  background-color: var(--overlay-panel);
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+.mobile-panel--overlay.is-open { opacity: 1; pointer-events: auto; }
+
+.mobile-panel--topbar {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-400);
+  padding: 28px 42px 28px 76px;
+  opacity: 0; transform: translateY(-10px);
+  transition: opacity var(--duration-base) var(--ease-standard) var(--duration-instant),
+              transform var(--duration-base) var(--ease-standard) var(--duration-instant);
+}
+.mobile-panel.is-open .mobile-panel--topbar { opacity: 1; transform: translateY(0); }
+@media (max-width: 768px) { .mobile-panel--topbar { padding: 20px 24px; } }
+
+.mobile-panel--chip {
+  display: inline-flex; align-items: center; gap: var(--space-200);
+  height: 52px; padding: var(--space-300) var(--space-400);
+  border: none; cursor: pointer; text-decoration: none;
+  background-color: var(--color-grey); color: var(--color-text-primary);
+  font-family: var(--font-semibold); font-weight: var(--weight-semibold);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+  transition: all var(--duration-fast) var(--ease-legacy);
+}
+.mobile-panel--chip:hover { background-color: var(--color-groen); color: var(--color-white); }
+.mobile-panel--chip.is-close { background-color: var(--color-geel); color: var(--color-text-on-accent); }
+
+/* Hier stond een vaste marge van 200px boven het menu (120 op een telefoon).
+   Dat was gemaakt voor een korte lijst; met de uitklappers erbij werd het een
+   gat, en verkleinen verplaatste het gat alleen naar onderen.
+
+   Nu twee auto-marges: die op de knop onderaan stond er al, deze komt erbij.
+   Flexbox verdeelt de overgebleven ruimte dan gelijk over beide, dus het menu
+   staat gecentreerd tussen de bovenbalk en de knop. Past het niet meer, bijvoorbeeld bij een
+   opengeklapt submenu op een kleine telefoon, dan worden de auto-marges nul
+   en scrollt het paneel gewoon, zonder dat er iets wegvalt. */
+.mobile-panel--nav { margin-top: auto; padding: var(--space-700) 42px var(--space-700) 76px; }
+@media (max-width: 768px) { .mobile-panel--nav { padding: var(--space-600) 40px; } }
+.mobile-panel--label {
+  font-family: var(--font-semibold); font-weight: var(--weight-semibold);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+  margin-bottom: var(--space-600); display: block;
+}
+.mobile-panel--list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-400); }
+.mobile-panel--list--secondary { gap: 0; margin-top: var(--space-700); }
+.mobile-panel--nav-link {
+  display: block; text-decoration: none; color: var(--color-text-primary);
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: 2.5625rem; line-height: 1.1;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity var(--duration-slow) var(--ease-standard),
+              transform var(--duration-slow) var(--ease-standard);
+}
+.mobile-panel--list--secondary .mobile-panel--nav-link { font-size: 1.375rem; padding: var(--space-200) 0; }
+.mobile-panel.is-open .mobile-panel--nav-link { opacity: 1; transform: translateY(0); }
+@media (max-width: 768px) { .mobile-panel--nav-link { font-size: 1.75rem; } }
+
+/* Een menu-item met sublinks is in het paneel een uitklapper. De knop ziet er
+   hetzelfde uit als een gewone menulink; alleen de chevron komt erbij. */
+.mobile-panel--nav-knop {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-400);
+  width: 100%; background: none; border: none; padding: 0; cursor: pointer;
+  text-align: left;
+}
+.mobile-panel--nav-knop .submenu--chevron { width: 20px; height: 20px; }
+.mobile-panel--sublijst {
+  list-style: none; margin: 0; padding: 0;
+  overflow: hidden; height: 0;
+  transition: height var(--duration-base) var(--ease-standard);
+}
+.mobile-panel--sublijst[hidden] { display: block; height: 0; }
+.mobile-panel--sublink {
+  display: block; padding: var(--space-300) 0; text-decoration: none;
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: 1.375rem; line-height: 1.3; color: var(--color-text-primary);
+}
+.mobile-panel--sublink:hover { color: var(--color-groen); }
+@media (max-width: 768px) { .mobile-panel--sublink { font-size: 1.125rem; } }
+
+/* Tekst die bij hover omhoog rolt naar de identieke tweede span */
+/* De link bevat twee identieke spans onder elkaar; bij hover rolt de binnenste
+   de helft omhoog en zie je de tweede. Beide spans zijn precies zo hoog als het
+   venster, anders staan ze naast elkaar of klopt de halve slag niet. */
+.mobile-panel--text-slide { --rol-hoogte: 58px; display: block; height: var(--rol-hoogte); overflow: hidden; }
+.mobile-panel--list--secondary .mobile-panel--text-slide { --rol-hoogte: 45px; }
+@media (max-width: 768px) { .mobile-panel--text-slide { --rol-hoogte: 40px; } }
+.mobile-panel--text-slide-inner { display: block; transition: transform var(--duration-base) var(--ease-standard); }
+.mobile-panel--text-slide-inner > span { display: block; height: var(--rol-hoogte); line-height: var(--rol-hoogte); }
+.mobile-panel--nav-link:hover .mobile-panel--text-slide-inner { transform: translateY(-50%); }
+
+.mobile-panel--cta { margin-top: auto; padding: 0 76px 48px; }
+@media (max-width: 768px) { .mobile-panel--cta { padding: 0 40px 48px; } }
+.mobile-panel--cta > * { margin-bottom: var(--space-300); }
+
+/* ============================================================================
+   Kleine hulpklassen
+   ========================================================================== */
+
+.hidden { display: none !important; }
+
+/* Overslaan-link: alleen zichtbaar zodra hij focus krijgt. */
+.skip-link {
+  position: absolute; left: var(--space-400); top: var(--space-400);
+  z-index: calc(var(--z-header) + 1);
+  transform: translateY(-200%);
+  background: var(--color-geel); color: var(--color-text-on-accent);
+  padding: var(--space-300) var(--space-400);
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+  text-decoration: none;
+  transition: transform var(--duration-fast) var(--ease-standard);
+}
+.skip-link:focus { transform: translateY(0); }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ============================================================================
+   Contactformulier (§6.20, afgeleid)
+   De gids kent geen formulier: de referentiepagina heeft er geen. De velden
+   volgen de afleiding die er wel staat: 52px hoog, geen radius, geen rand,
+   12/16 padding en een uppercase label van 11px.
+   ========================================================================== */
+
+.contactformulier { display: flex; flex-direction: column; gap: var(--space-500); }
+
+.veld-rij { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-500); }
+@media (max-width: 576px) { .veld-rij { grid-template-columns: 1fr; } }
+
+.veld { display: flex; flex-direction: column; }
+
+/* De bijlagen op de offertepagina staan in een fieldset, zodat de regel over de
+   maximale grootte als legenda bij de vijf velden hoort en een schermlezer die
+   koppeling ook doorgeeft. De browserrand en -marge van een fieldset gaan eraf;
+   verder is het dezelfde opmaak als de rest van het formulier. */
+.veld-groep { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column;
+              gap: var(--space-500); }
+.veld-groep__kop {
+  padding: 0; margin-bottom: var(--space-200);
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+/* Een bestandsveld is een invoerveld met een knop erin. Het veld volgt .field;
+   de knop erin krijgt dezelfde vorm als de kleine knoppen elders: hoekig, klein
+   en in hoofdletters. Vorm en maten komen uit de bestaande tokens. */
+.field--bestand { height: auto; padding: var(--space-300) var(--space-400); line-height: 1.5; }
+.field--bestand::file-selector-button {
+  margin-right: var(--space-400);
+  padding: var(--space-200) var(--space-300);
+  border: none; border-radius: var(--radius-none);
+  background: var(--color-grey-diep); color: var(--color-text-primary);
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-legacy);
+}
+.field--bestand::file-selector-button:hover { background: var(--color-geel); color: var(--color-text-on-accent); }
+
+.veld__fout {
+  margin: var(--space-200) 0 0;
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+  color: var(--color-text-primary);
+  background: var(--color-geel);
+  padding: var(--space-200) var(--space-300);
+  align-self: flex-start;
+}
+.veld__fout[hidden] { display: none; }
+
+.field[aria-invalid="true"] { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+/* Een veld is wit (§6.20). Op een witte band zou het dan verdwijnen: er zijn
+   geen randen om het af te bakenen (DR-3), dus het vlak is het veld. Op wit
+   draaien we de twee kleuren daarom om. */
+.background--white .field { background: var(--color-grey); }
+.background--white .veld__fout { background: var(--color-geel); color: var(--color-text-on-accent); }
+
+select.field { appearance: none; cursor: pointer;
+               background-image: linear-gradient(45deg, transparent 50%, var(--color-groen) 50%),
+                                 linear-gradient(135deg, var(--color-groen) 50%, transparent 50%);
+               background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%;
+               background-size: 6px 6px, 6px 6px; background-repeat: no-repeat;
+               padding-right: var(--space-800); }
+
+.akkoord { display: flex; align-items: flex-start; gap: var(--space-300); cursor: pointer;
+           font-family: var(--font-regular); font-weight: var(--weight-regular);
+           font-size: 1rem; line-height: 1.5; }
+.akkoord input { width: 24px; height: 24px; flex-shrink: 0; margin: 0;
+                 accent-color: var(--color-groen); cursor: pointer; }
+.akkoord a { color: var(--color-text-primary); }
+
+.honeypot { position: absolute; left: -9999px; width: 0; height: 0; opacity: 0; }
+
+.contactformulier__voet { display: flex; gap: var(--space-400); align-items: center; }
+.contactformulier__melding {
+  margin: 0;
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+}
+.contactformulier__melding:empty { display: none; }
+.contactformulier__melding.is-goed { background: var(--color-geel); color: var(--color-text-on-accent);
+                                     padding: var(--space-300) var(--space-400); }
+.contactformulier__melding.is-fout { background: var(--color-groen); color: var(--color-white);
+                                     padding: var(--space-300) var(--space-400); }
+
+/* ============================================================================
+   Kleine aanvullingen op het systeem
+   ========================================================================== */
+
+/* De pagina waar je nu bent, in de navigatie. */
+.submenu--link.is-actief { background-color: var(--color-groen); color: var(--color-white); }
+.header--light .submenu--link.is-actief { background-color: var(--color-white); color: var(--color-text-primary); }
+
+.footer--intro { font-family: var(--font-regular); font-weight: var(--weight-regular);
+                 font-size: 0.875rem; line-height: 1.5; max-width: 32ch; }
+.footer--adres { font-size: 0.875rem; line-height: 1.5; margin-top: var(--space-400); }
+
+/* Een sectie is een band met een eigen achtergrond; het ritme komt uit de
+   padding, nooit uit marges (§4.6). */
+section + section { margin-top: 0; }
+
+/* ============================================================================
+   Panelen en getuigenissen, gedeeld over de pagina's
+   ========================================================================== */
+
+/* ---- Panelen ------------------------------------------------------------
+   Dezelfde opzet als de kaartenparen uit §6.8, maar met drie of vier kolommen.
+   INFERRED: de gids kent alleen een paar van twee; de rij zonder tussenruimte
+   is wel letterlijk het .row.g-0-idioom. */
+.panel-row { display: flex; flex-wrap: wrap; }
+.panel-row > * { display: flex; width: 100%; }
+@media (min-width: 768px) { .panel-row--4 > * { width: 50%; } }
+@media (min-width: 992px) {
+  .panel-row--2 > * { width: 50%; }
+  .panel-row--3 > * { width: 33.3333%; }
+  .panel-row--4 > * { width: 25%; }
+}
+
+.panel {
+  display: flex; flex-direction: column; gap: var(--space-500);
+  width: 100%; padding: var(--space-panel) var(--inset-x);
+  background-color: var(--color-white);
+  color: var(--color-text-primary); text-decoration: none;
+}
+.panel--grey { background-color: var(--color-grey); }
+
+/* .panel--wit is geen fout maar ook geen opmaak: .panel is al wit. De
+   modifier staat in de HTML zodat in de bouwscripts te zien is dat een paneel
+   met opzet wit is en niet per ongeluk zonder kleur. */
+.panel--wit { background-color: var(--color-white); }
+
+/* ---------------------------------------------------------------- trap ------
+   De genummerde processtappen, en de iconen en koppen in de voordeel- en
+   opleveringspanelen. Deze regels stonden in service.css, maar de componenten
+   worden ook gebruikt op index.html, werkwijze.html en over-ons.html, en die
+   laden die stylesheet niet. */
+/* ---- 03 Stappenplan als oplopende trap ----------------------------------
+   Bij Veilig gedrag zijn dit de vijf treden van de Veiligheidsladder, bij de
+   andere diensten drie stappen. Elke trede schuift een stukje verder in en
+   staat op een eigen vlak, zodat de stijging zichtbaar is zonder tekening. */
+.trap { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.trede {
+  display: flex; gap: var(--space-500);
+  padding: var(--space-panel) var(--inset-x);
+  background-color: var(--color-white);
+  margin-left: calc(var(--trede) * 6%);
+  border-left: 4px solid var(--color-geel);
+}
+.trede:nth-child(even) { background-color: var(--color-grey); }
+@media (max-width: 991px) {
+.trede { margin-left: 0; padding: var(--space-panel-md) var(--inset-x); }
+}
+@media (max-width: 576px) {
+.trede { flex-direction: column; gap: var(--space-300); padding: var(--space-panel-sm) var(--inset-x); }
+}
+.trede__nummer {
+  flex-shrink: 0;
+  font-family: var(--font-light); font-weight: var(--weight-light);
+  font-size: 2rem; line-height: 1; color: var(--color-text-primary);
+}
+.trede__inhoud { display: flex; flex-direction: column; gap: var(--space-300); }
+.trede__titel { font-size: clamp(1.25rem, 1rem + 1vw, 2rem); line-height: 1.1; }
+.trede__tekst { font-family: var(--font-regular); font-weight: var(--weight-regular);
+                font-size: 1rem; line-height: 1.5; margin: 0; }
+.trede__gedrag { font-family: var(--font-regular); font-weight: var(--weight-regular);
+                 font-size: 0.875rem; line-height: 1.5; margin: 0; }
+.trede__gedrag span {
+  display: block; margin-bottom: var(--space-100);
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+}
+/* ---- 04 Voordelen -------------------------------------------------------- */
+.voordeel__icoon { fill: var(--color-text-primary); width: 24px; height: 24px; }
+.voordeel__titel { font-size: 1.5rem; line-height: 1.1; }
+
+.panel--groen { background-color: var(--color-groen); }
+.panel--groen :is(h2, h3, p, span) { color: var(--color-white); }
+@media (max-width: 991px) { .panel { padding: var(--space-panel-md) var(--inset-x); } }
+@media (max-width: 576px) { .panel { padding: var(--space-panel-sm) var(--inset-x); } }
+
+/* Paneel met een foto erboven. Het beeld loopt tot de rand van de kaart, de
+   tekst houdt de inzet: vandaar de negatieve marges van precies de inzet en
+   geen padding aan de bovenkant. Deze regels staan bewust n&aacute; de media-queries
+   hierboven, want ze hebben dezelfde soortelijkheid als .panel en moeten die
+   padding-top ook op smalle schermen kunnen overschrijven.
+   Een verhouding in plaats van een vaste hoogte, zodat het beeld meeschaalt
+   met de kolombreedte; bij vier naast elkaar is dat 360px breed en 225 hoog,
+   op een telefoon de volle breedte. 16:10 komt uit de referentie, waar het
+   beeld 637 bij 390 staat. */
+.panel--beeld { padding-top: 0; }
+.panel__beeld { margin: 0 calc(var(--inset-x) * -1); overflow: hidden; }
+.panel__beeld img {
+  display: block; width: 100%; height: auto;
+  aspect-ratio: 16 / 10; object-fit: cover;
+  transition: transform var(--duration-image) var(--ease-image);
+}
+.panel--link:hover .panel__beeld img { transform: scale(1.05); }
+
+/* Vier kaarten naast elkaar is 360px per kaart op 1440. De paginainzet van 48px
+   links en rechts liet daar 264px voor de tekst over, en dat is te weinig:
+   "Veiligheidsbewustzijn" is op 30px al 283px breed en liep dus tot over de rand
+   van de kaart. Vandaar een kleinere inzet in deze rij. De inzet van de pagina
+   houden we voor de rijen met twee of drie kaarten, waar de kolom breed genoeg
+   is om hem te dragen.
+
+   Afbreken erbij, want ook met 296px past niet elk Nederlands koppelwoord: net
+   boven de 992px is de kaart 248px breed. Met lang="nl" op de pagina breekt de
+   browser op de juiste plek (Veiligheids-bewustzijn); overflow-wrap is het
+   vangnet voor een woord dat zelfs dan niet past. Dezelfde combinatie staat al
+   op .streamer .title. */
+@media (min-width: 992px) {
+  .panel-row--4 .panel { padding-inline: var(--space-600); }
+  .panel-row--4 .panel__beeld { margin-inline: calc(var(--space-600) * -1); }
+  .panel-row--4 .panel__title { hyphens: auto; overflow-wrap: anywhere; }
+}
+
+/* Dezelfde behandeling voor de twee andere kaarttitels. Daar staan woorden als
+   "Natuurvillapark", "Brandweerkazerne" en "Vakantiebungalows" in; in een kolom
+   van een kwart pagina (192px inhoud op 1024px) past dat niet op één regel. De
+   maten blijven zoals ze zijn, alleen het afbreken komt erbij. */
+.voordeel__titel,
+.cta-blocks-advanced__title,
+.panel__title,
+.trede__titel,
+.case-kaart__titel,
+.cases-grid__title { hyphens: auto; overflow-wrap: break-word; }
+
+/* En in de lopende tekst. De vakteksten bevatten woorden als
+   "staalframeconstructie" en "productiefaciliteit"; op 375px is een tekstkolom 343px
+   en dan loopt zo'n woord eruit. break-word grijpt alleen in bij een woord dat
+   anders zou overlopen, dus voor alle andere tekst verandert er niets. */
+p, li, .article-body, .panel__body, .cta-blocks-advanced__content,
+.case-lijst li, .trede__tekst { overflow-wrap: break-word; }
+
+.panel__meta { font-family: var(--font-medium); font-weight: var(--weight-medium); font-size: 12px;
+               letter-spacing: 0.2em; text-transform: uppercase; }
+.panel__title { font-size: clamp(1.25rem, 1rem + 1vw, 2rem); line-height: 1.1; }
+.panel__body { font-family: var(--font-regular); font-weight: var(--weight-regular);
+               font-size: 1rem; line-height: 1.5; margin: 0; }
+.panel__actie { margin-top: auto; }
+.panel--link:focus-visible { outline: 2px solid var(--color-groen); outline-offset: -2px; }
+
+/* ---- Testimonials -------------------------------------------------------
+   Opgebouwd uit de carousel-attributie (§6.13): een haarlijn van 54px boven de
+   naam, quote in de kaarttypografie. */
+.testimonial blockquote { margin: 0; }
+.testimonial blockquote p { font-family: var(--font-regular); font-weight: var(--weight-regular);
+                            font-size: 1rem; line-height: 1.5; margin: 0; }
+.review--name { position: relative; padding-top: 3rem; margin-top: auto; }
+.review--name::after {
+  content: ""; position: absolute; left: 0; top: 24px;
+  width: 54px; height: 1px; border-top: 1px solid var(--color-groen-diep);
+}
+.review--name strong { display: block; font-family: var(--font-medium); font-weight: var(--weight-medium);
+                       font-size: 0.875rem; line-height: 1.35; }
+.review--name span { display: block; font-family: var(--font-light); font-weight: var(--weight-light);
+                     font-size: 0.875rem; line-height: 1.35; }

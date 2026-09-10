@@ -1,0 +1,81 @@
+/* ---- Cookiemelding ----
+   Vierkant en wit, met de gele knop als bevestiging: hetzelfde idioom als de
+   chips in de header (§6.4) en de knoppen uit §6.6. Dit is een zwevende laag,
+   dus hier mag wel de popup-schaduw uit §2 op staan (DR-2 laat die toe voor
+   overlays). */
+.cookiebalk {
+  position: fixed;
+  left: 0; bottom: 0;
+  z-index: var(--z-panel-overlay, 10000);
+  width: 100%;
+  max-width: 520px;
+  background: var(--color-white, #fff);
+  border: 0;
+  border-radius: var(--radius-none, 0);
+  box-shadow: var(--shadow-popup, 0 8px 80px rgba(0, 0, 0, 0.15));
+  padding: var(--space-panel, 48px);
+  color: var(--color-groen, #0D2646);
+}
+@media (max-width: 576px) { .cookiebalk { padding: var(--space-500, 24px) var(--space-400, 16px); max-width: 100%; } }
+.cookiebalk[hidden] { display: none; }
+
+.cookiebalk h2 {
+  font-family: var(--font-medium); font-weight: var(--weight-medium, 500);
+  font-size: 0.6875rem; line-height: 1.1;
+  letter-spacing: var(--tracking-label, 2.2px); text-transform: uppercase;
+  margin: 0 0 var(--space-500, 24px);
+}
+.cookiebalk p {
+  font-family: var(--font-regular); font-weight: var(--weight-regular, 400);
+  font-size: 1rem; line-height: 1.5;
+  margin: 0 0 var(--space-500, 24px);
+}
+.cookiebalk a { color: var(--color-groen, #0D2646); text-decoration: underline; text-underline-offset: 3px; }
+.cookiebalk a:hover { color: var(--color-focus, #383838); }
+
+.cookie-knoppen { display: flex; flex-wrap: wrap; gap: var(--space-200, 8px); }
+.cookie-knop {
+  flex: 0 1 auto;
+  border: 0; border-radius: var(--radius-none, 0);
+  padding: var(--space-300, 12px) var(--space-400, 16px);
+  font-family: var(--font-medium); font-weight: var(--weight-medium, 500);
+  font-size: 0.6875rem; line-height: 1.5rem;
+  letter-spacing: var(--tracking-label, 2.2px); text-transform: uppercase;
+  cursor: pointer;
+  background: var(--color-grey, #F5F5F5);
+  color: var(--color-black, #000);
+  transition: all var(--duration-legacy, 500ms) ease;
+}
+.cookie-knop:hover { background: var(--color-groen, #0D2646); color: var(--color-white, #fff); }
+/* Deze knop staat op het accent. Dat was geel met zwarte tekst; met het
+   groene accent van Steel Framing Holland moet de tekst wit zijn, anders haalt hij
+   1,71:1. Vorm, maat en hover blijven zoals ze waren. */
+.cookie-knop--donker { background: var(--color-geel, #1B7A48); color: var(--color-text-on-accent, #fff); }
+.cookie-knop--donker:hover { background: var(--color-geel-hover, #14603A); color: var(--color-text-on-accent, #fff); }
+
+/* ---- Paneel met de losse keuzes ---- */
+.cookie-keuzes { margin: 0 0 var(--space-500, 24px); display: flex; flex-direction: column; gap: var(--space-400, 16px); }
+.cookie-keuzes[hidden] { display: none; }
+.cookie-optie { display: flex; align-items: flex-start; gap: var(--space-300, 12px); }
+.cookie-optie-naam {
+  font-family: var(--font-medium); font-weight: var(--weight-medium, 500);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label, 2.2px); text-transform: uppercase;
+}
+.cookie-optie p { font-size: 0.875rem; line-height: 1.35; margin: var(--space-100, 4px) 0 0; }
+
+/* Schakelaar: een rechthoek, geen pil (DR-1). */
+.cookie-schakelaar { position: relative; flex-shrink: 0; width: 44px; height: 24px; display: block; }
+.cookie-schakelaar input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.cookie-schakelaar span {
+  position: absolute; inset: 0; background: var(--color-grey, #F5F5F5);
+  transition: background var(--duration-fast, 200ms) ease;
+}
+.cookie-schakelaar span::after {
+  content: ''; position: absolute; top: 4px; left: 4px; width: 16px; height: 16px;
+  background: var(--color-groen, #0D2646);
+  transition: transform var(--duration-fast, 200ms) var(--ease-standard, ease);
+}
+.cookie-schakelaar input:checked + span { background: var(--color-geel, #1B7A48); }
+.cookie-schakelaar input:checked + span::after { transform: translateX(20px); }
+.cookie-schakelaar input:disabled + span { opacity: .5; }
+.cookie-schakelaar input:focus-visible + span { outline: 2px solid var(--color-focus, #383838); outline-offset: 2px; }

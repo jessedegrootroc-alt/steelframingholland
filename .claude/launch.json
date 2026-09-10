@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "steelframingholland",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["/Users/jessevialuxury.nl/Library/CloudStorage/OneDrive-Advalley(2)/Documenten/Code/STEELFRAMINGHOLLAND/_generator/devserver.py", "5501"],
+      "port": 5501
+    }
+  ]
+}

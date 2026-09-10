@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cookies | Steel Framing Holland</title>
+<meta name="description" content="Welke cookies deze website plaatst en waarvoor." />
+<link rel="canonical" href="https://www.steelframingholland.nl/cookies.html" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="author" content="Steel Framing Holland" />
+<meta name="theme-color" content="#FFFFFF" />
+<meta name="color-scheme" content="light" />
+
+<!-- GSAP en Barba komen van jsDelivr. Het opzetten van die verbinding (dns,
+     tcp, tls) kost op een telefoon een paar honderd ms en begint nu al terwijl
+     de HTML nog binnenkomt, in plaats van pas onderaan de pagina. -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+
+<!-- Het lettertype staat in de kop van de pagina en is dus onderdeel van de
+     LCP. Zonder preload vindt de browser het pas nadat styleguide.css binnen is
+     en ontleed is. crossorigin moet erbij, ook al staat het bestand op dezelfde
+     server: een font wordt altijd in CORS-modus opgehaald, en zonder dat woord
+     haalt de browser het twee keer op. -->
+<link rel="preload" href="assets/fonts/assistant-latin.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="assets/fonts/karla-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+<link rel="stylesheet" href="styleguide.min.css?v=d29ac4cb" />
+<style>[data-barba=wrapper]{position:relative}.app__wrapper{background-color:var(--color-background, #FFFFFF);color:var(--color-text-primary, #383838);min-height:100svh;display:flex;flex-direction:column}.content__wrapper{position:relative;width:100%;min-height:100svh;flex:1 0 auto;display:flex;flex-direction:column}[data-barba=container]+[data-barba=container]{position:fixed;inset:0;z-index:3;overflow:hidden}.is__transitioning a{pointer-events:none}@media(prefers-reduced-motion:reduce){.is__transitioning *{scroll-behavior:auto!important}}</style>
+<!-- De cookiebalk verschijnt pas als cookiebalk.js hem opbouwt, dus zijn stijl
+     hoeft de eerste weergave niet op te houden. media="print" laat de browser
+     hem buiten het kritieke pad ophalen; onload zet hem daarna alsnog aan. De
+     noscript-regel vangt op dat zonder JavaScript ook die onload niet afgaat. -->
+<link rel="stylesheet" href="cookiebalk.min.css?v=40b51365" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="cookiebalk.min.css?v=40b51365" /></noscript>
+<style data-page-css="tekstpagina">.tekstpagina .content__wrapper{display:flex;flex-direction:column}.tekstpagina main{flex:1 0 auto}.tekstband{padding:160px 0 var(--space-section-y);background:var(--color-white)}.tekstband>.container{padding-inline:var(--inset-x)}@media(max-width:576px){.tekstband{padding:120px 0 var(--space-section-y-mobile)}}.tekst{max-width:var(--content-max-half)}.tekst h1{font-size:clamp(2rem,1.25rem + 3vw,3.5rem);line-height:1.1;margin-bottom:var(--space-500)}.tekst h2{font-family:var(--font-regular);font-weight:var(--weight-regular);font-size:clamp(1.5rem,1.25rem + 1vw,2rem);line-height:1.1;margin:var(--space-800) 0 var(--space-500)}.tekst h3{font-family:var(--font-medium);font-weight:var(--weight-medium);font-size:.6875rem;letter-spacing:var(--tracking-label);text-transform:uppercase;margin:var(--space-700) 0 var(--space-300)}.tekst p,.tekst li{font-family:var(--font-regular);font-weight:var(--weight-regular);font-size:1rem;line-height:1.6;color:var(--color-text-primary)}.tekst p{margin:0 0 1.6em}.tekst ul{list-style:disc;padding-left:1.35rem;margin:0 0 1.6em}.tekst li{margin-bottom:var(--space-200)}.tekst a{color:var(--color-text-primary);text-decoration:underline;text-underline-offset:3px}.tekst a:hover{color:var(--color-focus)}.tekst .meta{font-family:var(--font-medium);font-weight:var(--weight-medium);font-size:.6875rem;letter-spacing:var(--tracking-label);text-transform:uppercase;margin-bottom:var(--space-500)}.tekst h1+.meta{margin-bottom:var(--space-800)}.invulblok{background:var(--color-geel);padding:var(--space-500);margin-bottom:1.6em}.invulblok p{margin:0}.invulblok p+p{margin-top:var(--space-300)}.invulblok:before{content:"Nog aan te leveren";display:block;margin-bottom:var(--space-300);font-family:var(--font-medium);font-weight:var(--weight-medium);font-size:.6875rem;letter-spacing:var(--tracking-label);text-transform:uppercase}</style>
+
+<link rel="icon" href="assets/favicon/sfh-favicon.ico" sizes="16x16 32x32 48x48" />
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/sfh-favicon-32.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/sfh-favicon-192.png" />
+<link rel="apple-touch-icon" href="assets/favicon/sfh-apple-touch-icon.png" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Steel Framing Holland" />
+<meta property="og:locale" content="nl_NL" />
+<meta property="og:url" content="https://www.steelframingholland.nl/cookies.html" />
+<meta property="og:title" content="Cookies | Steel Framing Holland" />
+<meta property="og:description" content="Welke cookies deze website plaatst en waarvoor." />
+<meta property="og:image" content="https://www.steelframingholland.nl/assets/social/sfh-deelafbeelding.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Steel Framing Holland: staalframebouw voor woningbouw, renovatie en utiliteitsbouw" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://www.steelframingholland.nl/assets/social/sfh-deelafbeelding.png" />
+<meta name="twitter:title" content="Cookies | Steel Framing Holland" />
+<meta name="twitter:description" content="Welke cookies deze website plaatst en waarvoor." />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Steel Framing Holland",
+  "url": "https://www.steelframingholland.nl/",
+  "logo": "https://www.steelframingholland.nl/assets/logo/sfh-logo.png",
+  "email": "n.melman@veerhuis.eu",
+  "telephone": "+31299324243",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Netwerk 150",
+    "postalCode": "1446 WR",
+    "addressLocality": "Purmerend",
+    "addressCountry": "NL"
+  },
+  "areaServed": "NL",
+  "knowsAbout": "Staalframebouw"
+}
+</script>
+</head>
+
+<body>
+<a class="skip-link" href="#main-content">Naar de inhoud</a>
+
+<!-- De header en het mobiele paneel staan bewust BUITEN #smooth-wrapper.
+     ScrollSmoother verschuift de inhoud met een transform, en onder een
+     transform hangt position:fixed aan dat element in plaats van aan het
+     scherm. Ze blijven daardoor ook staan bij een pagina-overgang; welke
+     menulink actief is wordt in page-transitions.js bijgewerkt. -->
+<header class="header header--scrolled" id="siteHeader">
+  <div class="header--container">
+    <a href="index.html" class="header--logo" aria-label="Steel Framing Holland, naar de homepage">
+      <img class="header--logo-kleur" src="assets/logo/sfh-logo.webp" alt="Steel Framing Holland" width="124" height="40">
+      <img class="header--logo-wit" src="assets/logo/sfh-logo-wit.webp" alt="" aria-hidden="true" width="124" height="40">
+    </a>
+
+    <nav class="submenu" aria-label="Hoofdmenu">
+      <a class="submenu--link" href="index.html">Home</a>
+      <button type="button" class="submenu--link submenu--trigger" data-uitklap="toepassingen" aria-expanded="false" aria-controls="uitklap-toepassingen">Toepassingen<svg class="submenu--chevron" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.4 5.6 9 7 7.6l5 5 5-5L18.4 9 12 15.4Z"/></svg></button>
+      <button type="button" class="submenu--link submenu--trigger" data-uitklap="staalframebouw" aria-expanded="false" aria-controls="uitklap-staalframebouw">Staalframebouw<svg class="submenu--chevron" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.4 5.6 9 7 7.6l5 5 5-5L18.4 9 12 15.4Z"/></svg></button>
+      <button type="button" class="submenu--link submenu--trigger" data-uitklap="projecten" aria-expanded="false" aria-controls="uitklap-projecten">Projecten<svg class="submenu--chevron" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.4 5.6 9 7 7.6l5 5 5-5L18.4 9 12 15.4Z"/></svg></button>
+      <button type="button" class="submenu--link submenu--trigger" data-uitklap="over-ons" aria-expanded="false" aria-controls="uitklap-over-ons">Over ons<svg class="submenu--chevron" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.4 5.6 9 7 7.6l5 5 5-5L18.4 9 12 15.4Z"/></svg></button>
+      <a class="submenu--link highlight" href="contact.html">Contact</a>
+    </nav>
+
+    <button type="button" id="hamburger" class="hamburger" aria-expanded="false" aria-controls="mobilePanel">
+      Menu
+      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5h20v2H2V5Zm0 6h20v2H2v-2Zm0 6h20v2H2v-2Z"/></svg>
+    </button>
+  </div>
+
+  <div class="uitklap" id="uitklap-toepassingen" data-uitklap-paneel="toepassingen" inert>
+    <div class="uitklap__inner">
+      <div class="uitklap__kolom">
+        <span class="subtitle">Toepassingen</span>
+        <ul class="uitklap__lijst" role="list">
+          <li><a class="uitklap__link" href="woningbouw.html"><span class="uitklap__naam">Woningbouw</span><span class="uitklap__uitleg">Van vrijstaande villa tot seriematige woningbouw</span></a></li>
+          <li><a class="uitklap__link" href="renovatie.html"><span class="uitklap__naam">Renovatie</span><span class="uitklap__uitleg">Optoppen, gevels vervangen en uitbreiden</span></a></li>
+          <li><a class="uitklap__link" href="utiliteitsbouw.html"><span class="uitklap__naam">Utiliteitsbouw</span><span class="uitklap__uitleg">Bedrijfsunits, kantoren, hallen en scholen</span></a></li>
+        </ul>
+      </div>
+      <div class="uitklap__kaart">
+        <picture><img src="assets/foto/sfh-woningbouw-1632.webp" srcset="assets/foto/sfh-woningbouw-640.webp 640w, assets/foto/sfh-woningbouw-1200.webp 1200w, assets/foto/sfh-woningbouw-1632.webp 1632w" sizes="(max-width: 1199px) 0px, 40vw" width="1632" height="1224" alt="" loading="lazy" fetchpriority="low" decoding="async"></picture>
+        <span class="uitklap__sluier" aria-hidden="true"></span>
+        <div class="uitklap__kaart-tekst">
+          <p class="uitklap__kaart-kop">Weten wat er in staalframe kan?</p>
+          <p class="uitklap__kaart-body">Vertel kort wat u wilt bouwen; we rekenen door wat er constructief mogelijk is en wat het kost.</p>
+          <a href="offerte.html" class="button button--primary"><span class="button__inhoud">Bespreek uw project<span class="button__spoor" aria-hidden="true"><svg class="arrow--animation is-1" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 4.6 20.6 12l-7.4 7.4-1.4-1.4 5-5H3.4v-2h13.4l-5-5 1.4-1.4Z"/></svg><svg class="arrow--animation is-2" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 4.6 20.6 12l-7.4 7.4-1.4-1.4 5-5H3.4v-2h13.4l-5-5 1.4-1.4Z"/></svg></span></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="uitklap" id="uitklap-staalframebouw" data-uitklap-paneel="staalframebouw" inert>
+    <div class="uitklap__inner">
+      <div class="uitklap__kolom">
+        <span class="subtitle">Staalframebouw</span>
+        <ul class="uitklap__lijst" role="list">
+          <li><a class="uitklap__link" href="ontwerpen-tekenen-en-berekenen.html"><span class="uitklap__naam">Ontwerpen, tekenen en berekenen</span><span class="uitklap__uitleg">Ook in het verlengde van uw eigen ontwerp</span></a></li>
+          <li><a class="uitklap__link" href="lichtgewicht-staalframe.html"><span class="uitklap__naam">Lichtgewicht staalframe</span><span class="uitklap__uitleg">Koudgevormde profielen uit eigen productie</span></a></li>
+          <li><a class="uitklap__link" href="eps-wandsysteem.html"><span class="uitklap__naam">EPS wandsysteem</span><span class="uitklap__uitleg">Isolerend, brandveilig en voordelig</span></a></li>
+          <li><a class="uitklap__link" href="overige-wandsystemen.html"><span class="uitklap__naam">Overige wandsystemen</span><span class="uitklap__uitleg">Hout, gips, kunststof, aluminium of prefab</span></a></li>
+        </ul>
+      </div>
+      <div class="uitklap__kaart">
+        <picture><img src="assets/foto/sfh-engineering-1900.webp" srcset="assets/foto/sfh-engineering-640.webp 640w, assets/foto/sfh-engineering-1200.webp 1200w, assets/foto/sfh-engineering-1800.webp 1800w, assets/foto/sfh-engineering-1900.webp 1900w" sizes="(max-width: 1199px) 0px, 40vw" width="1900" height="873" alt="" loading="lazy" fetchpriority="low" decoding="async"></picture>
+        <span class="uitklap__sluier" aria-hidden="true"></span>
+        <div class="uitklap__kaart-tekst">
+          <p class="uitklap__kaart-kop">Zes stappen, één partij</p>
+          <p class="uitklap__kaart-body">Ontwerpen, tekenen, berekenen, fabriceren, transporteren en monteren doen wij met eigen mensen.</p>
+          <a href="werkwijze.html" class="button button--primary"><span class="button__inhoud">Zo werken we<span class="button__spoor" aria-hidden="true"><svg class="arrow--animation is-1" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 4.6 20.6 12l-7.4 7.4-1.4-1.4 5-5H3.4v-2h13.4l-5-5 1.4-1.4Z"/></svg><svg class="arrow--animation is-2" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 4.6 20.6 12l-7.4 7.4-1.4-1.4 5-5H3.4v-2h13.4l-5-5 1.4-1.4Z"/></svg></span></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="uitklap" id="uitklap-projecten" data-uitklap-paneel="projecten" inert>
+    <div class="uitklap__inner">
+      <div class="uitklap__kolom">
+        <span class="subtitle">Projecten</span>
+        <ul class="uitklap__lijst" role="list">
+          <li><a class="uitklap__link" href="projecten.html"><span class="uitklap__naam">Alle projecten</span><span class="uitklap__uitleg">35 projecten in Nederland en daarbuiten</span></a></li>
+          <li><a class="uitklap__link" href="projecten.html#woningbouw"><span class="uitklap__naam">Woningbouw</span><span class="uitklap__uitleg">19 projecten</span></a></li>
+          <li><a class="uitklap__link" href="projecten.html#renovatie"><span class="uitklap__naam">Renovatie</span><span class="uitklap__uitleg">9 projecten</span></a></li>
+          <li><a class="uitklap__link" href="projecten.html#utiliteitsbouw"><span class="uitklap__naam">Utiliteitsbouw</span><span class="uitklap__uitleg">6 projecten</span></a></li>
+          <li><a class="uitklap__link" href="projecten.html#buitenland"><span class="uitklap__naam">Buitenland</span><span class="uitklap__uitleg">10 projecten</span></a></li>
+        </ul>
+      </div>
+      <div class="uitklap__kaart">
+        <picture><img src="assets/foto/sfh-project-villa-in-bergen-1632.webp" srcset="assets/foto/sfh-project-villa-in-bergen-640.webp 640w, assets/foto/sfh-project-villa-in-bergen-1200.webp 1200w, assets/foto/sfh-project-villa-in-bergen-1632.webp 1632w" sizes="(max-width: 1199px) 0px, 40vw" width="1632" height="1224" alt="" loading="lazy" fetchpriority="low" decoding="async"></picture>
+        <span class="uitklap__sluier" aria-hidden="true"></span>
+        <div class="uitklap__kaart-tekst">
+          <p class="uitklap__kaart-kop">Van villa tot optopping</p>
+          <p class="uitklap__kaart-body">Woningen, renovaties en utiliteitsbouw in Nederland, en projecten op Bonaire, in Haïti, Irak en op Ibiza.</p>
+          <a href="projecten.html" class="button button--primary"><span class="button__inhoud">Bekijk de projecten<span class="button__spoor" aria-hidden="true"><svg class="arrow--animation is-1" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 4.6 20.6 12l-7.4 7.4-1.4-1.4 5-5H3.4v-2h13.4l-5-5 1.4-1.4Z"/></svg><svg class="arrow--animation is-2" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 4.6 20.6 12l-7.4 7.4-1.4-1.4 5-5H3.4v-2h13.4l-5-5 1.4-1.4Z"/></svg></span></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="uitklap" id="uitklap-over-ons" data-uitklap-paneel="over-ons" inert>
+    <div class="uitklap__inner">
+      <div class="uitklap__kolom">
+        <span class="subtitle">Over ons</span>
+        <ul class="uitklap__lijst" role="list">
+          <li><a class="uitklap__link" href="over-ons.html"><span class="uitklap__naam">Steel Framing Holland</span><span class="uitklap__uitleg">Wie wij zijn en wat wij zelf doen</span></a></li>
+          <li><a class="uitklap__link" href="werkwijze.html"><span class="uitklap__naam">Werkwijze</span><span class="uitklap__uitleg">Van oriëntatie tot oplevering in vijf stappen</span></a></li>
+          <li><a class="uitklap__link" href="partners.html"><span class="uitklap__naam">Onze partners</span><span class="uitklap__uitleg">Met wie wij vast samenwerken, en waarvoor</span></a></li>
+        </ul>
+      </div>
+      <div class="uitklap__kaart">
+        <picture><img src="assets/foto/sfh-staalframe-1200.webp" srcset="assets/foto/sfh-staalframe-640.webp 640w, assets/foto/sfh-staalframe-1200.webp 1200w" sizes="(max-width: 1199px) 0px, 40vw" width="1200" height="900" alt="" loading="lazy" fetchpriority="low" decoding="async"></picture>
+        <span class="uitklap__sluier" aria-hidden="true"></span>
+        <div class="uitklap__kaart-tekst">
+          <p class="uitklap__kaart-kop">Engineering, productie en montage in één hand</p>
+          <p class="uitklap__kaart-body">Eigen engineers, een eigen productiefaciliteit en een vast team monteurs.</p>
+          <a href="over-ons.html" class="button button--primary"><span class="button__inhoud">Over Steel Framing Holland<span class="button__spoor" aria-hidden="true"><svg class="arrow--animation is-1" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 4.6 20.6 12l-7.4 7.4-1.4-1.4 5-5H3.4v-2h13.4l-5-5 1.4-1.4Z"/></svg><svg class="arrow--animation is-2" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 4.6 20.6 12l-7.4 7.4-1.4-1.4 5-5H3.4v-2h13.4l-5-5 1.4-1.4Z"/></svg></span></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-panel--overlay" id="panelOverlay" hidden></div>
+<div class="mobile-panel" id="mobilePanel" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="mobile-panel--topbar">
+    <a class="mobile-panel--chip" href="contact.html">Contact</a>
+    <button type="button" class="mobile-panel--chip is-close" id="panelSluit">
+      Sluiten
+      <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19l5.6-5.6 5.6 5.6 1.4-1.4-5.6-5.6L19 6.4Z"/></svg>
+    </button>
+  </div>
+  <nav class="mobile-panel--nav" aria-label="Hoofdmenu">
+    <span class="mobile-panel--label">Menu</span>
+    <ul class="mobile-panel--list" role="list">
+      <li><a class="mobile-panel--nav-link" href="index.html" data-panel-sluit style="transition-delay:0ms"><span class="mobile-panel--text-slide"><span class="mobile-panel--text-slide-inner"><span>Home</span><span aria-hidden="true">Home</span></span></span></a></li>
+      <li>
+        <button type="button" class="mobile-panel--nav-link mobile-panel--nav-knop"
+                data-mobiel-uitklap="toepassingen" aria-expanded="false"
+                aria-controls="mobiel-toepassingen" style="transition-delay:60ms"><span class="mobile-panel--text-slide"><span class="mobile-panel--text-slide-inner"><span>Toepassingen</span><span aria-hidden="true">Toepassingen</span></span></span><svg class="submenu--chevron" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.4 5.6 9 7 7.6l5 5 5-5L18.4 9 12 15.4Z"/></svg></button>
+        <ul class="mobile-panel--sublijst" id="mobiel-toepassingen" role="list" hidden>
+          <li><a class="mobile-panel--sublink" href="woningbouw.html" data-panel-sluit>Woningbouw</a></li>
+          <li><a class="mobile-panel--sublink" href="renovatie.html" data-panel-sluit>Renovatie</a></li>
+          <li><a class="mobile-panel--sublink" href="utiliteitsbouw.html" data-panel-sluit>Utiliteitsbouw</a></li>
+        </ul>
+      </li>
+      <li>
+        <button type="button" class="mobile-panel--nav-link mobile-panel--nav-knop"
+                data-mobiel-uitklap="staalframebouw" aria-expanded="false"
+                aria-controls="mobiel-staalframebouw" style="transition-delay:120ms"><span class="mobile-panel--text-slide"><span class="mobile-panel--text-slide-inner"><span>Staalframebouw</span><span aria-hidden="true">Staalframebouw</span></span></span><svg class="submenu--chevron" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.4 5.6 9 7 7.6l5 5 5-5L18.4 9 12 15.4Z"/></svg></button>
+        <ul class="mobile-panel--sublijst" id="mobiel-staalframebouw" role="list" hidden>
+          <li><a class="mobile-panel--sublink" href="ontwerpen-tekenen-en-berekenen.html" data-panel-sluit>Ontwerpen, tekenen en berekenen</a></li>
+          <li><a class="mobile-panel--sublink" href="lichtgewicht-staalframe.html" data-panel-sluit>Lichtgewicht staalframe</a></li>
+          <li><a class="mobile-panel--sublink" href="eps-wandsysteem.html" data-panel-sluit>EPS wandsysteem</a></li>
+          <li><a class="mobile-panel--sublink" href="overige-wandsystemen.html" data-panel-sluit>Overige wandsystemen</a></li>
+        </ul>
+      </li>
+      <li>
+        <button type="button" class="mobile-panel--nav-link mobile-panel--nav-knop"
+                data-mobiel-uitklap="projecten" aria-expanded="false"
+                aria-controls="mobiel-projecten" style="transition-delay:180ms"><span class="mobile-panel--text-slide"><span class="mobile-panel--text-slide-inner"><span>Projecten</span><span aria-hidden="true">Projecten</span></span></span><svg class="submenu--chevron" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.4 5.6 9 7 7.6l5 5 5-5L18.4 9 12 15.4Z"/></svg></button>
+        <ul class="mobile-panel--sublijst" id="mobiel-projecten" role="list" hidden>
+          <li><a class="mobile-panel--sublink" href="projecten.html" data-panel-sluit>Alle projecten</a></li>
+          <li><a class="mobile-panel--sublink" href="projecten.html#woningbouw" data-panel-sluit>Woningbouw</a></li>
+          <li><a class="mobile-panel--sublink" href="projecten.html#renovatie" data-panel-sluit>Renovatie</a></li>
+          <li><a class="mobile-panel--sublink" href="projecten.html#utiliteitsbouw" data-panel-sluit>Utiliteitsbouw</a></li>
+          <li><a class="mobile-panel--sublink" href="projecten.html#buitenland" data-panel-sluit>Buitenland</a></li>
+        </ul>
+      </li>
+      <li>
+        <button type="button" class="mobile-panel--nav-link mobile-panel--nav-knop"
+                data-mobiel-uitklap="over-ons" aria-expanded="false"
+                aria-controls="mobiel-over-ons" style="transition-delay:240ms"><span class="mobile-panel--text-slide"><span class="mobile-panel--text-slide-inner"><span>Over ons</span><span aria-hidden="true">Over ons</span></span></span><svg class="submenu--chevron" width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.4 5.6 9 7 7.6l5 5 5-5L18.4 9 12 15.4Z"/></svg></button>
+        <ul class="mobile-panel--sublijst" id="mobiel-over-ons" role="list" hidden>
+          <li><a class="mobile-panel--sublink" href="over-ons.html" data-panel-sluit>Steel Framing Holland</a></li>
+          <li><a class="mobile-panel--sublink" href="werkwijze.html" data-panel-sluit>Werkwijze</a></li>
+          <li><a class="mobile-panel--sublink" href="partners.html" data-panel-sluit>Onze partners</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  <div class="mobile-panel--cta button__mobile-width">
+    <a href="contact.html" class="button button--primary"><span class="button__inhoud">Bespreek uw project<span class="button__spoor" aria-hidden="true"><svg class="arrow--animation is-1" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 4.6 20.6 12l-7.4 7.4-1.4-1.4 5-5H3.4v-2h13.4l-5-5 1.4-1.4Z"/></svg><svg class="arrow--animation is-2" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 4.6 20.6 12l-7.4 7.4-1.4-1.4 5-5H3.4v-2h13.4l-5-5 1.4-1.4Z"/></svg></span></span></a>
+  </div>
+</div>
+
+<div id="smooth-wrapper">
+<div id="smooth-content">
+
+<div data-barba="wrapper">
+<div class="app__wrapper" data-barba="container" data-barba-namespace="tekst">
+<div class="content__wrapper">
+
+<main id="main-content">
+
+  <section class="paginahero paginahero--patroon" id="s01-kop">
+    <div class="paginahero__kop">
+      <span class="subtitle">Cookies</span>
+      <h1 class="paginahero__titel">Cookies</h1>
+    </div>
+    <div class="paginahero__beeld" aria-hidden="true">
+      <picture>
+        <source media="(max-width: 767px)" srcset="assets/patronen/hero-patroon-mobiel-720.webp 720w, assets/patronen/hero-patroon-mobiel-800.webp 800w, assets/patronen/hero-patroon-mobiel-1440.webp 1440w" sizes="100vw" width="1440" height="1440">
+        <img src="assets/patronen/hero-patroon-1440.webp" srcset="assets/patronen/hero-patroon-720.webp 720w, assets/patronen/hero-patroon-1000.webp 1000w, assets/patronen/hero-patroon-1440.webp 1440w" sizes="50vw" width="1440" height="940" alt="" loading="eager" fetchpriority="high" decoding="async">
+      </picture>
+    </div>
+  </section>
+
+  <section class="content-block" id="s02-blok">
+    <div class="container">
+      <div class="content-block--container background--white">
+        <div class="row">
+          <div class="col-lg-8 col-12">
+            <div class="article-body">
+              <p>Deze website plaatst alleen cookies die nodig zijn om de site te laten werken. Analytische cookies staan uit tot u ze zelf aanzet via de cookiemelding; daarin kunt u uw keuze ook weer wijzigen.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-block" id="s03-blok">
+    <div class="container">
+      <div class="content-block--container background--white">
+        <div class="row">
+          <div class="col-lg-8 col-12">
+            <h2 class="font-size--md" style="margin-bottom:var(--space-400)">Nog aan te leveren</h2>
+            <div class="article-body">
+              <p>[CONTENT NODIG] De bronsite heeft geen cookieverklaring. Zodra bekend is welk statistiekpakket wordt gebruikt en welke cookies dat plaatst, hoort die opsomming hier: naam, doel en bewaartermijn per cookie.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-block" id="s04-blok">
+    <div class="container">
+      <div class="content-block--container background--white">
+        <div class="row">
+          <div class="col-lg-8 col-12">
+            <h2 class="font-size--md" style="margin-bottom:var(--space-400)">Contact over cookies</h2>
+            <div class="article-body">
+              <p>Vragen hierover? Bel +31 (0)299 324 243 of mail naar n.melman@veerhuis.eu.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer--widgets">
+      <div class="row footer--gap">
+        <div class="col-lg-3 col-md-4 col-12 widget">
+          <img src="assets/logo/sfh-logo.webp" alt="Steel Framing Holland" width="124" height="40" style="margin-bottom:var(--space-500)">
+          <p class="footer--intro">Staalframebouw voor woningbouw, renovatie en utiliteitsbouw. Ontworpen, gerekend, geproduceerd en gemonteerd met eigen mensen, vanuit Purmerend.</p>
+        </div>
+        <div class="col-lg-3 col-md-4 col-12 widget">
+          <h2 class="footer__kop">Staalframebouw</h2>
+          <ul role="list">
+            <li><a href="woningbouw.html">Woningbouw</a></li>
+            <li><a href="renovatie.html">Renovatie</a></li>
+            <li><a href="utiliteitsbouw.html">Utiliteitsbouw</a></li>
+            <li><a href="ontwerpen-tekenen-en-berekenen.html">Ontwerpen, tekenen en berekenen</a></li>
+            <li><a href="lichtgewicht-staalframe.html">Lichtgewicht staalframe</a></li>
+            <li><a href="eps-wandsysteem.html">EPS wandsysteem</a></li>
+            <li><a href="overige-wandsystemen.html">Overige wandsystemen</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-4 col-12 widget">
+          <h2 class="footer__kop">Projecten</h2>
+          <ul role="list">
+            <li><a href="projecten.html#woningbouw">Woningbouw</a></li>
+            <li><a href="projecten.html#renovatie">Renovatie</a></li>
+            <li><a href="projecten.html#utiliteitsbouw">Utiliteitsbouw</a></li>
+            <li><a href="projecten.html#buitenland">Buitenland</a></li>
+            <li><a href="over-ons.html">Over ons</a></li>
+            <li><a href="werkwijze.html">Werkwijze</a></li>
+            <li><a href="partners.html">Partners</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-4 col-12 widget">
+          <h2 class="footer__kop">Contact</h2>
+          <ul role="list">
+            <li><a href="tel:+31299324243">+31 (0)299 324 243</a></li>
+            <li><a href="mailto:n.melman@veerhuis.eu">n.melman@veerhuis.eu</a></li>
+          </ul>
+          <p class="footer--adres">Netwerk 150<br>1446 WR Purmerend<br>Werkplaats: Component 148</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer--line"></div>
+    <div class="footer--copyright">
+      <span>&copy; Steel Framing Holland</span>
+      <a href="privacybeleid.html">Privacybeleid</a>
+      <a href="cookies.html">Cookies</a>
+    </div>
+  </div>
+</footer>
+
+<script src="site.min.js?v=3700f944"></script>
+<script src="contactformulier.min.js?v=6a70ab3a"></script>
+
+</div><!-- /.content__wrapper -->
+</div><!-- /[data-barba=container] -->
+</div><!-- /[data-barba=wrapper] -->
+
+</div><!-- /#smooth-content -->
+</div><!-- /#smooth-wrapper -->
+
+<!-- ================= COOKIEMELDING ================= -->
+<aside id="cookiebalk" class="cookiebalk" hidden aria-label="Cookiemelding">
+  <h2>Cookie-instellingen</h2>
+  <p>Deze site plaatst alleen wat nodig is om hem te laten werken. Zet je analytische cookies aan, dan help je ons te zien wat werkt en wat niet. Lees het <a href="cookies.html">cookiebeleid</a>.</p>
+
+  <div id="cookieKeuzes" class="cookie-keuzes" hidden>
+    <div class="cookie-optie">
+      <label class="cookie-schakelaar">
+        <input type="checkbox" checked disabled aria-label="Functionele cookies, altijd aan">
+        <span aria-hidden="true"></span>
+      </label>
+      <div>
+        <span class="cookie-optie-naam">Functioneel</span>
+        <p>Nodig om de site te laten werken. Staat altijd aan.</p>
+      </div>
+    </div>
+    <div class="cookie-optie">
+      <label class="cookie-schakelaar">
+        <input type="checkbox" id="cookieAnalytisch" aria-label="Analytische cookies">
+        <span aria-hidden="true"></span>
+      </label>
+      <div>
+        <span class="cookie-optie-naam">Analytisch</span>
+        <p>Laat ons zien welke pagina&rsquo;s bezocht worden, zodat we de site kunnen verbeteren.</p>
+      </div>
+    </div>
+    <div class="cookie-optie">
+      <label class="cookie-schakelaar">
+        <input type="checkbox" id="cookieMarketing" aria-label="Marketingcookies">
+        <span aria-hidden="true"></span>
+      </label>
+      <div>
+        <span class="cookie-optie-naam">Marketing</span>
+        <p>Voor advertenties en het meten daarvan. Nu niet in gebruik.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cookie-knoppen">
+    <button type="button" class="cookie-knop" data-cookie="weigeren">Weigeren</button>
+    <button type="button" class="cookie-knop" data-cookie="aanpassen">Aanpassen</button>
+    <button type="button" class="cookie-knop cookie-knop--donker" data-cookie="toestaan">Toestaan</button>
+  </div>
+</aside>
+
+<!-- ================= PAGINA-OVERGANGEN =================
+     Barba wisselt alleen de container hierboven om, GSAP animeert de wissel. -->
+<!-- defer: de browser haalt ze op terwijl hij de pagina nog aan het ontleden is
+     en voert ze daarna uit, in deze volgorde. Die volgorde is nodig, want
+     ScrollTrigger heeft gsap nodig en page-transitions.js heeft Barba nodig. -->
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollSmoother.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@barba/core@2.10.3/dist/barba.umd.js"></script>
+<script defer src="cookiebalk.min.js?v=eca84725"></script>
+<script defer src="analytics.min.js?v=66593c4a"></script>
+<script defer src="smooth-scroll.min.js?v=1d90f74d"></script>
+<script defer src="page-transitions.min.js?v=9ca3fe1f"></script>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+# macOS
+.DS_Store
+
+# ---------------------------------------------------------------------------
+#  Content van een ander bedrijf
+# ---------------------------------------------------------------------------
+# Dit template is eerder gebruikt voor Duyts Bouwconstructies. De twee bestanden
+# hieronder zijn de volledige contentexport van www.duyts.nl: alle teksten,
+# projectomschrijvingen en foto's van dat bedrijf.
+#
+# Deze repository is publiek. Die export daarin zetten is de site van een ander
+# bedrijf opnieuw publiceren, en dat is niet aan ons. Ze staan daarom alleen
+# lokaal.
+duyts-website-export.zip
+_backup-template-duyts.tar.gz
+_generator/duyts/
+
+# ---------------------------------------------------------------------------
+#  Bronbeeld op volle resolutie
+# ---------------------------------------------------------------------------
+# 157 MB aan originelen: de foto's zoals ze van www.steelframingholland.nl
+# komen (tot 6240x4160) plus de onbewerkte herofilm.
+#
+# Ze zitten er niet in omdat een kloon dan traag en zwaar wordt, en omdat ze
+# reproduceerbaar zijn: `_generator/beeldplan.json` houdt per beeld de volledige
+# bron-URL bij in het veld `herkomst`. Wat de site nodig heeft zijn de
+# omgezette WebP-bestanden, en die staan wél in `assets/foto/`.
+#
+# Wil je ze er toch in hebben, haal deze regel dan weg. Reken op ongeveer
+# 210 MB in totaal.
+_generator/assets_bron/
+
+# Wegwerpmateriaal van meet_hero_contrast.py
+_generator/meetframes/

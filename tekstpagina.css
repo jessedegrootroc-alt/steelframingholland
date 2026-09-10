@@ -1,0 +1,59 @@
+/* ============================================================================
+   tekstpagina.css: privacybeleid en cookies
+   De gids zet lange tekst op de zwaardere instelling: font-regular, 1rem,
+   line-height 1.6, met ruimte tussen alinea's in plaats van ondermarges (§3.5).
+   ========================================================================== */
+
+.tekstpagina .content__wrapper { display: flex; flex-direction: column; }
+.tekstpagina main { flex: 1 0 auto; }
+
+.tekstband { padding: 160px 0 var(--space-section-y); background: var(--color-white); }
+.tekstband > .container { padding-inline: var(--inset-x); }
+@media (max-width: 576px) {
+  .tekstband { padding: 120px 0 var(--space-section-y-mobile); }
+}
+
+.tekst { max-width: var(--content-max-half); }
+
+.tekst h1 { font-size: clamp(2rem, 1.25rem + 3vw, 3.5rem); line-height: 1.1; margin-bottom: var(--space-500); }
+.tekst h2 {
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem); line-height: 1.1;
+  margin: var(--space-800) 0 var(--space-500);
+}
+.tekst h3 {
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+  margin: var(--space-700) 0 var(--space-300);
+}
+
+.tekst p, .tekst li {
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: 1rem; line-height: 1.6; color: var(--color-text-primary);
+}
+.tekst p { margin: 0 0 1.6em; }
+.tekst ul { list-style: disc; padding-left: 1.35rem; margin: 0 0 1.6em; }
+.tekst li { margin-bottom: var(--space-200); }
+.tekst a { color: var(--color-text-primary); text-decoration: underline; text-underline-offset: 3px; }
+.tekst a:hover { color: var(--color-focus); }
+
+.tekst .meta {
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+  margin-bottom: var(--space-500);
+}
+.tekst h1 + .meta { margin-bottom: var(--space-800); }
+
+/* Nog aan te leveren tekst. Geen streepjesrand en geen radius (DR-1/DR-3):
+   een geel vlak is opvallend genoeg. */
+.invulblok { background: var(--color-geel); padding: var(--space-500); margin-bottom: 1.6em; }
+.invulblok p { margin: 0; }
+.invulblok p + p { margin-top: var(--space-300); }
+.invulblok::before {
+  content: 'Nog aan te leveren';
+  display: block; margin-bottom: var(--space-300);
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+}
+
+/* .invulveld staat in styleguide.css: de cursuspagina's gebruiken hem ook. */

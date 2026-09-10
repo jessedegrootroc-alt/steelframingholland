@@ -1,0 +1,8 @@
+/* ============================================================================
+   over-ons.css: de pagina over MADEGRO en Martin
+   ----------------------------------------------------------------------------
+   De hero (.paginahero), de vier vlakken (.vlakkenrij) en de medewerkersband
+   (.streamer--employee) zijn gedeelde componenten en staan in styleguide.css.
+   Deze pagina heeft verder niets eigens; het bestand blijft staan omdat de
+   pagina-overgang een stijl per pagina verwacht (data-page-css).
+   ========================================================================== */

@@ -1,0 +1,76 @@
+{
+ "sourceUrl": "https://www.steelframingholland.nl/",
+ "mainNavigation": [
+  {
+   "label": "Home",
+   "url": "https://www.steelframingholland.nl/"
+  },
+  {
+   "label": "Toepassingen",
+   "children": [
+    {
+     "label": "Woningbouw",
+     "url": "https://www.steelframingholland.nl/woningbouw/"
+    },
+    {
+     "label": "Renovatie",
+     "url": "https://www.steelframingholland.nl/renovatie/"
+    },
+    {
+     "label": "Utiliteitsbouw",
+     "url": "https://www.steelframingholland.nl/utiliteitsbouw/"
+    }
+   ]
+  },
+  {
+   "label": "Staalframebouw",
+   "children": [
+    {
+     "label": "Ontwerpen, tekenen en berekenen",
+     "url": "https://www.steelframingholland.nl/ontwerpen-tekenen-en-berekenen-staalconstructie/"
+    },
+    {
+     "label": "Lichtgewicht staalframe",
+     "url": "https://www.steelframingholland.nl/lichtgewicht-staalframe/"
+    },
+    {
+     "label": "EPS wandsysteem",
+     "url": "https://www.steelframingholland.nl/eps-wandsysteem/"
+    },
+    {
+     "label": "Overige wandsystemen",
+     "url": "https://www.steelframingholland.nl/overige-wandsystemen/"
+    }
+   ]
+  },
+  {
+   "label": "Projecten",
+   "url": "https://www.steelframingholland.nl/projecten/"
+  },
+  {
+   "label": "Over ons",
+   "children": [
+    {
+     "label": "Steel Framing Holland",
+     "url": "https://www.steelframingholland.nl/about-us/"
+    },
+    {
+     "label": "Werkwijze",
+     "url": "https://www.steelframingholland.nl/werkwijze/"
+    }
+   ]
+  },
+  {
+   "label": "Nieuws",
+   "url": "https://www.steelframingholland.nl/category/news/nieuws/"
+  },
+  {
+   "label": "Contact",
+   "url": "https://www.steelframingholland.nl/contact/"
+  }
+ ],
+ "notes": [
+  "De bronsite heeft geen offertepagina, geen privacybeleid en geen cookiepagina.",
+  "De projectenpagina heeft geen werkende categoriefilter: portfolio_category is leeg op alle items."
+ ]
+}

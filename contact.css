@@ -1,0 +1,28 @@
+/* ============================================================================
+   contact.css: de contactpagina
+   ----------------------------------------------------------------------------
+   De hero (.paginahero) en de vier vlakken (.vlakkenrij) zijn gedeelde
+   componenten en staan in styleguide.css; over-ons.html gebruikt ze ook.
+   Hier staat alleen wat van deze pagina zelf is.
+   ========================================================================== */
+
+.contact-direct { margin: var(--space-600) 0 0; }
+.contact-direct a { color: var(--color-text-primary); }
+
+/* Het formulier staat rechts in zijn kolom en niet over de volle acht kolommen;
+   invulvelden die te breed worden zijn lastiger te scannen. */
+@media (min-width: 992px) {
+  .contact-formulier-wikkel { max-width: 720px; margin-left: auto; }
+}
+
+/* Het formulier wordt door contactformulier.js in de pagina gezet en is er dus
+   nog niet bij de eerste weergave. Zonder deze regel klapt alles eronder omlaag
+   zodra het er staat: dat was de enige layoutverschuiving op de hele site
+   (CLS 0,036 op deze pagina).
+
+   De maten zijn opgemeten aan het formulier zoals het er komt te staan: 596px
+   waar het naast de tekst past en 789px op een telefoon, waar de labels over
+   meer regels breken. Afgerond naar boven, zodat het vak eerder iets te hoog is
+   dan te laag; een gat van een paar pixels ziet niemand, een sprong wel. */
+.contact-formulier-wikkel { min-height: 600px; }
+@media (max-width: 767px) { .contact-formulier-wikkel { min-height: 800px; } }

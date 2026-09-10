@@ -1,0 +1,209 @@
+/* ============================================================================
+   cases.css: het cases-overzicht en de detailpagina's
+   Opzet overgenomen van iwell.eu/nl/cases: twee filtergroepen met pillen, een
+   kaartraster, en een detailpagina met kop, kerncijfers, tekstblokken, een
+   citaat en verwante cases. De componenten komen uit styleguide.css.
+   ========================================================================== */
+
+/* ============================================================================
+   Overzicht
+   ========================================================================== */
+
+.cases-overzicht { padding: 0 0 var(--space-section-y); }
+
+.cases-overzicht__filters {
+  display: flex; flex-direction: column; gap: var(--space-400);
+  padding: 0 var(--inset-x) var(--space-600);
+}
+
+.filter-groep { display: flex; flex-wrap: wrap; gap: var(--space-200); }
+
+/* De pil krijgt zijn vinkje pas als hij aan staat. De breedte verandert
+   daardoor; met een vaste breedte voor het vinkje verspringt de rij niet. */
+.filter-pil {
+  display: inline-flex; align-items: center; gap: var(--space-200);
+  min-height: 44px; padding: var(--space-300) var(--space-400);
+  border: none; border-radius: var(--radius-none); cursor: pointer;
+  background: var(--color-grey); color: var(--color-text-primary);
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+  transition: all var(--duration-legacy) var(--ease-legacy);
+}
+.filter-pil:hover { background: var(--color-groen); color: var(--color-white); }
+/* De actieve filterpil staat op de cases-pagina en draagt daarom hetzelfde
+   diepgroen als de rest van de case-acties, niet het geel van de primaire CTA. */
+.filter-pil.is-actief { background: var(--color-groen-diepst); color: var(--color-white); }
+.filter-pil.is-actief .filter-pil__vink svg { fill: var(--color-white); }
+.filter-pil__vink { display: inline-flex; width: 0; overflow: hidden;
+                    transition: width var(--duration-fast) var(--ease-standard); }
+.filter-pil.is-actief .filter-pil__vink { width: 14px; }
+
+.cases-overzicht__telling {
+  margin: 0 var(--inset-x) var(--space-500);
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+.cases-overzicht__leeg {
+  margin: 0 var(--inset-x); padding: var(--space-800) 0;
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: 1rem; line-height: 1.5;
+}
+.cases-overzicht__leeg[hidden] { display: none; }
+
+/* Het raster: panelen die elkaar raken, zoals de rest van de site (DR-4). */
+.cases-overzicht__raster { display: flex; flex-wrap: wrap; }
+.case-kaart { display: flex; width: 100%; }@media (min-width: 768px) { .case-kaart { width: 50%; } }@media (min-width: 1200px) { .case-kaart { width: 33.3333%; } }
+.case-kaart[hidden] { display: none; }
+
+.case-kaart__link {
+  display: flex; flex-direction: column; width: 100%;
+  text-decoration: none; color: var(--color-text-primary);
+  background: var(--color-white);
+  transition: background var(--duration-base) var(--ease-image);
+}
+/* Om en om grijs, geteld over de kaarten die na het filteren overblijven.
+   Het script zet daarom .is-even; nth-child zou de weggefilterde meetellen. */
+.case-kaart.is-even .case-kaart__link { background: var(--color-grey); }
+.case-kaart__link:focus-visible { outline: 2px solid var(--color-groen); outline-offset: -2px; }
+
+.case-kaart__beeld { margin: 0; overflow: hidden; aspect-ratio: 16/10; }
+.case-kaart__beeld img { width: 100%; height: 100%; object-fit: cover;
+                         transition: transform var(--duration-image) var(--ease-image); }
+.case-kaart__link:hover .case-kaart__beeld img { transform: scale(1.05); }
+
+.case-kaart__inhoud { display: flex; flex-direction: column; gap: var(--space-400);
+                      padding: var(--space-panel) var(--inset-x); flex: 1 1 auto; }@media (max-width: 991px) { .case-kaart__inhoud { padding: var(--space-panel-md) var(--inset-x); } }
+
+.case-kaart__meta { display: flex; flex-wrap: wrap; gap: var(--space-400); }
+.case-kaart__label {
+  font-family: var(--font-medium); font-weight: var(--weight-medium); font-size: 12px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+}
+.case-kaart__titel { font-size: clamp(1.25rem, 1rem + 1vw, 2rem); line-height: 1.1; }
+.case-kaart__tekst { font-family: var(--font-regular); font-weight: var(--weight-regular);
+                     font-size: 1rem; line-height: 1.5; margin: 0;
+                     display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
+                     overflow: hidden; }
+.case-kaart__voet { margin-top: auto; display: flex; align-items: center;
+                    justify-content: space-between; gap: var(--space-400); }
+.case-kaart__lees {
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+}
+
+/* ============================================================================
+   Detailpagina
+   ========================================================================== */
+
+/* Twee naast elkaar, ook op de smalste telefoon, zoals in de referentie.
+   Onder 576px is de kolom nog geen 160px breed, dus daar gaat de rechtermarge
+   eraf zodat het getal en de eenheid op &eacute;&eacute;n regel blijven passen. */
+/* De kerncijfers staan in styleguide.css; de cursuspagina's gebruiken ze ook. */
+
+/* De inleiding onder de kerncijfers, in het formaat van een lead. */
+.case-lead {
+  max-width: var(--content-max-half);
+  margin: 0;
+  font-family: var(--font-light); font-weight: var(--weight-light);
+  font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);
+  line-height: 1.4;
+  color: var(--color-text-primary);
+}
+
+.case-blok__inner { max-width: var(--container-max); }
+.case-blok__kop {
+  margin: 0 0 var(--space-500);
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+}
+/* Bewust kleiner dan .article-body: de referentie zet een compacte kolom onder
+   een grote kop, en die sprong is wat de pagina rustig houdt. 54ch komt neer op
+   ongeveer 70 tekens per regel, ruim binnen wat prettig leest. */
+.case-blok__body {
+  max-width: 54ch;
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: 0.9375rem; line-height: 1.7;
+  color: var(--color-text-primary);
+}
+.case-blok__body p { margin: 0; font: inherit; }
+.case-blok__body p + p { margin-top: 1.7em; }
+
+.case-lijst {
+  max-width: 54ch;
+  margin: var(--space-500) 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-regular); font-weight: var(--weight-regular);
+  font-size: 0.9375rem; line-height: 1.7;
+  color: var(--color-text-primary);
+}
+.case-lijst li { font: inherit; position: relative; padding-left: var(--space-500); }
+.case-lijst li + li { margin-top: var(--space-400); }
+/* Een blokje in het huisstijlgroen in plaats van een bolletje, zodat de lijst
+   bij het vierkante karakter van de rest past (DR-3: geen ronde vormen). */
+.case-lijst li::before {
+  content: ""; position: absolute; left: 0; top: 0.6em;
+  width: 8px; height: 8px; background: var(--color-groen);
+}
+
+/* Het citaat staat nu op wit, net als in de referentie: donkere tekst, groot,
+   met het streepje boven de naam in het huisstijlgroen. */
+.case-citaat { margin: 0; max-width: var(--content-max-half); }
+.case-citaat blockquote { margin: 0; }
+.case-citaat blockquote p {
+  font-family: var(--font-light); font-weight: var(--weight-light);
+  font-size: clamp(1.5rem, 1.25rem + 1.5vw, 2.5rem); line-height: 1.25;
+  color: var(--color-text-primary); margin: 0;
+}
+.case-citaat__wie { position: relative; padding-top: 3rem; margin-top: var(--space-600); }
+.case-citaat__wie::after {
+  content: ""; position: absolute; left: 0; top: 24px;
+  width: 54px; height: 1px; border-top: 1px solid var(--color-groen);
+}
+.case-citaat__wie strong { display: block; color: var(--color-text-primary);
+                           font-family: var(--font-medium); font-weight: var(--weight-medium);
+                           font-size: 0.875rem; line-height: 1.35; }
+.case-citaat__wie span { display: block; color: var(--color-text-primary);
+                         font-family: var(--font-light); font-weight: var(--weight-light);
+                         font-size: 0.875rem; line-height: 1.35; }
+
+.projectkaart__klant {
+  font-family: var(--font-medium); font-weight: var(--weight-medium);
+  font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
+  margin: 0;
+}
+
+/* De projectgalerij. De bronsite heeft per project geen verhaal maar wel een
+   fotoreeks: dat is het bewijs dat er iets gebouwd is, dus krijgt het een eigen
+   raster in plaats van één losse foto.
+
+   Drie kolommen op desktop, twee op tablet, één op een telefoon. De verhouding
+   staat vast op 4:3, want de bronfoto's lopen van 4:3 tot 3:2 en zonder vaste
+   verhouding wordt het een rommelig raster; object-fit snijdt bij. Dezelfde
+   afronding, spacing en hover-zoom als .case-kaart, zodat het bij de rest past. */
+.case-galerij {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: var(--space-400);
+  grid-template-columns: repeat(3, 1fr);
+}@media (max-width: 991px) { .case-galerij { grid-template-columns: repeat(2, 1fr); } }@media (max-width: 576px) { .case-galerij { grid-template-columns: 1fr; } }
+.case-galerij li { margin: 0; }
+.case-galerij figure { margin: 0; overflow: hidden; aspect-ratio: 4/3; background: var(--color-grey); }
+.case-galerij img {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+  transition: transform var(--duration-legacy) var(--ease-legacy);
+}
+.case-galerij figure:hover img { transform: scale(1.05); }@media (prefers-reduced-motion: reduce) {
+  .case-galerij img { transition: none; }
+  .case-galerij figure:hover img { transform: none; }
+}
+
+/* .case-bleed staat in styleguide.css: het wordt ook gebruikt op index.html en
+   contact.html, en die laden deze stylesheet niet. */
+
+/* De .service-hero stond hier: een fotohero met witte tekst eroverheen, voor de
+   case- en cursuspagina's van een eerdere versie van dit template. Geen enkele
+   pagina gebruikt die klasse nog (de projectpagina's dragen .paginahero uit
+   styleguide.css), en de regels bevatten nog de merkkleur van de vorige
+   eigenaar. Daarom eruit: het was dode CSS die op 36 pagina's meeging.
+*/

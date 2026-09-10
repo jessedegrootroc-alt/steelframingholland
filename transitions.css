@@ -1,0 +1,58 @@
+/* ---- Pagina-overgangen ----
+   Barba.js wisselt alleen het blok met data-barba="container" om; de rest van
+   de pagina (cookiemelding, scripts) blijft staan. Deze stijlen zorgen dat de
+   twee containers tijdens de overgang netjes over elkaar heen kunnen liggen.
+
+   De animatie zelf staat in page-transitions.js.                              */
+
+[data-barba="wrapper"] {
+  position: relative;
+}
+
+/* De container is de laag die wisselt. Hij heeft een eigen achtergrond nodig:
+   tijdens de overgang liggen twee pagina's over elkaar heen, en zonder vulling
+   schijnt de oude pagina door de nieuwe heen.
+
+   Kolomrichting, zodat pagina's die hun footer met flex-1 naar beneden duwen
+   (de tekstpagina's) blijven kloppen. */
+.app__wrapper {
+  background-color: var(--color-background, #FFFFFF);
+  color: var(--color-text-primary, #383838);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content__wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Vangnet: in sync-modus staat de nieuwe container even in de pagina voordat
+   het script hem oppakt. Deze regel houdt hem meteen uit de flow, zodat je
+   geen sprong ziet. GSAP zet er daarna zijn eigen inline stijlen overheen. */
+[data-barba="container"] + [data-barba="container"] {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+}
+
+/* Tijdens de overgang geen tweede klik: anders lopen twee animaties door
+   elkaar heen. */
+.is__transitioning a {
+  pointer-events: none;
+}
+
+/* Wie beweging heeft uitgezet, krijgt een korte overvloeier in plaats van de
+   schaal- en clip-animatie. Dat regelt het script; hier zetten we alleen de
+   sticky header stil, die tijdens een vaste positie toch niets doet. */
+@media (prefers-reduced-motion: reduce) {
+  .is__transitioning * {
+    scroll-behavior: auto !important;
+  }
+}
