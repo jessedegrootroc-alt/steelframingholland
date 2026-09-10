@@ -288,11 +288,28 @@
 
      Pas zichtbaar bij 'playing' en niet bij 'canplay': weigert de browser het
      automatisch afspelen -- dat mag hij -- dan blijft de foto staan in plaats
-     van een stilstaand eerste beeldje. */
+     van een stilstaand eerste beeldje.
+
+     Twee dingen zetten de film ook uit, en dat is dan geen fout maar een keuze
+     van de bezoeker: 'Beperk beweging' in de toegankelijkheidsinstellingen
+     (dat is de regel over `kalm` hieronder) en de energiespaarstand op een
+     iPhone, die alle automatisch afspelen tegenhoudt.
+
+     En de server moet byte-ranges ondersteunen. Safari op iOS speelt een mp4
+     niet als er 200 met het hele bestand komt in plaats van 206; zie
+     _generator/devserver.py en DEPLOY.md. */
   container.querySelectorAll('[data-herovideo]').forEach((video) => {
     if (kalm.matches) return;                                   // beweging uit
     if (navigator.connection?.saveData) return;                 // databesparing aan
     if (/^(slow-)?2g$/.test(navigator.connection?.effectiveType || '')) return;  // trage lijn
+
+    /* muted en autoplay hier en niet alleen in de HTML, en dat is voor Safari.
+       Het attribuut `muted` in de opmaak zet `defaultMuted`; Safari kijkt voor
+       zijn afspeelbeleid naar de eigenschap. En met `autoplay` erbij hoeft het
+       afspelen niet van de play() hieronder te komen: die combinatie -- muted,
+       playsinline en autoplay -- is wat Safari officieel toestaat. */
+    video.muted = true;
+    video.autoplay = true;
 
     const bron = document.createElement('source');
     bron.src = video.dataset.herovideo;
@@ -300,7 +317,15 @@
     video.appendChild(bron);
     video.addEventListener('playing', () => video.classList.add('is-zichtbaar'), { once: true });
     video.load();
-    video.play().catch(() => {});
+
+    /* Twee keer proberen, en dat is geen slordigheid. Met preload="none" is er
+       op het moment van load() nog niets binnen, en dan wijst Safari een play()
+       af omdat de aanvraag door het laden wordt onderbroken. De tweede poging
+       staat op 'loadeddata', als er wel iets is om te spelen. Weigert de
+       browser het daarna nog, dan blijft de foto staan; dat mag hij. */
+    const probeer = () => video.play().catch(() => {});
+    probeer();
+    video.addEventListener('loadeddata', probeer, { once: true });
 
     /* Op een telefoon zet de browser de film stil zodra je naar een andere app
        of een ander tabblad gaat, en niet elke browser zet hem weer aan als je

@@ -13,9 +13,32 @@ telefoon een halve seconde langer.
 | **gzip of brotli** op html, css, js, svg, xml | `styleguide.min.css` gaat van 61 kB naar ruim 10 kB, de HTML van 65 kB naar 11 kB |
 | **lange cache op css en js** | Ze worden aangeroepen met `?v=<hash van de inhoud>`, dus een nieuwe versie krijgt automatisch een nieuwe URL |
 | **geen cache op html** | Daarin staan die hashes; een oude pagina wijst naar een oude stylesheet |
+| **byte-ranges op mp4** | Safari op iOS speelt de herofilm niet zonder; zie hieronder |
 
 Beeld, video en lettertypen niet comprimeren: webp, avif, mp4 en woff2 zijn dat
 al, en er nog een laag omheen doen kost tijd en levert niets op.
+
+## Byte-ranges, anders speelt de herofilm niet op een iPhone
+
+Safari op iOS speelt een mp4 alleen als de server een deel van het bestand kan
+sturen: status **206** met een `Content-Range`. Komt er 200 met het hele
+bestand, dan blijft de film staan en zie je de foto eronder. Op desktop en op
+Android valt dat niet op, want die spelen hem wel.
+
+Apache, nginx, Netlify en Cloudflare doen dit standaard. Controleer het na het
+uploaden:
+
+```bash
+curl -sI -H 'Range: bytes=0-1023' https://<jouw-domein>/assets/video/sfh-hero.mp4
+```
+
+Dat moet `206 Partial Content` zijn met `Content-Range: bytes 0-1023/1304051`.
+Staat er `200 OK` met de volle lengte, dan speelt de film niet op een iPhone en
+moet de host ranges aanzetten.
+
+Twee dingen zetten de film ook uit, en dat is dan geen fout: **Beperk beweging**
+in de toegankelijkheidsinstellingen, en de **energiespaarstand** op een iPhone.
+In beide gevallen blijft de foto staan, en dat is met opzet zo.
 
 ## Apache (de meeste Nederlandse shared hosting)
 

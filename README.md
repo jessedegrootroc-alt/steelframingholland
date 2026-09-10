@@ -11,6 +11,17 @@ Open `index.html` in de browser, of draai een server vanuit deze map:
 
     python3 _generator/devserver.py 5501
 
+Wil je op je telefoon kijken, dan moet de server ook op het netwerk luisteren:
+
+    python3 _generator/devserver.py 5501 --lan
+
+Hij print dan het adres dat je op je telefoon kunt openen, op dezelfde wifi.
+Doe dat niet op een netwerk dat je niet vertrouwt: deze map staat dan open voor
+iedereen erop.
+
+Open `index.html` rechtstreeks als bestand en de herofilm speelt niet: die
+heeft byte-ranges nodig, en dat kan alleen een server. Zie DEPLOY.md.
+
 Alle links zijn relatief, dus de map kan zonder aanpassing als eigen site
 gepubliceerd worden.
 
