@@ -888,15 +888,17 @@ def paginahero(nr, ident, label, titel, beeld, alt=None, positie=None):
 def patroonhero(nr, ident, label, titel):
     """Dezelfde hero, maar met het merkpatroon in plaats van een foto.
 
-       Twee bestanden, want de compositie verschilt: op breed scherm staat het
-       patroon rechts in een liggend vak, op een telefoon als brede band boven de
-       titel. <picture> kiest ze op dezelfde grens als de layout zelf omslaat
-       (768px), zodat er nooit een verkeerde uitsnede te zien is.
+       Eén bestand voor beide breekpunten. Het template had er twee, omdat de
+       vorige versie van het patroon een aparte vierkante variant voor de
+       telefoon had aangeleverd. Van deze versie is er één liggende compositie
+       (1440x940), en die snijdt op beide plekken goed bij: naast de kop op
+       ongeveer 1,65:1, en op een telefoon als brede band op 7:3. De diagonalen
+       zijn grote vlakken, dus een strook door het midden leest nog steeds als
+       het patroon. Nagekeken op beide uitsneden.
 
-       Hoe hoog die band is, staat in de stylesheet en niet in het bestand: 7:3
-       plus de hoogte van de vaste balk, want die ligt eroverheen. Het
-       bronbestand is daarom vierkant en niet al op 7:3 gesneden; cover heeft
-       verticaal wat over nodig.
+       Hoe hoog het vak is, staat in de stylesheet en niet in het bestand: 7:3
+       plus de hoogte van de vaste balk, want die ligt eroverheen. Daarom staat
+       er `object-fit: cover` op en geen vaste uitsnede in het bestand.
 
        Het patroon is versiering en zegt niets wat de kop niet al zegt, dus
        alt="" en aria-hidden: een schermlezer slaat het over."""
@@ -906,10 +908,13 @@ def patroonhero(nr, ident, label, titel):
             f'      <h1 class="paginahero__titel">{titel}</h1>\n'
             '    </div>\n'
             '    <div class="paginahero__beeld" aria-hidden="true">\n'
-            '      <picture>\n'
-            '        <source media="(max-width: 767px)" srcset="assets/patronen/hero-patroon-mobiel-720.webp 720w, assets/patronen/hero-patroon-mobiel-800.webp 800w, assets/patronen/hero-patroon-mobiel-1440.webp 1440w" sizes="100vw" width="1440" height="1440">\n'
-            '        <img src="assets/patronen/hero-patroon-1440.webp" srcset="assets/patronen/hero-patroon-720.webp 720w, assets/patronen/hero-patroon-1000.webp 1000w, assets/patronen/hero-patroon-1440.webp 1440w" sizes="50vw" width="1440" height="940" alt="" loading="eager" fetchpriority="high" decoding="async">\n'
-            '      </picture>\n'
+            '      <img src="assets/patronen/hero-patroon-v3-1440.webp" '
+            'srcset="assets/patronen/hero-patroon-v3-720.webp 720w, '
+            'assets/patronen/hero-patroon-v3-1000.webp 1000w, '
+            'assets/patronen/hero-patroon-v3-1440.webp 1440w" '
+            'sizes="(max-width: 767px) 100vw, 50vw" '
+            'width="1440" height="940" alt="" loading="eager" '
+            'fetchpriority="high" decoding="async">\n'
             '    </div>\n'
             '  </section>')
 

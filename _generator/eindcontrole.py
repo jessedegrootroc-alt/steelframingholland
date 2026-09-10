@@ -10,8 +10,8 @@ niets kapot of dubbel is. Wat het nagaat:
   - precies één <h1> per pagina, en geen sprong in de koppenniveaus
   - unieke <title> en meta-omschrijving, en geen lege
   - resten van de vorige merken: bedrijfsnaam, contactgegevens, merkkleuren
-    (als hex én als rgb-getallen, ongeacht schrijfwijze), dienstnamen
-    (dit template is twee keer omgebouwd)
+    (als hex, als rgb-getallen ongeacht schrijfwijze, én in de pixels van de
+    verzonden beelden), dienstnamen (dit template is twee keer omgebouwd)
   - lege alinea's en afbeeldingen zonder alt
   - dubbele labels in de navigatie
   - hoeveel [CONTENT NODIG]-markeringen er staan (die horen er te zijn)
@@ -73,6 +73,100 @@ def oude_tint_als_rgb(inhoud):
         if trio in OUDE_TINTEN:
             uit.append(f'{m.group(0)}) = {OUDE_TINTEN[trio]}')
     return uit
+
+
+# De tinten van dít merk. Nodig omdat sommige oude en nieuwe tinten dicht bij
+# elkaar liggen: de oude #0D2247 zit op vier waarden van de huidige navy
+# #0D2646. Een pixel wordt daarom toegewezen aan de referentiekleur waar hij het
+# dichtst bij ligt, en telt alleen als dat een oude tint is.
+HUIDIGE_TINTEN = {
+    (13, 38, 70):    '#0D2646 navy',
+    (188, 218, 131): '#BCDA83 lichtgroen',
+    (27, 122, 72):   '#1B7A48 accent',
+    (10, 30, 54):    '#0A1E36 navy diep',
+    (8, 23, 41):     '#081729 navy diepst',
+    (20, 96, 58):    '#14603A accent donker',
+    (0, 40, 72):     '#002848 patroon-navy',
+    (0, 183, 103):   '#00B767 patroon-groen',
+    (48, 179, 109):  '#30B36D logogroen',
+    (255, 255, 255): 'wit',
+    (0, 0, 0):       'zwart',
+}
+
+
+def merkkleur_in_beeld(drempel=10.0, marge=8, max_kleuren=400):
+    """De verzonden beelden aftasten op de merktinten van een vorige eigenaar.
+
+       Waarom dit er is: de patroonbitmaps in assets/patronen/ waren bij de
+       ombouw naar dit merk niet opnieuw gemaakt. Ze bestonden voor 46% uit
+       #463878, de indigo van de vorige eigenaar, en stonden zo op het
+       contactvlak en in de patroonhero van vier pagina's. Alle tekstcontroles
+       hierboven gaven groen licht, want in de HTML en de CSS stond niets
+       verkeerd: de kleur zat in de pixels. De opdrachtgever zag het zelf.
+
+       Deze controle kijkt naar wat die fout kenmerkte, en niet naar losse
+       pixels:
+
+         `max_kleuren`  alleen vlak beeld. Een patroon, logo of icoon heeft
+                        tientallen kleuren, een foto tienduizenden. Zonder deze
+                        grens meldt de controle bleekblauwe luchten als
+                        #C7D8E0 en donkere schaduwen als #0D2247, en dan is
+                        hij niets waard.
+         `drempel`      minstens tien procent van het beeld. Een achtergebleven
+                        merkvlak is groot; antialiasing langs een rand is dat
+                        niet.
+         nearest        een kleur telt alleen als hij dichter bij een OUDE tint
+                        ligt dan bij een huidige. De oude #0D2247 zit op vier
+                        waarden van de huidige navy #0D2646, dus zonder dit
+                        meldt elk navy vlak zich.
+
+       Vraagt PIL, en die is er niet altijd; dan levert het None en slaat de
+       controle zichzelf over.
+    """
+    try:
+        from PIL import Image
+    except ImportError:
+        return None
+
+    referenties = ([(t, naam, True) for t, naam in OUDE_TINTEN.items()]
+                   + [(t, naam, False) for t, naam in HUIDIGE_TINTEN.items()])
+
+    def is_oud(kleur):
+        if not any(all(abs(kleur[i] - t[i]) <= marge for i in range(3))
+                   for t in OUDE_TINTEN):
+            return None
+        beste, beste_afstand, oud = None, None, False
+        for tint, naam, van_vroeger in referenties:
+            d = sum((kleur[i] - tint[i]) ** 2 for i in range(3))
+            if beste_afstand is None or d < beste_afstand:
+                beste_afstand, beste, oud = d, naam, van_vroeger
+        return beste if oud else None
+
+    treffers = []
+    for pad in sorted(WORTEL.glob('assets/**/*')):
+        if pad.suffix.lower() not in ('.webp', '.png', '.jpg', '.jpeg'):
+            continue
+        if 'bron' in pad.parts or 'origineel' in pad.parts:
+            continue          # archief, gaat niet mee met de site
+        try:
+            im = Image.open(pad).convert('RGB')
+        except Exception:
+            continue
+        im.thumbnail((160, 160))
+        tel = collections.Counter(im.getdata())
+        if len(tel) > max_kleuren:
+            continue          # foto, geen vlak beeld
+        aantal = sum(tel.values())
+        per_tint = collections.Counter()
+        for kleur, n in tel.items():
+            naam = is_oud(kleur)
+            if naam:
+                per_tint[naam] += n
+        for naam, n in per_tint.items():
+            deel = n / aantal * 100
+            if deel >= drempel:
+                treffers.append(f'{pad.relative_to(WORTEL)}: {deel:.0f}% {naam}')
+    return treffers
 
 
 def tekst(el):
@@ -179,6 +273,12 @@ def main():
         for vondst in oude_tint_als_rgb(inhoud):
             rgb_treffers.append(f'{c.name}: {vondst}')
     regel('oude merkkleur als rgb()', rgb_treffers, 2)
+
+    beeld = merkkleur_in_beeld()
+    if beeld is None:
+        print('  n.v.t. oude merkkleur in beeld            (PIL niet aanwezig)')
+    else:
+        regel('oude merkkleur in beeld', beeld, 2)
 
     print(f'\n  [CONTENT NODIG]-markeringen: {markeringen} (bewust: ontbrekende brondata)')
     print('\nRESULTAAT: ' + ('ALLES OK' if not fouten else 'AANDACHT: ' + ', '.join(fouten)))

@@ -36,6 +36,7 @@ weg zodra de generator opnieuw draait.**
 | `bouw_contact.py` | contact, offerte, privacybeleid, cookies |
 | `bouw_sitemap.py` | `sitemap.xml` en `robots.txt` |
 | `maak_assets.py` | zet de beelden uit de export om naar responsive WebP (alleen nodig bij nieuw beeld) |
+| `maak_patronen.py` | zet het merkpatroon om naar WebP (alleen nodig bij nieuw patroon) |
 
 De CSS, de JavaScript en alles in `assets/` worden **niet** gegenereerd; die
 bewerk je rechtstreeks.

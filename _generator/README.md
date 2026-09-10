@@ -19,6 +19,8 @@ Dat schrijft alle pagina's opnieuw. `bouw_alles.py` roept de andere scripts aan:
 | `bouw_bedrijf.py` | over ons, werkwijze, partners |
 | `bouw_contact.py` | contact, offerte, privacybeleid, cookies |
 | `bouw_sitemap.py` | `sitemap.xml` en `robots.txt` |
+| `maak_patronen.py` | zet het merkpatroon om naar WebP (alleen nodig bij nieuw patroon) |
+| `meet_hero_contrast.py` | meet het tekstcontrast op de herofilm |
 
 ## Waar de inhoud staat
 
@@ -113,6 +115,26 @@ in het veld `herkomst`.
 Het logo wordt hier niet gemaakt; dat was een eenmalige bewerking. Zie
 `assets/logo/HERKOMST.md`.
 
+Het merkpatroon heeft zijn eigen script, want daar zit een omkleuring in:
+
+```
+python3 maak_patronen.py
+```
+
+Het patroon staat op twee plekken: in een eigen vak naast de kop van een
+patroonhero, en als achtergrond van het contactvlak. Op die tweede plek staat er
+witte tekst middenop, en het aangeleverde groen `#00B767` haalt met wit 2,64:1.
+De CTA-variant krijgt daarom het accent uit de merklaag (`#1B7A48`, 5,35:1); de
+hero-variant houdt het felle groen, want daar staat niets over. Zie
+`assets/patronen/HERKOMST.md`.
+
+**De patroonbestanden hebben een versie in hun naam** (`-v3-`). DEPLOY.md zet
+een cache van dertig dagen op beeld, en zonder versie in de naam houdt wie de
+site eerder bezocht het oude patroon. Dat is hier gebeurd: bij het nakijken
+stond in de browser nog het patroon van versie 2 terwijl het nieuwe al op schijf
+stond. Verandert het patroon, dan verhoog je `VERSIE` in `maak_patronen.py` en
+de twee verwijzingen (in `styleguide.css` en in `patroonhero()` in `schil.py`).
+
 ## Snelheid
 
 De optimalisaties van het template zijn niet aangeraakt en werken nog:
@@ -145,8 +167,15 @@ python3 _generator/eindcontrole.py
 
 Kijkt niet of de site mooi is, maar of er niets kapot of dubbel is: kapotte
 links, koppenniveaus, dubbele titles, dubbele labels in de navigatie, lege
-alinea's, ontbrekende alt-teksten en resten van het vorige merk. Draai dit na
+alinea's, ontbrekende alt-teksten en resten van de vorige merken. Draai dit na
 elke `bouw_alles.py`.
+
+Die laatste controle kijkt ook naar de **pixels** van het verzonden beeld, en
+niet alleen naar tekst in HTML en CSS. Dat is er ingekomen nadat bleek dat de
+patroonbitmaps de hele ombouw hadden meegedragen in de indigo van de vorige
+eigenaar: in de code stond niets verkeerd, de kleur zat in het beeld. De
+controle meldt alleen vlak beeld (tot 400 kleuren) met minstens tien procent in
+een oude tint, zodat een bleekblauwe lucht in een foto geen valse melding geeft.
 
 ## Versiehash op CSS en JavaScript
 
