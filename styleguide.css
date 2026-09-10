@@ -120,7 +120,7 @@
      voor knoppen, links en labels (--color-accent). */
   --color-primary:           #0D2646;  /* SFH Navy, uit het logo: merkvlakken (30%) */
   --color-secondary:         #BCDA83;  /* SFH Lichtgroen, uit het logo: tekst en details OP donkere merkvlakken (9,8:1 op navy) */
-  --color-accent:            #1B7A48;  /* SFH Groen verdiept: CTA, links, labels (10%). Het logogroen #30B36D haalt op wit maar 2,7:1; deze stap haalt 5,35:1 en dus AA. */
+  --color-accent:            #00B767;  /* SFH Groen, uit het patroon: CTA, labels, accentvlakken (10%) */
   --color-background:        #FFFFFF;  /* de dominante basis (60%) */
   --color-background-subtle: #F5F5F5;  /* rustige afwijkende achtergrond */
   --color-text:              #383838;  /* koppen en lopende tekst */
@@ -133,7 +133,7 @@
      nodig heeft; welke beweging een vlak maakt, blijft dus van de template. */
   --color-primary-deep:      #0A1E36;  /* haarlijnen, kleine labels, pressed */
   --color-primary-deepest:   #081729;  /* donkerste vlak en de sluier over foto's */
-  --color-accent-strong:     #14603A;  /* accent een stap donkerder: hover en pressed (7,6:1) */
+  --color-accent-strong:     #00A65D;  /* accent een stap donkerder: hover en pressed */
 
   /* ---------- Merkkleuren (§2) ----------
      De namen hieronder komen uit de oorspronkelijke template en worden in de
@@ -180,7 +180,15 @@
   --color-text-inverse:    var(--color-white);
   /* Het accent is nu donker in plaats van geel, dus de tekst erop is wit.
      Stond hier zwart, want op geel las dat goed. */
+  /* Wat op een MERKVLAK staat. Twee tokens, want de twee merkvlakken vragen
+     het tegenovergestelde:
+       --color-text-on-accent  wit, voor de navy vlakken (15,19:1)
+       --color-op-accent       navy, voor de groene vlakken (5,76:1)
+     Wit op het groen #00B767 haalt maar 2,64:1, en dat is de reden dat dit
+     tweede token bestaat. Zet je hier weer wit, dan faalt elke groene knop,
+     elk groen vlak en elke groene chip op de hele site. */
   --color-text-on-accent:  var(--color-white);
+  --color-op-accent:       var(--color-primary);
   --color-heading:         var(--color-text);
   --color-accent-hover:    var(--color-accent-strong);
   /* De haarlijn blijft een gekleurde lijn, zoals de template hem bedoelde,
@@ -470,7 +478,7 @@ h1 > span.highlight, h2 > span.highlight, h3 > span.highlight {
   padding: 0 1rem 0.25rem;
   border-radius: var(--radius-chip);
   background-color: var(--color-geel);
-  color: var(--color-text-on-accent);
+  color: var(--color-op-accent);
 }
 
 /* Lopende tekst in kaarten en artikelen is zwaarder en ruimer (§3.5) */
@@ -517,7 +525,7 @@ h1 > span.highlight, h2 > span.highlight, h3 > span.highlight {
    dat we nog niet hebben. Bewust opvallend, zodat het niet per ongeluk live gaat. */
 .invulveld {
   background: var(--color-geel); padding: 0 .25em;
-  font-family: var(--font-medium); font-weight: var(--weight-medium); color: var(--color-text-on-accent);
+  font-family: var(--font-medium); font-weight: var(--weight-medium); color: var(--color-op-accent);
 }
 
 /* Een kolom die zijn inhoud over de volle hoogte laat lopen; nodig als er een
@@ -609,8 +617,8 @@ main > section:has(+ section) > .container > .content-text-side-cta--container {
 .background--grey  { background-color: var(--color-grey); }
 .background--groen  { background-color: var(--color-groen); color: var(--color-white); }
 .background--groen :is(h1,h2,h3,h4,h5,h6,p,li,a:not(.button)) { color: var(--color-white); }
-.background--geel  { background-color: var(--color-geel); color: var(--color-text-on-accent); }
-.background--geel :is(h1,h2,h3,h4,h5,h6,p,li,a:not(.button)) { color: var(--color-text-on-accent); }
+.background--geel  { background-color: var(--color-geel); color: var(--color-op-accent); }
+.background--geel :is(h1,h2,h3,h4,h5,h6,p,li,a:not(.button)) { color: var(--color-op-accent); }
 
 /* Een foto op zijn eigen verhouding, over de breedte van de inhoud. Anders dan
    .case-bleed in cases.css wordt hier niet gesneden: op een groepsfoto valt dan
@@ -663,18 +671,24 @@ main > section:has(+ section) > .container > .content-text-side-cta--container {
   text-transform: uppercase;
   transition: all var(--duration-legacy) var(--ease-legacy);
 }
-/* De primaire knop staat in de merkkleur en niet in het navy accent. Het accent
-   blijft wel het accent voor links en kleine vlakken; alleen de knopvulling is
-   paars. Wit haalt op de indigo 10,01:1 en het vlak zelf haalt datzelfde tegen
-   wit en 9,18:1 tegen het subtiele grijs, dus ruim boven de eis. */
+/* De primaire knop staat in de navy en niet in het groene accent, en dat is met
+   opzet. Het groen #00B767 haalt tegen wit 2,64:1: te weinig voor de 3:1 die de
+   vorm van een knop vraagt, en wit erop haalt 2,64:1 waar 4,5:1 nodig is. Navy
+   haalt 15,19:1 op beide fronten.
+
+   Het groen blijft wel het accent: voor de gekleurde vlakken, de labels en de
+   hover van een knop. Op een groen vlak staat navy tekst, niet wit; dat is
+   --color-op-accent. */
 .button--primary   { background-color: var(--color-primary);  color: var(--color-text-on-accent); }
 .button--secondary { background-color: var(--color-white); color: var(--color-black); }
 .button--groen      { background-color: var(--color-groen);  color: var(--color-white); }
-/* De tweede keus, in diepgroen. Diensten en cursussen zijn waar iemand voor
-   komt en houden het geel; de cases zijn onderbouwing daarbij en trekken
-   daarom niet dezelfde aandacht. */
+/* De tweede keus, in het diepste navy. */
 .button--secundair  { background-color: var(--color-groen-diepst); color: var(--color-white); }
-.button:hover      { background-color: var(--color-geel-hover); color: var(--color-text-on-accent); }
+/* Bij hover wordt een knop groen, met navy tekst. De hoverkleur #00A65D is een
+   stap donkerder dan het accent, want die moet twee dingen halen: de vorm tegen
+   wit (3,18:1, eis 3) en de navy tekst erop (4,78:1, eis 4,5). Het accent zelf
+   haalt die eerste niet (2,64:1). */
+.button:hover      { background-color: var(--color-geel-hover); color: var(--color-op-accent); }
 /* Na de regel hierboven, niet ervoor: die heeft dezelfde specificiteit en
    zou de knop bij hover terug naar het navy zetten. */
 .button--primary:hover  { background-color: var(--color-primary-deep); color: var(--color-text-on-accent); }
@@ -723,7 +737,7 @@ main > section:has(+ section) > .container > .content-text-side-cta--container {
    knoppenstrook, met de sluier op 67% op die hoogte:
 
      navy  #0D2646 (nu)   1,04:1
-     groen #1B7A48 (accent) 1,47:1
+     groen #00B767 (accent) 1,04:1
      licht #BCDA83        9,76:1
      wit   #FFFFFF        8,01:1
 
@@ -733,19 +747,19 @@ main > section:has(+ section) > .container > .content-text-side-cta--container {
    dan haalt de knop 8,01:1. */
 .cta-slot__hoofd .button--primary,
 .uitklap__kaart .button--primary {
-  background-color: var(--color-white); color: var(--color-accent);
+  background-color: var(--color-white); color: var(--color-primary);
 }
 .cta-slot__hoofd .button--primary:hover,
 .uitklap__kaart .button--primary:hover {
-  background-color: var(--color-secondary); color: var(--color-accent);
+  background-color: var(--color-secondary); color: var(--color-primary);
 }
 .cta-slot__hoofd .button--secondary,
 .uitklap__kaart .button--secondary {
-  background-color: var(--color-secondary); color: var(--color-accent);
+  background-color: var(--color-secondary); color: var(--color-primary);
 }
 .cta-slot__hoofd .button--secondary:hover,
 .uitklap__kaart .button--secondary:hover {
-  background-color: var(--color-white); color: var(--color-accent);
+  background-color: var(--color-white); color: var(--color-primary);
 }
 /* De focusring is standaard indigo en valt op een indigo vlak weg (1,3:1).
    WCAG 2.2 vraagt 3:1 voor de focusindicator; wit haalt hier 6:1 of meer. */
@@ -849,13 +863,13 @@ main > section:has(+ section) > .container > .content-text-side-cta--container {
    wel, maar was niet te zien. Wit haalt op het accent 12,30:1. */
 .button--icon { background-color: var(--color-grey); }
 .button--icon .button--circle { background-color: var(--color-geel); }
-.button--icon :is(svg, i) { fill: var(--color-white); color: var(--color-white); }
+.button--icon :is(svg, i) { fill: var(--color-op-accent); color: var(--color-op-accent); }
 
 .button--icon.button--groen-vlak { background-color: var(--color-groen); }
-.button--icon.button--groen-vlak :is(svg, i) { fill: var(--color-white); color: var(--color-white); }
+.button--icon.button--groen-vlak :is(svg, i) { fill: var(--color-op-accent); color: var(--color-op-accent); }
 .button--icon.button--groen-vlak .button--circle { background-color: var(--color-geel); }
 .button--icon.button--groen-vlak:hover :is(svg, i),
-.hover--icon:hover .button--icon.button--groen-vlak :is(svg, i) { fill: var(--color-text-on-accent); color: var(--color-text-on-accent); }
+.hover--icon:hover .button--icon.button--groen-vlak :is(svg, i) { fill: var(--color-op-accent); color: var(--color-op-accent); }
 /* Dezelfde tweede keus voor de ronde knop: de vulling wordt diepgroen en de
    pijl wit, in plaats van geel met een groene pijl. */
 .button--icon.button--secundair .button--circle { background-color: var(--color-groen-diepst); }
@@ -907,8 +921,8 @@ main > section:has(+ section) > .container > .content-text-side-cta--container {
 }
 .cta-blocks-advanced__body--bg-grey  { background-color: var(--color-grey); }
 .cta-blocks-advanced__body--bg-white { background-color: var(--color-white); }
-.cta-blocks-advanced__body--bg-geel  { background-color: var(--color-geel); color: var(--color-text-on-accent); }
-.cta-blocks-advanced__body--bg-geel :is(h1,h2,h3,h4,h5,h6,p,li) { color: var(--color-text-on-accent); }
+.cta-blocks-advanced__body--bg-geel  { background-color: var(--color-geel); color: var(--color-op-accent); }
+.cta-blocks-advanced__body--bg-geel :is(h1,h2,h3,h4,h5,h6,p,li) { color: var(--color-op-accent); }
 .cta-blocks-advanced__body--bg-groen  { background-color: var(--color-groen); }
 .cta-blocks-advanced__body--bg-groen :is(h1,h2,h3,h4,h5,h6,p,li) { color: var(--color-white); }
 .cta-blocks-advanced__wrapper {
@@ -1199,8 +1213,11 @@ main > section:has(+ section) > .container > .content-text-side-cta--container {
    HET PATROON IS HIERVOOR OMGEKLEURD, en dat is de hele reden dat dit werkt.
    Het aangeleverde patroon is navy met `#00B767`, en wit haalt op dat groen
    maar 2,64:1. De variant die hier wordt geladen heeft datzelfde groen als
-   `--color-accent` (`#1B7A48`). Dat is de kleur die in de merklaag al bestaat
-   juist omdát het logogroen op wit te licht is; zie brand-style.md.
+   `#1B7A48`, een dieper groen. Dit is de enige plek op de site waar dat staat:
+   het accent is sinds 10 september `#00B767`, precies zoals aangeleverd, met
+   navy tekst erop. Op dit patroon kan dat niet, want het is tweekleurig en de
+   tekst loopt over beide kleuren; navy haalt op het groen 5,76:1 maar op het
+   navy in datzelfde patroon 1,01:1. Zie brand-style.md.
 
    De hero-variant van hetzelfde patroon is NIET omgekleurd en houdt het felle
    groen: daar staat geen tekst over, want die zit in het grijze vak ernaast.
@@ -1518,7 +1535,7 @@ main > section:has(+ section) > .container > .content-text-side-cta--container {
 
 .vlak--geel  { background-color: var(--color-geel); }
 .vlak--geel .vlak__kop,
-.vlak--geel .vlak__tekst { color: var(--color-text-on-accent); }
+.vlak--geel .vlak__tekst { color: var(--color-op-accent); }
 .vlak--grijs { background-color: var(--color-grey); }
 .vlak--wit   { background-color: var(--color-white); }
 /* De merkkleur uit het logo, niet de donkerste toon: dit is een gekleurd vlak
@@ -1891,11 +1908,11 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible, .field:focus-vi
 .header--light .submenu--link { background-color: transparent; color: var(--color-white); }
 .header--light .submenu--link:not(.highlight):hover { background-color: var(--color-white); color: var(--color-text-primary); }
 .header--light .hamburger { background-color: transparent; color: var(--color-white); }
-.header--light .hamburger:hover { background-color: var(--color-geel); color: var(--color-text-on-accent); }
+.header--light .hamburger:hover { background-color: var(--color-geel); color: var(--color-op-accent); }
 
 .header--scrolled { background-color: var(--color-grey); }
 .header--scrolled .hamburger { background-color: var(--color-white); }
-.header--scrolled .hamburger:hover { background-color: var(--color-geel); color: var(--color-text-on-accent); }
+.header--scrolled .hamburger:hover { background-color: var(--color-geel); color: var(--color-op-accent); }
 .header--scroll-hidden { transform: translateY(-100%); }
 
 /* Navigatie ≥1200px: één doorlopende witte balk, geen tussenruimte */
@@ -2065,7 +2082,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible, .field:focus-vi
               color var(--duration-instant) linear;
 }
 @media (max-width: 1199px) { .hamburger { display: flex; } }
-.hamburger:hover { background-color: var(--color-geel); color: var(--color-text-on-accent); }
+.hamburger:hover { background-color: var(--color-geel); color: var(--color-op-accent); }
 
 /* ============================================================================
    Mobiel schuifpaneel (§6.5)
@@ -2113,7 +2130,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible, .field:focus-vi
   transition: all var(--duration-fast) var(--ease-legacy);
 }
 .mobile-panel--chip:hover { background-color: var(--color-groen); color: var(--color-white); }
-.mobile-panel--chip.is-close { background-color: var(--color-geel); color: var(--color-text-on-accent); }
+.mobile-panel--chip.is-close { background-color: var(--color-geel); color: var(--color-op-accent); }
 
 /* Hier stond een vaste marge van 200px boven het menu (120 op een telefoon).
    Dat was gemaakt voor een korte lijst; met de uitklappers erbij werd het een
@@ -2193,7 +2210,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible, .field:focus-vi
   position: absolute; left: var(--space-400); top: var(--space-400);
   z-index: calc(var(--z-header) + 1);
   transform: translateY(-200%);
-  background: var(--color-geel); color: var(--color-text-on-accent);
+  background: var(--color-geel); color: var(--color-op-accent);
   padding: var(--space-300) var(--space-400);
   font-family: var(--font-medium); font-weight: var(--weight-medium);
   font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
@@ -2246,7 +2263,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible, .field:focus-vi
   cursor: pointer;
   transition: background-color var(--duration-fast) var(--ease-legacy);
 }
-.field--bestand::file-selector-button:hover { background: var(--color-geel); color: var(--color-text-on-accent); }
+.field--bestand::file-selector-button:hover { background: var(--color-geel); color: var(--color-op-accent); }
 
 .veld__fout {
   margin: var(--space-200) 0 0;
@@ -2265,7 +2282,7 @@ a:focus-visible, button:focus-visible, [tabindex]:focus-visible, .field:focus-vi
    geen randen om het af te bakenen (DR-3), dus het vlak is het veld. Op wit
    draaien we de twee kleuren daarom om. */
 .background--white .field { background: var(--color-grey); }
-.background--white .veld__fout { background: var(--color-geel); color: var(--color-text-on-accent); }
+.background--white .veld__fout { background: var(--color-geel); color: var(--color-op-accent); }
 
 select.field { appearance: none; cursor: pointer;
                background-image: linear-gradient(45deg, transparent 50%, var(--color-groen) 50%),
@@ -2290,7 +2307,7 @@ select.field { appearance: none; cursor: pointer;
   font-size: 0.6875rem; letter-spacing: var(--tracking-label); text-transform: uppercase;
 }
 .contactformulier__melding:empty { display: none; }
-.contactformulier__melding.is-goed { background: var(--color-geel); color: var(--color-text-on-accent);
+.contactformulier__melding.is-goed { background: var(--color-geel); color: var(--color-op-accent);
                                      padding: var(--space-300) var(--space-400); }
 .contactformulier__melding.is-fout { background: var(--color-groen); color: var(--color-white);
                                      padding: var(--space-300) var(--space-400); }

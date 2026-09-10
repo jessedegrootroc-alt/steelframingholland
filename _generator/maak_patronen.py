@@ -11,13 +11,22 @@ De bronbestanden staan in `assets/patronen/bron/`. Wat hier gebeurt:
 
 2. **De CTA-variant wordt omgekleurd.** Daar staat witte tekst middenop, en het
    aangeleverde groen `#00B767` haalt met wit 2,64:1 tegen een eis van 4,5:1.
-   Het groen wordt daarom het accent uit de merklaag, `#1B7A48` (5,35:1).
+   Het groen wordt daarom `#1B7A48` (5,35:1).
+
+   Dit is de ENIGE plek op de site waar dat diepere groen nog staat. Overal
+   elders is het accent sinds 10 september `#00B767`, precies zoals aangeleverd;
+   daar staat navy tekst op in plaats van wit (5,76:1), en zo kon de kleur wel
+   letterlijk worden overgenomen. Op dit patroon kan dat niet: het is
+   tweekleurig, en de tekst loopt over beide kleuren. Navy zou op het groen
+   5,76:1 halen maar op het navy in hetzelfde patroon 1,01:1.
+
+   Wil je hier ook het volle #00B767, dan moet de tekst op een massief vlak
+   middenin komen te staan met het patroon eromheen. Zet dan GROEN_LEESBAAR
+   gelijk aan GROEN en pas .cta-slot__hoofd aan.
 
    Waarom omkleuren en niet een waas eroverheen: een waas van 35% navy haalt de
    eis ook, maar duwt het groen naar teal (`#04845b`) en dat valt buiten het
-   merk. Omkleuren houdt het een groen, houdt de randen scherp, en gebruikt de
-   kleur die in de merklaag al bestaat juist omdat het logogroen op wit te licht
-   is. Zie assets/patronen/HERKOMST.md.
+   merk. Zie assets/patronen/HERKOMST.md.
 
 3. **Lossless WebP.** Het zijn twee vlakke kleuren met harde diagonalen. Lossy
    op q88 is 10,9 kB en maakt er 4048 kleuren van (franje langs de diagonalen);
@@ -41,7 +50,7 @@ UIT = WORTEL / 'assets' / 'patronen'
 # in de variant waar tekst over komt.
 NAVY = (0, 40, 72)          # #002848, zoals aangeleverd
 GROEN = (0, 183, 103)       # #00B767, zoals aangeleverd
-GROEN_LEESBAAR = (27, 122, 72)   # #1B7A48, --color-accent uit de merklaag
+GROEN_LEESBAAR = (27, 122, 72)   # #1B7A48, alleen hier: zie de uitleg bovenaan
 
 # De versie zit in de bestandsnaam, en dat is geen sier.
 #

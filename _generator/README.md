@@ -124,9 +124,10 @@ python3 maak_patronen.py
 Het patroon staat op twee plekken: in een eigen vak naast de kop van een
 patroonhero, en als achtergrond van het contactvlak. Op die tweede plek staat er
 witte tekst middenop, en het aangeleverde groen `#00B767` haalt met wit 2,64:1.
-De CTA-variant krijgt daarom het accent uit de merklaag (`#1B7A48`, 5,35:1); de
-hero-variant houdt het felle groen, want daar staat niets over. Zie
-`assets/patronen/HERKOMST.md`.
+De CTA-variant krijgt daarom een dieper groen (`#1B7A48`, 5,35:1); de
+hero-variant houdt het felle groen, want daar staat niets over. Dit is de enige
+plek waar dat diepere groen nog staat: het accent zelf is `#00B767` met navy
+tekst erop. Zie `assets/patronen/HERKOMST.md`.
 
 **De patroonbestanden hebben een versie in hun naam** (`-v3-`). DEPLOY.md zet
 een cache van dertig dagen op beeld, en zonder versie in de naam houdt wie de

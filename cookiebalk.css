@@ -50,8 +50,10 @@
 /* Deze knop staat op het accent. Dat was geel met zwarte tekst; met het
    groene accent van Steel Framing Holland moet de tekst wit zijn, anders haalt hij
    1,71:1. Vorm, maat en hover blijven zoals ze waren. */
-.cookie-knop--donker { background: var(--color-geel, #1B7A48); color: var(--color-text-on-accent, #fff); }
-.cookie-knop--donker:hover { background: var(--color-geel-hover, #14603A); color: var(--color-text-on-accent, #fff); }
+/* De accentknop is een groen vlak, dus navy tekst erop: wit haalt op #00B767
+   maar 2,64:1. Zie brand-style.md. */
+.cookie-knop--donker { background: var(--color-geel, #00B767); color: var(--color-op-accent, #0D2646); }
+.cookie-knop--donker:hover { background: var(--color-geel-hover, #00A65D); color: var(--color-op-accent, #0D2646); }
 
 /* ---- Paneel met de losse keuzes ---- */
 .cookie-keuzes { margin: 0 0 var(--space-500, 24px); display: flex; flex-direction: column; gap: var(--space-400, 16px); }
@@ -75,7 +77,7 @@
   background: var(--color-groen, #0D2646);
   transition: transform var(--duration-fast, 200ms) var(--ease-standard, ease);
 }
-.cookie-schakelaar input:checked + span { background: var(--color-geel, #1B7A48); }
+.cookie-schakelaar input:checked + span { background: var(--color-geel, #00B767); }
 .cookie-schakelaar input:checked + span::after { transform: translateX(20px); }
 .cookie-schakelaar input:disabled + span { opacity: .5; }
 .cookie-schakelaar input:focus-visible + span { outline: 2px solid var(--color-focus, #383838); outline-offset: 2px; }

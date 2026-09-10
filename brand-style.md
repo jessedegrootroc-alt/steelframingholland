@@ -26,16 +26,34 @@ en die zijn als volgt verdeeld:
 Navy is dus de merkkleur en groen het accent. Dat is precies de verhouding die
 het template als 30/10 gebruikt, dus die vertaling was rechtstreeks.
 
-### Eén aanpassing, en waarom
+Het accent is niet het logogroen `#30B36D` maar `#00B767`, het groen uit het
+merkpatroon. Die twee liggen dicht bij elkaar (2,69:1 en 2,64:1 op wit) en het
+patroon is de plek waar de kleur op de site het grootste vlak vult, dus die is
+maatgevend.
 
-Het logogroen `#30B36D` haalt op wit **2,69:1**. Voor een link of een label is
-4,5:1 nodig en voor een knopvorm 3:1, dus die kleur kan niet als accent op wit.
+### Het accent is het groen zelf, en de tekst erop is navy
 
-Daarom is het accent een verdiepte stap van datzelfde groen: **`#1B7A48`**, dat
-op wit **5,35:1** haalt. Dezelfde tint, donkerder gezet tot hij leesbaar is.
-Het logo zelf blijft onaangeraakt `#30B36D`; die kleur wordt alleen gebruikt
-waar contrast geen rol speelt (in het logo, en in de witvariant op de donkere
-balk, waar hij 5,64:1 haalt).
+Het accent is **`#00B767`**, het groen uit het merkpatroon, letterlijk zoals
+aangeleverd. Dat is een lichte kleur: op wit haalt hij 2,64:1, en wit erop
+haalt datzelfde. Als tekstkleur op wit kan hij dus niet, en als knopvulling met
+witte tekst ook niet.
+
+De oplossing zit niet in de kleur maar in wat erop staat. **Op een groen vlak
+staat navy tekst** (`#0D2646`), en dat haalt **5,76:1**. Zo hoeft de merkkleur
+niet te worden aangepast om leesbaar te zijn.
+
+Daar horen twee regels bij:
+
+- **Groen is een vlak, geen tekstkleur.** Labels, links en knoplabels staan in
+  navy. Waar eerder een groene tekstkleur stond (op de witte knop in het
+  contactvlak en in de menukaart) staat nu navy.
+- **De primaire knop is navy, niet groen.** Het groen tegen wit haalt 2,64:1 en
+  een knopvorm vraagt 3:1. Groen komt bij een knop pas bij hover, en dan in
+  `#00A65D`: die haalt de vorm op 3,18:1 en de navy tekst erop op 4,78:1.
+
+Twee tokens regelen dit: `--color-text-on-accent` is wit en hoort bij de navy
+vlakken, `--color-op-accent` is navy en hoort bij de groene. Zet je op de
+tweede weer wit, dan faalt elk groen vlak op de hele site.
 
 ---
 
@@ -47,7 +65,7 @@ mee; alles verderop in `styleguide.css` verwijst hiernaar.
 ```css
 --color-primary:           #0D2646;  /* SFH Navy: merkvlakken (30%) */
 --color-secondary:         #BCDA83;  /* SFH Lichtgroen: tekst OP donkere vlakken */
---color-accent:            #1B7A48;  /* SFH Groen verdiept: CTA, links, labels (10%) */
+--color-accent:            #00B767;  /* SFH Groen: accentvlakken en labels (10%) */
 --color-background:        #FFFFFF;  /* de dominante basis (60%) */
 --color-background-subtle: #F5F5F5;  /* rustige afwijkende achtergrond */
 --color-text:              #383838;  /* koppen en lopende tekst */
@@ -55,13 +73,15 @@ mee; alles verderop in `styleguide.css` verwijst hiernaar.
 --color-border-soft:       #E6E6E6;  /* randen en scheidingen */
 ```
 
-Plus drie afgeleide stappen, die er zijn omdat een merkvlak een hover en een
-ingedrukte staat nodig heeft:
+Plus vier afgeleide waarden: drie omdat een merkvlak een hover en een ingedrukte
+staat nodig heeft, en één omdat de twee merkvlakken niet dezelfde tekstkleur
+kunnen dragen:
 
 ```css
 --color-primary-deep:      #0A1E36;  /* haarlijnen, kleine labels, pressed */
 --color-primary-deepest:   #081729;  /* donkerste vlak en de sluier over foto's */
---color-accent-strong:     #14603A;  /* accent een stap donkerder: hover en pressed */
+--color-accent-strong:     #00A65D;  /* accent een stap donkerder: hover en pressed */
+--color-op-accent:         #0D2646;  /* wat OP een groen vlak staat */
 ```
 
 De historische namen (`--color-geel`, `--color-groen`) staan er nog als alias en
@@ -76,7 +96,10 @@ een halve omzetting erger is dan een rare naam. Ze wijzen naar de juiste kleur.
 - **60% wit.** De basis. De meeste secties staan op wit of op `#F5F5F5`.
 - **30% navy.** De merkvlakken: de balk als je gescrold hebt, het CTA-blok, de
   sluier over de hero, het vierde vlak van de vlakkenrij.
-- **10% groen.** Knoppen, links, labels en het eerste vlak van de vlakkenrij.
+- **10% groen.** Accentvlakken: het eerste vlak van de vlakkenrij, de
+  markeer-chip in een kop, de hover van een knop en de cirkel in een
+  icoonknop. Niet de knoppen zelf en niet de links: die zijn navy, want groen
+  haalt als tekstkleur en als knopvorm de eis niet.
 
 De vlakkenrij op de contactpagina laat de vier rollen naast elkaar zien: groen,
 grijs, wit, navy.
@@ -95,10 +118,11 @@ Alles hieronder is opnieuw gerekend met de WCAG-formule op de huidige tokens.
 | `--color-primary` `#0D2646` op wit | 15,19:1 | AAA |
 | wit op `--color-primary` | 15,19:1 | AAA |
 | `--color-secondary` `#BCDA83` op `--color-primary` | 9,76:1 | AAA |
-| `--color-accent` `#1B7A48` op wit | 5,35:1 | AA |
-| `--color-accent` op `#F5F5F5` | 4,91:1 | AA |
-| wit op `--color-accent` | 5,35:1 | AA |
-| `--color-accent-strong` `#14603A` op wit | 7,60:1 | AAA |
+| `--color-op-accent` navy op `--color-accent` `#00B767` | 5,76:1 | AA |
+| `--color-accent` als vlak tegen wit | 2,64:1 | **haalt de 3:1 voor een knopvorm niet** |
+| wit op `--color-accent` | 2,64:1 | **faalt, daarom staat er navy op** |
+| navy op `--color-accent-strong` `#00A65D` (hover) | 4,78:1 | AA |
+| `--color-accent-strong` als vlak tegen wit | 3,18:1 | AA (eis 3) |
 | logogroen `#30B36D` op `--color-primary` | 5,64:1 | AA |
 
 Twee dingen om te weten:
@@ -106,10 +130,13 @@ Twee dingen om te weten:
 - **`--color-secondary` is geen tekstkleur op wit.** `#BCDA83` haalt daar
   1,56:1. Hij is bedoeld voor tekst en details **op** de navy vlakken, en daar
   haalt hij 9,76:1.
-- **Het accent haalt AA, niet AAA.** 5,35:1 is genoeg voor lopende tekst en
-  ruim genoeg voor labels en knopvormen, maar het is geen AAA. Dat is de prijs
-  van een accent dat nog als het logogroen te herkennen is. Wil je AAA, dan moet
-  het accent naar `#0F5C36` (8,06:1) en verliest het die herkenbaarheid.
+- **Het accent is een vlak en geen tekstkleur.** `#00B767` op wit haalt 2,64:1.
+  Gebruik het als achtergrond met navy tekst erop, niet als kleur voor tekst,
+  een dun lijntje of een icoon op wit.
+- **Eén plek houdt een dieper groen: het patroon in het contactvlak** (`#1B7A48`).
+  Daar staat witte tekst middenop een tweekleurig patroon, en dan werkt geen
+  enkele tekstkleur over het geheel: navy haalt op het groen 5,76:1 maar op het
+  navy in datzelfde patroon 1,01:1. Zie `assets/patronen/HERKOMST.md`.
 
 ---
 
