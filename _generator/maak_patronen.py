@@ -5,30 +5,24 @@
 
 De bronbestanden staan in `assets/patronen/bron/`. Wat hier gebeurt:
 
-1. **De hero-variant gaat ongewijzigd door.** Dat patroon staat in een eigen vak
-   naast de kop; er komt geen tekst over. De kleuren blijven dus precies zoals
-   ze zijn aangeleverd.
+1. **Beide varianten gaan ongewijzigd door.** De kleuren blijven precies zoals
+   ze zijn aangeleverd: navy `#002848` met `#00B767`.
 
-2. **De CTA-variant wordt omgekleurd.** Daar staat witte tekst middenop, en het
-   aangeleverde groen `#00B767` haalt met wit 2,64:1 tegen een eis van 4,5:1.
-   Het groen wordt daarom `#1B7A48` (5,35:1).
+   Dat was niet altijd zo. De CTA-variant werd hier omgekleurd naar `#1B7A48`,
+   een dieper groen, omdat er witte tekst middenop staat en wit op `#00B767`
+   maar 2,64:1 haalt tegen een eis van 4,5:1. Het gevolg was een dof groen dat
+   niet als de merkkleur las: het leek alsof er een donkere waas over het blok
+   lag, terwijl het de bitmap zelf was.
 
-   Dit is de ENIGE plek op de site waar dat diepere groen nog staat. Overal
-   elders is het accent sinds 10 september `#00B767`, precies zoals aangeleverd;
-   daar staat navy tekst op in plaats van wit (5,76:1), en zo kon de kleur wel
-   letterlijk worden overgenomen. Op dit patroon kan dat niet: het is
-   tweekleurig, en de tekst loopt over beide kleuren. Navy zou op het groen
-   5,76:1 halen maar op het navy in hetzelfde patroon 1,01:1.
+   Dat is nu opgelost in de vórm en niet in de kleur, en niet hier maar in het
+   patroon zelf. De aangeleverde `cta.png` heeft een **leeg midden**: alleen
+   het parallellogram linksonder en de kubus rechts, met navy ertussen. Daar
+   staat de tekst, en wit haalt op dat navy 15,03:1.
 
-   Wil je hier ook het volle #00B767, dan moet de tekst op een massief vlak
-   middenin komen te staan met het patroon eromheen. Zet dan GROEN_LEESBAAR
-   gelijk aan GROEN en pas .cta-slot__hoofd aan.
+   Wil je hier terug naar een omgekleurd patroon, zet dan een doelgroen in
+   PLAN en gebruik `op_de_lijn()`; die functie staat er nog en werkt.
 
-   Waarom omkleuren en niet een waas eroverheen: een waas van 35% navy haalt de
-   eis ook, maar duwt het groen naar teal (`#04845b`) en dat valt buiten het
-   merk. Zie assets/patronen/HERKOMST.md.
-
-3. **Lossless WebP.** Het zijn twee vlakke kleuren met harde diagonalen. Lossy
+2. **Lossless WebP.** Het zijn twee vlakke kleuren met harde diagonalen. Lossy
    op q88 is 10,9 kB en maakt er 4048 kleuren van (franje langs de diagonalen);
    lossless is 8,1 kB en pixelexact. Kleiner én scherper, dus die keuze is geen
    afweging.
@@ -46,11 +40,9 @@ WORTEL = HIER.parent
 BRON = WORTEL / 'assets' / 'patronen' / 'bron'
 UIT = WORTEL / 'assets' / 'patronen'
 
-# De twee kleuren van het aangeleverde patroon, en waar het groen naartoe gaat
-# in de variant waar tekst over komt.
+# De twee kleuren van het aangeleverde patroon. Beide varianten houden ze.
 NAVY = (0, 40, 72)          # #002848, zoals aangeleverd
 GROEN = (0, 183, 103)       # #00B767, zoals aangeleverd
-GROEN_LEESBAAR = (27, 122, 72)   # #1B7A48, alleen hier: zie de uitleg bovenaan
 
 # De versie zit in de bestandsnaam, en dat is geen sier.
 #
@@ -64,17 +56,20 @@ GROEN_LEESBAAR = (27, 122, 72)   # #1B7A48, alleen hier: zie de uitleg bovenaan
 # dus geen enkele cache kan er nog tussen zitten. De stylesheets en scripts
 # lossen dit met `?v=<hash>` op (zie v() in schil.py); beeld dat vanuit CSS
 # wordt aangeroepen kan dat niet, dus daar doet de naam het werk.
-VERSIE = 'v3'
+VERSIE = 'v5'
 
-# (bronbestand, naam, breedtes, groen omkleuren)
+# (bronbestand, naam, breedtes)
 PLAN = [
-    ('Hero.png', f'hero-patroon-{VERSIE}', [720, 1000, 1440], False),
-    ('cta.png', f'cta-patroon-{VERSIE}', [1440, 2880], True),
+    ('Hero.png', f'hero-patroon-{VERSIE}', [720, 1000, 1440]),
+    ('cta.png', f'cta-patroon-{VERSIE}', [1440, 2880]),
 ]
 
 
 def op_de_lijn(im, doelgroen):
     """Elke pixel terugzetten op de lijn tussen navy en `doelgroen`.
+
+       Beide varianten gebruiken hier GROEN, dus dit verandert de kleuren niet;
+       het haalt de franje weg die het verkleinen erin legt. Zie hieronder.
 
        Het patroon is een verloop tussen twee kleuren: elke pixel is navy, groen
        of een tussenstap van de antialiasing op een diagonaal. Per pixel wordt
@@ -120,19 +115,18 @@ def main():
     for oud in UIT.glob('*.webp'):
         oud.unlink()
     totaal = 0
-    for bestand, naam, breedtes, om in PLAN:
+    for bestand, naam, breedtes in PLAN:
         bron = BRON / bestand
         if not bron.exists():
             sys.exit(f'bron ontbreekt: {bron}')
         origineel = Image.open(bron).convert('RGB')
-        doel = GROEN_LEESBAAR if om else GROEN
         print(f'{bestand}  {origineel.size[0]}x{origineel.size[1]}'
-              f'{"  (groen -> #1B7A48)" if om else "  (kleuren ongewijzigd)"}')
+              f'  (kleuren ongewijzigd)')
         for b in breedtes:
             h = round(origineel.size[1] * b / origineel.size[0])
             pad = UIT / f'{naam}-{b}.webp'
             verkleind = origineel.resize((b, h), Image.LANCZOS)
-            n = webp(op_de_lijn(verkleind, doel), pad)
+            n = webp(op_de_lijn(verkleind, GROEN), pad)
             totaal += n
             print(f'   {pad.name:28} {b}x{h}  {n / 1024:6.1f} kB')
     print(f'\n{totaal / 1024:.1f} kB aan patronen')

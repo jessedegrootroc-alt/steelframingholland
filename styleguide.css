@@ -1197,50 +1197,42 @@ main > section:has(+ section) > .container > .content-text-side-cta--container {
 
    Geen ruimte onder het slotblok: het groene vlak sluit direct aan op de voet. */
 .cta-slot { background-color: var(--color-white); }
-/* Het merkpatroon op volle sterkte, zonder waas ertussen. Het zit in de
-   achtergrond en niet in een <img>: het is versiering en heeft geen
-   alternatieve tekst nodig.
+/* Het merkpatroon op volle sterkte: navy `#002848` met het merkgroen `#00B767`,
+   precies zoals aangeleverd. Het zit in de achtergrond en niet in een <img>:
+   het is versiering en heeft geen alternatieve tekst nodig.
 
-   Contrast van witte tekst op dit patroon, gemeten over ELKE pixel van beide
-   bitmaps (cta-patroon-1440.webp en -2880.webp):
+   De tekst staat gecentreerd, en die staat op navy. Dat is geen geluk: de
+   CTA-variant van het patroon heeft een leeg midden, met alleen het
+   parallellogram linksonder en de kubus rechts. Wit haalt op dat navy 15,03:1
+   en op het groen maar 2,64:1, dus daar zit het hele verschil.
 
-     slechtste pixel   5,35:1    <- dat is het groen zelf
-     pixels onder 4,5  0 van 2.736.000
+   Twee eerdere oplossingen voor hetzelfde probleem staan hier niet meer:
 
-   Wit haalt dus overal 5,35:1, boven de 4,5:1 voor normale tekst en de 3:1 voor
-   de kop. Een waas is niet nodig en zit er daarom niet.
+   - Het groen van deze variant omkleuren naar `#1B7A48` (5,35:1 met wit). Dat
+     werkte, maar het las als dof groen met een donkere waas erover, terwijl
+     die waas de bitmap zelf was.
+   - De tekst op een massief navy vlak middenin zetten. Dat werkte ook, maar het
+     legde een zichtbaar blok over het patroon.
 
-   HET PATROON IS HIERVOOR OMGEKLEURD, en dat is de hele reden dat dit werkt.
-   Het aangeleverde patroon is navy met `#00B767`, en wit haalt op dat groen
-   maar 2,64:1. De variant die hier wordt geladen heeft datzelfde groen als
-   `#1B7A48`, een dieper groen. Dit is de enige plek op de site waar dat staat:
-   het accent is sinds 10 september `#00B767`, precies zoals aangeleverd, met
-   navy tekst erop. Op dit patroon kan dat niet, want het is tweekleurig en de
-   tekst loopt over beide kleuren; navy haalt op het groen 5,76:1 maar op het
-   navy in datzelfde patroon 1,01:1. Zie brand-style.md.
+   Met een leeg midden is geen van beide nodig. Verandert het patroon, meet dan
+   opnieuw wat er achter de tekst komt te staan: de ondergrens is een lichtste
+   pixel die met wit nog 4,5:1 haalt, dat is ongeveer #7A7A7A.
 
-   De hero-variant van hetzelfde patroon is NIET omgekleurd en houdt het felle
-   groen: daar staat geen tekst over, want die zit in het grijze vak ernaast.
-
-   Het alternatief was een waas van 35% navy over het felle groen. Dat haalt de
-   eis ook (4,70:1), maar duwt het groen naar teal (`#04845b`) en dat valt buiten
-   het merk. Omkleuren houdt het een groen en houdt de randen scherp.
-
-   Vervang je de bitmap opnieuw, meet dan opnieuw. De ondergrens is een lichtste
-   pixel die met wit nog 4,5:1 haalt, dat is ongeveer #7A7A7A. Haalt een nieuw
-   patroon dat niet, dan zijn er twee wegen: het groen omkleuren in
-   `_generator/maak_patronen.py`, of hier een waas leggen tot het klopt:
+   Wil je toch een waas over het geheel, dan is dat:
 
      background-image:
        linear-gradient(rgba(13, 38, 70, .40), rgba(13, 38, 70, .40)),
-       url("assets/patronen/cta-patroon-v3-2880.webp"); */
+       url("assets/patronen/cta-patroon-v5-2880.webp");
+
+   maar let op dat 35% navy over het felle groen het naar teal (`#04845b`) duwt,
+   en dat valt buiten het merk. */
 .cta-slot__hoofd {
   background-color: var(--color-groen-diepst);
   /* image-set laat de browser kiezen: op een telefoon is 2880px zinloos breed.
      De url() eronder is de terugval voor browsers zonder image-set. */
-  background-image: url("assets/patronen/cta-patroon-v3-1440.webp");
-  background-image: image-set(url("assets/patronen/cta-patroon-v3-1440.webp") 1x,
-                              url("assets/patronen/cta-patroon-v3-2880.webp") 2x);
+  background-image: url("assets/patronen/cta-patroon-v5-1440.webp");
+  background-image: image-set(url("assets/patronen/cta-patroon-v5-1440.webp") 1x,
+                              url("assets/patronen/cta-patroon-v5-2880.webp") 2x);
   background-size: cover;
   background-position: center;
   padding: var(--space-1000) var(--inset-x);

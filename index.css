@@ -49,13 +49,29 @@
      sluier (luminantie 0,165 tegen 0,147), terwijl de film boven in de hero
      ruim twee keer zo goed zichtbaar is.
 
-     Gemeten over dertig beeldjes, op het 98e percentiel per tekstvlak, op
-     1440x900 en op 375x812:
-       navigatie (14px, eis 4,5)  5,3:1
-       label     (11px, eis 4,5)  5,1:1
-       titel     (72px, eis 3,0)  5,2:1
-       intro     (16px, eis 4,5)  5,9:1
-       knop      (11px, eis 4,5)  5,7:1
+     Gemeten over dertig beeldjes, op het 98e percentiel per tekstzone, op
+     375x812, 768x1024, 1024x768 en 1440x900. De krapste per zone:
+       label     (11px, eis 4,5)  4,78:1   op 1440x900
+       navigatie (14px, eis 4,5)  5,26:1   op 1440x900
+       titel     (72px, eis 3,0)  5,12:1   op 1440x900
+       logo      (vorm, eis 3,0)  5,12:1   op 1440x900
+       intro     (16px, eis 4,5)  5,87:1   op 1440x900
+
+     Het label van 11px is de krapste, en dat is met 4,78:1 ook de reden dat
+     deze sluier niet lichter kan. De marge is een kwart punt. Een vlakke
+     sluier van 20% brengt het label op 4,55:1 en van 15% op 4,33:1, en dat
+     laatste haalt de eis niet meer. De film lichter maken kan dus ook niet:
+     bij `omax 0.54` staat het label op 4,43:1.
+
+     DE ZONES ZIJN DE LETTERS EN NIET DE ELEMENTVAKKEN, en dat scheelt echt.
+     Hier stonden eerder betere cijfers (label 5,1:1), gemeten op het vak van
+     de span. Die span is de hele kolom breed terwijl de tekst maar 16,5% van
+     de breedte vult, dus de meting pakte een groot stuk beeld mee waar geen
+     letter staat. De zones in het meetscript komen nu uit de browser, met
+     Range.getClientRects() over de tekstknopen.
+
+     De knop staat niet meer in de meting: die heeft een eigen navy vlak en
+     ligt dus niet op de film.
 
      Zelf nameten na een wijziging hier of aan de film:
 

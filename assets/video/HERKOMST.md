@@ -44,13 +44,24 @@ Over deze film staat witte tekst: de kop, het label, de introtekst, de knoppen
 en de navigatie. Ongegradeerd haalde die tekst de contrasteis niet, ook niet met
 de sluier die er al lag. Gemeten over dertig beeldjes:
 
-| tekstvlak | eis | ongegradeerd | na gradatie |
-|---|---|---|---|
-| navigatie (14px) | 4,5:1 | 2,53:1 | **5,3:1** |
-| label (11px) | 4,5:1 | 1,88:1 | **5,1:1** |
-| titel (72px) | 3,0:1 | 2,19:1 | **5,2:1** |
-| introtekst (16px) | 4,5:1 | 3,05:1 | **5,9:1** |
-| knoppen (11px) | 4,5:1 | 3,32:1 | **5,7:1** |
+| tekstzone | eis | na gradatie |
+|---|---|---|
+| label (11px) | 4,5:1 | **4,78:1** |
+| navigatie (14px) | 4,5:1 | **5,26:1** |
+| titel (72px) | 3,0:1 | **5,12:1** |
+| logo (vorm) | 3,0:1 | **5,12:1** |
+| introtekst (16px) | 4,5:1 | **5,87:1** |
+
+Dit is de krapste waarde per zone over vier schermmaten (375, 768, 1024 en
+1440 px breed) en dertig beeldjes. De cijfers zijn lager dan wat hier eerder
+stond omdat de zones nu de **letters** zijn en niet de elementvakken; zie de
+uitleg bij `.hero--sluier` in `index.css`. De knoppen staan er niet meer in:
+die hebben een eigen navy vlak en liggen niet op de film.
+
+Het label van 11px is met 4,78:1 de krapste, en daarmee bepaalt het hoe licht
+de hero kan zijn. Er is een kwart punt marge: een vlakke sluier van 20% brengt
+het label op 4,55:1 en van 15% op 4,33:1, en de film op `omax 0.54` op 4,43:1.
+Lichter dan nu kan dus niet zonder het label een eigen ondergrond te geven.
 
 Dat is opgelost in de film en niet in de sluier, en dat is een bewuste ruil. Een
 sluier haalt contrast **weg** uit het beeld: alles gaat naar zwart toe, de lucht

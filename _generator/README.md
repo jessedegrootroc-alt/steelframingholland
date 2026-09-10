@@ -122,14 +122,16 @@ python3 maak_patronen.py
 ```
 
 Het patroon staat op twee plekken: in een eigen vak naast de kop van een
-patroonhero, en als achtergrond van het contactvlak. Op die tweede plek staat er
-witte tekst middenop, en het aangeleverde groen `#00B767` haalt met wit 2,64:1.
-De CTA-variant krijgt daarom een dieper groen (`#1B7A48`, 5,35:1); de
-hero-variant houdt het felle groen, want daar staat niets over. Dit is de enige
-plek waar dat diepere groen nog staat: het accent zelf is `#00B767` met navy
-tekst erop. Zie `assets/patronen/HERKOMST.md`.
+patroonhero, en als achtergrond van het contactvlak. Beide varianten houden de
+aangeleverde kleuren, navy `#002848` met `#00B767`.
 
-**De patroonbestanden hebben een versie in hun naam** (`-v3-`). DEPLOY.md zet
+Op het contactvlak staat witte tekst, gecentreerd, en wit op dat groen haalt
+maar 2,64:1. Daarom heeft de aangeleverde CTA-bron een leeg midden, zodat de
+tekst op navy staat (15,03:1). Eerder werd
+dit patroon omgekleurd naar `#1B7A48`; dat las als een dof groen met een waas
+erover en is weg. Zie `assets/patronen/HERKOMST.md`.
+
+**De patroonbestanden hebben een versie in hun naam** (`-v5-`). DEPLOY.md zet
 een cache van dertig dagen op beeld, en zonder versie in de naam houdt wie de
 site eerder bezocht het oude patroon. Dat is hier gebeurd: bij het nakijken
 stond in de browser nog het patroon van versie 2 terwijl het nieuwe al op schijf

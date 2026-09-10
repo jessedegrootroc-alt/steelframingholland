@@ -82,7 +82,6 @@ def oude_tint_als_rgb(inhoud):
 HUIDIGE_TINTEN = {
     (13, 38, 70):    '#0D2646 navy',
     (188, 218, 131): '#BCDA83 lichtgroen',
-    (27, 122, 72):   '#1B7A48 diep groen (alleen het CTA-patroon)',
     (10, 30, 54):    '#0A1E36 navy diep',
     (8, 23, 41):     '#081729 navy diepst',
     (20, 96, 58):    '#14603A accent donker',

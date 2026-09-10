@@ -133,10 +133,15 @@ Twee dingen om te weten:
 - **Het accent is een vlak en geen tekstkleur.** `#00B767` op wit haalt 2,64:1.
   Gebruik het als achtergrond met navy tekst erop, niet als kleur voor tekst,
   een dun lijntje of een icoon op wit.
-- **Eén plek houdt een dieper groen: het patroon in het contactvlak** (`#1B7A48`).
-  Daar staat witte tekst middenop een tweekleurig patroon, en dan werkt geen
-  enkele tekstkleur over het geheel: navy haalt op het groen 5,76:1 maar op het
-  navy in datzelfde patroon 1,01:1. Zie `assets/patronen/HERKOMST.md`.
+- **Het merkpatroon staat overal op de aangeleverde kleuren**, navy `#002848`
+  met `#00B767`. Ook op het contactvlak, waar witte tekst middenop staat. Over
+  een tweekleurig patroon werkt geen enkele tekstkleur voor het geheel: navy
+  haalt op het groen 5,76:1 maar op het navy in datzelfde patroon 1,01:1.
+  Daarom heeft de CTA-variant van het patroon een **leeg midden**, zodat de
+  tekst op navy staat (wit erop 15,03:1). Het
+  patroon werd eerder omgekleurd naar een dieper groen `#1B7A48`; dat las als
+  een dof groen met een waas erover en is eruit. Zie
+  `assets/patronen/HERKOMST.md`.
 
 ---
 
